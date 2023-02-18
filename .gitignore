@@ -133,3 +133,5 @@ dist
 # Temp files
 temp.*
 *.temp.*
+
+*.key

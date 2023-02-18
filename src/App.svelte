@@ -1,32 +1,106 @@
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+    <Router {routes} />
 </main>
 
-<script>
-export let name;
+<script lang="ts">
+// Components
+import Router from "svelte-spa-router";
+
+// Imports
+import routes from "@/routes";
 </script>
 
 <style lang="scss">
+
+@font-face {
+    font-family: "Roboto";
+    src: url("./fonts/Roboto-Regular.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("./fonts/Roboto-Medium.ttf");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("./fonts/Roboto-Bold.ttf");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Blanka";
+    src: url("./fonts/Blanka.otf");
+}
+
+@font-face {
+    font-family: "Ubuntu";
+    src: url("./fonts/Ubuntu-Bold.ttf");
+}
+
+:root {
+    // Font
+    --font-family: "Roboto", sans-serif;
+    --header-face: "Ubuntu", sans-serif;
+    --display-face: "Blanka", sans-serif;
+
+    // Backdrop is the global container
+    --backdrop: #e9e9e9;
+    --header-on-backdrop: #000000;
+    --text-on-backdrop: #49454f;
+
+    // Background is for elements like cards or sections
+    --background: #ffffff;
+    --header-on-background: #1c1b1f;
+    --text-on-background: #49454f;
+
+    // Theme colors
+    --primary-color: #1a1a1a;
+    --text-on-pimary: #ffffff;
+    --accent-color: #00008b;
+    --display-on-accent: #ffff17;
+    --text-on-accent: #ffffff;
+    --disabled-color: #7e7e7e;
+    --error-color: #ff3030;
+    --text-on-error: #ffffff;
+
+    // Shadows
+    --box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.6);
+    --drop-shadow: drop-shadow(0px 0px 2px rgba(163, 163, 163, 0.6));
+
+    // Border radius
+    --border-radius-tiny: 0.3em;
+    --border-radius-small: 0.5em;
+    --border-radius-medium: 0.75em;
+    --border-radius-round: 100000em;
+
+    // Material design
+    --standard-easing: cubic-bezier(0.4, 0.0, 0.2, 1);
+    --decelerated-easing: cubic-bezier(0.0, 0.0, 0.2, 1);
+    --accelerated-easing: cubic-bezier(0.4, 0.0, 1, 1);
+
+    // Snackbar
+    --snackbar-success-background: #cef8db;
+    --snackbar-success-primary: #3e8256;
+    --snackbar-error-background: #edcbcb;
+    --snackbar-error-primary: #b52d2d;
+}
+
+:global(html), :global(body) {
+    height: 100%;
+    width: 100%;
+
+    padding: 0;
+    margin: 0;
+
+    font-family: var(--font-family);
+}
+
 main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-
-    h1 {
-        color: #ff3e00;
-        text-transform: uppercase;
-        font-size: 4em;
-        font-weight: 100;
-    }
+    height: 100%;
+    width: 100%;
 }
 
-
-
-@media (min-width: 640px) {
-    main {
-        max-width: none;
-    }
-}
 </style>
