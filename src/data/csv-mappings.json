@@ -1,0 +1,21 @@
+{
+  "mappings": [
+    {
+      "name": "Rabobank",
+      "icon": "./img/rabobank.png",
+      "mapping": {
+        "accountIban": 0,
+        "date": 4,
+        "dateMapping": {
+          "template": "$ 00:00+0100",
+          "format": "%F %R%z"
+        },
+        "followNumber": 3,
+        "amount": 6,
+        "amountMapping": "euro",
+        "description": 19,
+        "externalAccountName": 9
+      }
+    }
+  ]
+}
