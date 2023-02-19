@@ -1,5 +1,6 @@
 import APIError from "@/models/error/APIError";
 import AuthenticationService from "@/services/AuthenticationService";
+import type ErrorDTO from "@/models/dto/ErrorDTO";
 
 export interface CustomRequestInit extends RequestInit {
     query?: Record<string, string>;
@@ -23,6 +24,10 @@ export default async function APIFetch<T>(
 
     if (!init.headers) {
         init.headers = {};
+    }
+
+    if (!init.headers["Accept"]) {
+        init.headers["Accept"] = "application/json";
     }
 
     if (!init.headers["Authorization"] && !init.noAuth) {
@@ -52,30 +57,40 @@ export default async function APIFetch<T>(
 
     if (!response.ok) {
         const possibleJson = await response.text();
-        let json = null;
+        let json: ErrorDTO = null;
 
         try {
             json = JSON.parse(possibleJson);
         } catch (e) {
-            /* empty as this is handled by checking for null later */
+            // Checked by checking for null later
         }
 
-        let message = json !== null ? json.message : null;
+        if (json !== null) {
+            throw new APIError(
+                json.error.code,
+                json.error.reason,
+                json.error.description,
+            );
+        } else {
+            const codeMessageMap: Record<number, string> = {
+                404: "Not found",
+                500: "Internal server error",
+                401: "Unauthorized",
+                403: "Insufficient permissions",
+            };
 
-        const codeMessageMap: Record<number, string> = {
-            404: "Not found",
-            500: "Internal server error",
-            401: "Unauthorized",
-            403: "Insufficient permissions",
-        };
+            let codeMessage = codeMessageMap[response.status];
 
-        const codeMessage = codeMessageMap[response.status];
+            if (!codeMessage) {
+                codeMessage = "Unknown";
+            }
 
-        if (!message && codeMessage) {
-            message = codeMessage;
+            throw new APIError(
+                response.status,
+                codeMessage,
+                `${response.status} ${codeMessage}`
+            );
         }
-
-        throw new APIError(message);
     }
 
     if (init.isJsonResponse) {

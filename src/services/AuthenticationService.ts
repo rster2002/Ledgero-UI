@@ -117,12 +117,12 @@ export default class AuthenticationService {
             throw new Error("Refresh token has expired");
         }
 
-        const jwtPair: JWTResponseDTO = await APIFetch("/su/refresh", {
+        const jwtPair: JWTResponseDTO = await APIFetch("/auth/refresh", {
             method: "POST",
             noAuth: true,
             body: JSON.stringify({
-                currentJWT: token,
-                refreshToken,
+                access_token: token,
+                refresh_token: refreshToken,
             }),
         });
 

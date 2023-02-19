@@ -1,19 +1,19 @@
 import { wrap } from "svelte-spa-router/wrap";
+import AuthenticationService from "@/services/AuthenticationService";
 
-// import LoadingView from "@/views/LoadingView.svelte";
+const authenticationService = new AuthenticationService();
 
-const routes = {
+export default {
     "/login": wrap({
         asyncComponent: () => import("./views/LoginView.svelte"),
+        conditions: [
+            async () => !(await authenticationService.isLoggedIn()),
+        ],
     }),
-    "/": wrap({
+    "/*": wrap({
         asyncComponent: () => import("./views/MainView.svelte"),
-    })
-    // "/campaign/:campaignId": wrap({ asyncComponent: () => import("./views/Campaign.svelte"), loadingComponent: LoadingView }),
-    // "/character/:characterId": wrap({ asyncComponent: () => import("./views/CharacterSheet.svelte"), loadingComponent: LoadingView }),
-    // "/test": wrap({ asyncComponent: () => import("./views/Testing.svelte"), loadingComponent: LoadingView }),
-    // "/": wrap({ asyncComponent: () => import("./views/Index.svelte"), loadingComponent: LoadingView }),
-    // "/*": wrap({ asyncComponent: () => import("./views/Index.svelte"), loadingComponent: LoadingView }),
-}
-
-export default routes;
+        conditions: [
+            async () => await authenticationService.isLoggedIn(),
+        ],
+    }),
+};

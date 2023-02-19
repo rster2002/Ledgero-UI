@@ -1,32 +1,34 @@
 <section>
-    <Card minimal>
-        <HLayout>
-            <aside>
-                <h1>Ledgero</h1>
-            </aside>
+  <Card minimal>
+    <HLayout>
+      <aside>
+        <h1>Ledgero</h1>
+      </aside>
 
-            <div class="login">
-                <div class="inner">
-                    <VLayout>
-                        <h2>Login</h2>
+      <div class="login">
+        <div class="inner">
+          <VLayout>
+            <h2>Login</h2>
 
-                        <Input label="Username" bind:value={username} />
-                        <Input label="Password" bind:value={password} type="password" />
+            <Input label="Username" bind:value={username} />
+            <Input label="Password" bind:value={password} type="password" />
 
-                        <AsyncButton asyncClick={() => login()}>
-                            <LoginIcon />
+            <AsyncButton asyncClick={() => login()}>
+              <LoginIcon />
+              Login
+            </AsyncButton>
 
-                            Login
-                        </AsyncButton>
-                    </VLayout>
-                </div>
-            </div>
-        </HLayout>
-    </Card>
+            <ErrorText {error} />
+          </VLayout>
+        </div>
+      </div>
+    </HLayout>
+  </Card>
 </section>
 
 <script lang="ts">
 // Imports
+import { push } from "svelte-spa-router";
 import AuthenticationService from "@/services/AuthenticationService";
 
 // Components
@@ -36,15 +38,24 @@ import VLayout from "@/components/layouts/VLayout.svelte";
 import HLayout from "@/components/layouts/HLayout.svelte";
 import AsyncButton from "@/components/AsyncButton.svelte";
 import LoginIcon from "@/components/icons/LoginIcon.svelte";
+import ErrorText from "@/components/error/ErrorText.svelte";
 
 // Data
 const authenticationService = new AuthenticationService();
 let username = "";
 let password = "";
+let error: Error | null = null;
 
 // Functions
 async function login() {
-    await authenticationService.login(username, password);
+    error = null;
+
+    try {
+        await authenticationService.login(username, password);
+        push("/");
+    } catch (e) {
+        error = e;
+    }
 }
 </script>
 

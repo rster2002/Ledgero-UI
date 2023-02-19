@@ -1,13 +1,24 @@
 <main>
-    <Router {routes} />
+    <Router {routes} on:conditionsFailed={conditionsFailed} />
 </main>
 
 <script lang="ts">
 // Components
-import Router from "svelte-spa-router";
+import Router, { replace } from "svelte-spa-router";
 
 // Imports
 import routes from "@/routes";
+
+// Functions
+function conditionsFailed(event) {
+    console.error('conditionsFailed event', event.detail)
+    //
+    if (event.detail.route === "/*") {
+        replace("/login");
+    } else {
+        replace("/");
+    }
+}
 </script>
 
 <style lang="scss">
@@ -38,6 +49,7 @@ import routes from "@/routes";
 @font-face {
     font-family: "Ubuntu";
     src: url("./fonts/Ubuntu-Bold.ttf");
+    font-weight: 700;
 }
 
 :root {
@@ -59,11 +71,11 @@ import routes from "@/routes";
     // Theme colors
     --primary-color: #1a1a1a;
     --text-on-pimary: #ffffff;
-    --accent-color: #00008b;
+    --accent-color: #277dca;
     --display-on-accent: #ffff17;
     --text-on-accent: #ffffff;
     --disabled-color: #7e7e7e;
-    --error-color: #ff3030;
+    --error-color: #b40e0e;
     --text-on-error: #ffffff;
 
     // Shadows
