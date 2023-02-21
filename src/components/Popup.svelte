@@ -28,17 +28,17 @@ function close() {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 16;
+    z-index: 8;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    background-color: var(--darkOpaqueScim);
+    animation: scim-in forwards 250ms var(--standard-easing);
 
     .popup {
         max-height: 80%;
         width: 95%;
-        max-width: 915px;
+        max-width: 500px;
 
         position: relative;
         padding: 32px;
@@ -46,7 +46,9 @@ function close() {
         overflow-x: hidden;
 
         background-color: var(--background);
-        border-radius: var(--borderRadius);
+        border-radius: var(--border-radius-medium);
+
+        animation: box-in forwards 250ms var(--standard-easing);
 
         &.noPadding {
             padding: 0;
@@ -76,6 +78,30 @@ function close() {
                 top: 16px;
             }
         }
+    }
+}
+
+@keyframes scim-in {
+    from {
+        backdrop-filter: blur(0px);
+        background-color: transparent;
+    }
+
+    to {
+        backdrop-filter: blur(2px);
+        background-color: #f0f0f0ba;
+    }
+}
+
+@keyframes box-in {
+    from {
+        transform: translateY(1em);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0em);
+        opacity: 1;
     }
 }
 

@@ -1,6 +1,20 @@
-<button on:click>
+<button on:click bind:this={el}>
     <slot />
 </button>
+
+<script lang="ts">
+// Imports
+import { onMount } from "svelte";
+
+// Data
+let el: HTMLButtonElement;
+
+onMount(() => {
+    let style = getComputedStyle(el);
+    el.style.minWidth = style.width;
+    el.style.minHeight = style.height;
+});
+</script>
 
 <style lang="scss">
 
@@ -24,9 +38,13 @@ button {
     align-items: center;
     gap: 1em;
 
+    --spinner-color: var(--text-on-accent);
+
     &:hover {
         background-color: transparent;
         color: var(--accent-color);
+
+        --spinner-color: var(--accent-color);
     }
 
     :global(svg) {

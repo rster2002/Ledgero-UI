@@ -1,4 +1,4 @@
-<span class="{amount < 0 && 'negative'}">
+<span class="{amount < 0 && 'negative'} {background && 'background'}">
   {amountText}
 </span>
 
@@ -9,6 +9,7 @@ import formatMoney from "@/utils/formatMoney";
 // Props
 export var amount: number;
 export var sign: boolean = false;
+export var background: boolean = false;
 
 // Computed
 $: amountText = formatMoney(amount, {
@@ -23,10 +24,19 @@ span {
 
     font-family: var(--header-face);
     border-radius: var(--border-radius-round);
-    background-color: #a9f59f;
+    background-color: var(--positive-amount);
 
     &.negative {
-        background-color: #ffc4c4;
+        background-color: var(--negative-amount);
+    }
+
+    &.background {
+        background-color: var(--background);
+        color: var(--positive-amount-on-bg);
+
+        &.negative {
+            color: var(--negative-amount-on-bg)
+        }
     }
 }
 

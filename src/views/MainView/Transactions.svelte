@@ -1,4 +1,11 @@
 <Page>
+  <PageHeader>
+    <h1>
+      <TransactionsIcon />
+      Transactions
+    </h1>
+  </PageHeader>
+
   <div class="grid">
     <Card>
       <AsyncContent {promise}>
@@ -34,7 +41,7 @@
                 <AmountSpan amount={item.amount} sign />
               </TextColumn>
               <TextColumn>
-                <CategorySpan category={item.category} />
+                <CategorySpan category={item.category} navigation />
               </TextColumn>
               <TextColumn>{item.description}</TextColumn>
             </svelte:fragment>
@@ -67,6 +74,8 @@ import Button from "@/components/Button.svelte";
 import PaginationTable from "@/components/PaginationTable.svelte";
 import Popup from "@/components/Popup.svelte";
 import { push } from "svelte-spa-router";
+import PageHeader from "@/components/fragments/PageHeader.svelte";
+import TransactionsIcon from "@/components/icons/TransactionsIcon.svelte";
 
 // Data
 const aggregateService = new AggregateService();

@@ -98,6 +98,12 @@ function conditionsFailed(event) {
     --snackbar-success-primary: #3e8256;
     --snackbar-error-background: #edcbcb;
     --snackbar-error-primary: #b52d2d;
+
+    // Amount colors
+    --positive-amount: #a9f59f;
+    --negative-amount: #ffc4c4;
+    --positive-amount-on-bg: #527d4d;
+    --negative-amount-on-bg: #ffc4c4;
 }
 
 :global(html), :global(body) {

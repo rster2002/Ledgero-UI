@@ -18,5 +18,5 @@ export default function textColorBasedOnHex(hex: string) {
         (rgb.g * 587) +
         (rgb.b * 114)) / 1000);
 
-    return (brightness > 125) ? "000000" : "ffffff";
+    return (brightness > 175) ? "000000" : "ffffff";
 }

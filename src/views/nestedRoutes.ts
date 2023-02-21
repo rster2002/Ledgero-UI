@@ -13,4 +13,7 @@ export default {
     "/categories": wrap({
         asyncComponent: () => import("./MainView/Categories.svelte"),
     }),
+    "/categories/:id": wrap({
+        asyncComponent: () => import("./MainView/Categories/ViewCategory.svelte"),
+    })
 }

@@ -35,7 +35,7 @@ function click() {
 
     text-align: center;
     border: 2px solid transparent;
-    border-top-color: inherit;
+    border-top-color: var(--spinner-color);
     border-radius: 1000px;
     animation: spinner 300ms infinite linear;
 }
