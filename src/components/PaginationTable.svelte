@@ -7,6 +7,16 @@
     <svelte:fragment slot="row" let:item>
       <slot name="row" {item} />
     </svelte:fragment>
+
+    <svelte:fragment slot="footer">
+      <div class="buttons">
+        {#if !done}
+          <AsyncButton asyncClick={next}>
+            Load more
+          </AsyncButton>
+        {/if}
+      </div>
+    </svelte:fragment>
   </Table>
 </AsyncContent>
 
@@ -14,6 +24,7 @@
 // Components
 import AsyncContent from "@/components/AsyncContent.svelte";
 import Table from "@/components/Table.svelte";
+import AsyncButton from "@/components/AsyncButton.svelte";
 
 // Generic
 type $$Generic = null;
@@ -45,3 +56,14 @@ async function next() {
 
 const promise = next();
 </script>
+
+<style lang="scss">
+
+.buttons {
+    width: 100%;
+
+    display: grid;
+    place-items: center;
+}
+
+</style>

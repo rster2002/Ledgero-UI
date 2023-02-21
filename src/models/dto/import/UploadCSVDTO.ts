@@ -1,5 +1,7 @@
+import type CSVMapping from "@/models/dto/import/CSVMapping";
+
 export default interface UploadCSVDTO {
-    mapping: UploadCSVDTO;
+    mappings: CSVMapping;
     filename: string;
     csv: string;
 }

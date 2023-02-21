@@ -13,44 +13,63 @@
         <FileUpload bind:file={csvFile} />
       </VLayout>
 
-      <VLayout>
-        <h2>Step 2: Select a template</h2>
+      <DisabledSection disabled={csvFile === null}>
+        <VLayout>
+          <h2>Step 2: Select a template</h2>
 
-        <p>
-          Select one of the pre-made template to import, or create your own.
-        </p>
+          <p>
+            Select one of the pre-made template to import, or create your own.
+          </p>
 
-        <div class="mappings">
-          {#each mappingsJson.mappings as mapping}
-            <button on:click={() => selectMapping(mapping.mapping)} class="{mapping.mapping === selectedMapping && 'selected'}">
-              <img src={mapping.icon} alt={mapping.name} />
-            </button>
-          {/each}
+          <div class="mappings">
+            {#each mappingsJson.mappings as mapping}
+              <button on:click={() => selectMapping(mapping.mapping)} class="{mapping.mapping === selectedMapping && 'selected'}">
+                <img src={mapping.icon} alt={mapping.name} />
+              </button>
+            {/each}
 
-<!--          <button on:click={() => selectMapping(customMapping)} class="{customMapping === selectedMapping && 'selected'}">-->
-<!--            Custom template-->
-<!--          </button>-->
-        </div>
+            <!--          <button on:click={() => selectMapping(customMapping)} class="{customMapping === selectedMapping && 'selected'}">-->
+            <!--            Custom template-->
+            <!--          </button>-->
+          </div>
 
-        {#if customMapping === selectedMapping}
-          <MappingForm bind:mapping={customMapping} />
-        {/if}
-      </VLayout>
+          {#if mappingCheckPromise !== null}
+            <div>
+              <h3>Example import</h3>
 
-      <VLayout>
-        <h2>Step 3: Import transactions</h2>
+              <p>Check below if all the information is in the correct place.</p>
 
-        <p>Click the button below to start importing the CSV file.</p>
+              <AsyncContent promise={mappingCheckPromise}>
+                <CheckCSVMapping result={checkCsvMappingResult} />
+              </AsyncContent>
+            </div>
+          {/if}
 
-        <div>
-          <AsyncButton>
-            Start importing
-          </AsyncButton>
-        </div>
-      </VLayout>
+          {#if customMapping === selectedMapping}
+            <MappingForm bind:mapping={customMapping} />
+          {/if}
+        </VLayout>
+      </DisabledSection>
+
+      <DisabledSection disabled={selectedMapping === null || csvFile === null}>
+        <VLayout>
+          <h2>Step 3: Import transactions</h2>
+
+          <p>Click the button below to start importing the CSV file.</p>
+
+          <div>
+            <AsyncButton asyncClick={upload}>
+              Start importing
+            </AsyncButton>
+          </div>
+        </VLayout>
+      </DisabledSection>
     </VLayout>
   </Card>
 </Page>
+
+<SuccessSnackbar message={successMessage} />
+<ErrorSnackbar message={errorMessage} />
 
 <script lang="ts">
 // Imports
@@ -58,6 +77,8 @@ import type CSVMapping from "@/models/dto/import/CSVMapping";
 import Papa from "papaparse";
 import mappingsJson from "@/data/csv-mappings.json";
 import AmountMapping from "@/models/dto/import/AmountMapping";
+import type CheckCsvMappingDTO from "@/models/dto/import/CheckCsvMappingDTO";
+import CSVImportService from "@/services/CSVImportService";
 
 // Components
 import Page from "@/components/Page.svelte";
@@ -66,10 +87,19 @@ import VLayout from "@/components/layouts/VLayout.svelte";
 import FileUpload from "@/components/FileUpload.svelte";
 import MappingForm from "@/components/forms/MappingForm.svelte";
 import AsyncButton from "@/components/AsyncButton.svelte";
+import ErrorSnackbar from "@/components/Snackbars/ErrorSnackbar.svelte";
+import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";
+import DisabledSection from "@/components/DisabledSection.svelte";
+import AsyncContent from "@/components/AsyncContent.svelte";
+import CheckCSVMapping from "@/components/fragments/CheckCSVMapping.svelte";
+import { push } from "svelte-spa-router";
 
 // Data
+const csvImportService = new CSVImportService();
 let csvFile: File | null = null;
 let selectedMapping: CSVMapping | null = null;
+let mappingCheckPromise: Promise<CheckCsvMappingDTO> | null = null;
+let checkCsvMappingResult: CheckCsvMappingDTO | null = null;
 let customMapping: CSVMapping = {
     accountIban: 0,
     date: 1,
@@ -83,8 +113,11 @@ let customMapping: CSVMapping = {
     description: 4,
     externalAccountName: 5
 };
+let successMessage = [""];
+let errorMessage = [""];
 
 $: parseCsv(csvFile);
+$: refreshMappingCheck(csvFile, selectedMapping);
 
 // Functions
 async function parseCsv(file: File | null) {
@@ -93,11 +126,48 @@ async function parseCsv(file: File | null) {
     }
 
     let result = Papa.parse(await file.text());
-    console.log(result);
 }
 
 function selectMapping(mapping: CSVMapping) {
     selectedMapping = mapping;
+}
+
+function refreshMappingCheck(file: File, mapping: CSVMapping) {
+    if (file === null || mapping === null) {
+        mappingCheckPromise = null;
+        return;
+    }
+
+    let localPromise = csvImportService.checkCSVMapping(file, mapping);
+    mappingCheckPromise = localPromise;
+
+    mappingCheckPromise.then(data => {
+        if (mappingCheckPromise !== localPromise) {
+            return;
+        }
+
+        console.log(data);
+
+        checkCsvMappingResult = data;
+    });
+}
+
+async function upload() {
+    if (csvFile === null) {
+        errorMessage = ["No file selected"];
+    }
+
+    if (selectedMapping === null) {
+        errorMessage = ["No mapping selected"];
+    }
+
+    try {
+        await csvImportService.importCSVFile(csvFile, selectedMapping);
+        successMessage = ["Transactions successfully imported!"];
+        await push("/transactions");
+    } catch (e) {
+        errorMessage = ["Failed to import transactions"];
+    }
 }
 </script>
 
