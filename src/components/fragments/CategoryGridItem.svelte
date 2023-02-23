@@ -1,19 +1,21 @@
-<div class="categoryGridItem" style="background-color: #{category.hexColor}; color: #{textColor};" on:click={openCategory}>
-  <VLayout>
-    <div class="expandIcon">
-      <div>
-        <ExpandIcon />
+<div class="categoryGridItem" use:action style="background-color: #{category.hexColor}; color: #{textColor};" on:click={openCategory}>
+  <TopBottomLayout>
+    <VLayout>
+      <div class="expandIcon">
+        <div>
+          <ExpandIcon />
+        </div>
       </div>
-    </div>
 
-    <h2>{category.name}</h2>
+      <h2>{category.name}</h2>
 
-    <p>{category.description}</p>
+      <p>{category.description}</p>
+    </VLayout>
 
-    <h2>
+    <h2 slot="bottom">
       <AmountSpan amount={category.amount} background />
     </h2>
-  </VLayout>
+  </TopBottomLayout>
 </div>
 
 <script lang="ts">
@@ -26,9 +28,11 @@ import AmountSpan from "@/components/AmountSpan.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
 import ExpandIcon from "@/components/icons/ExpandIcon.svelte";
 import { push } from "svelte-spa-router";
+import TopBottomLayout from "@/components/layouts/TopBottomLayout.svelte";
 
 // Props
 export var category: CategoryDTO;
+export var action: any = () => {};
 
 // Computed
 $: textColor = textColorBasedOnHex(category.hexColor);

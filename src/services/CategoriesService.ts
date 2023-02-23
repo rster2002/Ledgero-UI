@@ -11,6 +11,14 @@ export default class CategoriesService {
         return await APIFetch("/categories/" + id);
     }
 
+    async saveOrdering(ordering: string[]) {
+        await APIFetch("/categories/ordering", {
+            method: "PATCH",
+            isJsonResponse: false,
+            body: JSON.stringify(ordering),
+        });
+    }
+
     async createCategory(category: NewCategoryDTO): Promise<CategoryDTO> {
         return await APIFetch("/categories", {
             method: "POST",

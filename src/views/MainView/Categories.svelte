@@ -8,13 +8,22 @@
     <p>
       Manage categories and get an overview of your current financial situation.
     </p>
+
+    <div class="buttons" slot="right">
+      {#if orderChanged}
+        <AsyncButton asyncClick={saveOrdering}>
+          <SaveIcon />
+          Save ordering
+        </AsyncButton>
+      {/if}
+    </div>
   </PageHeader>
 
   <AsyncContent {promise}>
     <div class="grid">
-      {#each categories as category}
-        <CategoryGridItem {category} />
-      {/each}
+      <DragAndDropSort items={categories} let:item let:drag on:change={() => orderChanged = true}>
+        <CategoryGridItem category={item} action={drag} />
+      </DragAndDropSort>
 
       <button on:click={() => newPopupOpen = true}>
         <span>
@@ -60,9 +69,12 @@ import AsyncContent from "@/components/AsyncContent.svelte";
 import CategoryGridItem from "@/components/fragments/CategoryGridItem.svelte";
 import PageHeader from "@/components/fragments/PageHeader.svelte";
 import CategoriesIcon from "@/components/icons/CategoriesIcon.svelte";
+import DragAndDropSort from "@/components/DragAndDropSort.svelte";
+import SaveIcon from "@/components/icons/SaveIcon.svelte";
 
 // Data
 const categoriesService = new CategoriesService();
+let orderChanged = false;
 let successMessage = [""];
 let errorMessage = [""];
 let newPopupOpen = false;
@@ -77,6 +89,16 @@ let newCategory: NewCategoryDTO = {
 // Functions
 async function refresh() {
     categories = await categoriesService.getAllCategories();
+}
+
+async function saveOrdering() {
+    try {
+        await categoriesService.saveOrdering(categories.map(i => i.id));
+        orderChanged = false;
+        successMessage = ["Ordering saved"];
+    } catch (e) {
+        errorMessage = ["Failed to save ordering"];
+    }
 }
 
 async function createCategory() {
@@ -97,7 +119,7 @@ promise = refresh();
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 350px));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     grid-gap: 2em;
     justify-content: center;
 
