@@ -67,12 +67,13 @@ function conditionsFailed(event) {
     --background: #ffffff;
     --header-on-background: #1c1b1f;
     --text-on-background: #49454f;
+    --low-on-background: #646464;
 
     // Theme colors
     --primary-color: #1a1a1a;
     --text-on-pimary: #ffffff;
-    --accent-color: #277dca;
-    --display-on-accent: #ffff17;
+    --accent-color: #6083ff;
+    --display-on-accent: #ffffff;
     --text-on-accent: #ffffff;
     --disabled-color: #7e7e7e;
     --error-color: #b40e0e;
@@ -103,7 +104,7 @@ function conditionsFailed(event) {
     --positive-amount: #a9f59f;
     --negative-amount: #ffc4c4;
     --positive-amount-on-bg: #527d4d;
-    --negative-amount-on-bg: #ffc4c4;
+    --negative-amount-on-bg: #ff3c3c;
 }
 
 :global(html), :global(body) {

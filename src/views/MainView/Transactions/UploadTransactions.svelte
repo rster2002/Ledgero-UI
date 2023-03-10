@@ -82,15 +82,15 @@ import CSVImportService from "@/services/CSVImportService";
 
 // Components
 import Page from "@/components/Page.svelte";
-import Card from "@/components/Card.svelte";
+import Card from "@/components/common/Card.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
-import FileUpload from "@/components/FileUpload.svelte";
+import FileUpload from "@/components/common/FileUpload.svelte";
 import MappingForm from "@/components/forms/MappingForm.svelte";
-import AsyncButton from "@/components/AsyncButton.svelte";
+import AsyncButton from "@/components/common/AsyncButton.svelte";
 import ErrorSnackbar from "@/components/Snackbars/ErrorSnackbar.svelte";
 import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";
-import DisabledSection from "@/components/DisabledSection.svelte";
-import AsyncContent from "@/components/AsyncContent.svelte";
+import DisabledSection from "@/components/common/DisabledSection.svelte";
+import AsyncContent from "@/components/common/AsyncContent.svelte";
 import CheckCSVMapping from "@/components/fragments/CheckCSVMapping.svelte";
 import { push } from "svelte-spa-router";
 

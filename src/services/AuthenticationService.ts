@@ -92,7 +92,7 @@ export default class AuthenticationService {
         // This will only ever be false for the first request to refresh if there are multiple, because the first request
         // will set `globalRefreshPromise` and any subsequent refresh requests wait the `globalRefreshPromise`
         const expireDate = new Date(tokenPayload.exp);
-        if (expireDate.getTime() > Date.now()) {
+        if (expireDate.getTime() * 1000 > Date.now()) {
             refreshLock.release();
             return; // Not expired
         }

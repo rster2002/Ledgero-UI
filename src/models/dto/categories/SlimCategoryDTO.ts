@@ -1,7 +1,6 @@
-export default interface CategoryDTO {
+export default class SlimCategoryDTO {
     id: string;
     name: string;
     description: string;
     hexColor: string;
-    amount: number;
 }

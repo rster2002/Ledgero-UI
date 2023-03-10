@@ -54,18 +54,18 @@
 // Imports
 import type NewCategoryDTO from "@/models/dto/categories/NewCategoryDTO";
 import type CategoryDTO from "@/models/dto/categories/CategoryDTO";
-import CategoriesService from "@/services/CategoriesService";
+import CategoryService from "@/services/CategoryService";
 
 // Components
 import Page from "@/components/Page.svelte";
 import AddIcon from "@/components/icons/AddIcon.svelte";
-import Popup from "@/components/Popup.svelte";
+import Popup from "@/components/common/Popup.svelte";
 import NewCategoryForm from "@/components/forms/NewCategoryForm.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
-import AsyncButton from "@/components/AsyncButton.svelte";
+import AsyncButton from "@/components/common/AsyncButton.svelte";
 import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";
 import ErrorSnackbar from "@/components/Snackbars/ErrorSnackbar.svelte";
-import AsyncContent from "@/components/AsyncContent.svelte";
+import AsyncContent from "@/components/common/AsyncContent.svelte";
 import CategoryGridItem from "@/components/fragments/CategoryGridItem.svelte";
 import PageHeader from "@/components/fragments/PageHeader.svelte";
 import CategoriesIcon from "@/components/icons/CategoriesIcon.svelte";
@@ -73,7 +73,7 @@ import DragAndDropSort from "@/components/DragAndDropSort.svelte";
 import SaveIcon from "@/components/icons/SaveIcon.svelte";
 
 // Data
-const categoriesService = new CategoriesService();
+const categoriesService = new CategoryService();
 let orderChanged = false;
 let successMessage = [""];
 let errorMessage = [""];
@@ -107,6 +107,11 @@ async function createCategory() {
         successMessage = ["Category created"];
         newPopupOpen = false;
         await refresh();
+        newCategory = {
+            name: "New category",
+            description: "A brand new category",
+            hexColor: "ffffff",
+        };
     } catch (e) {
         errorMessage = ["Failed to create category"];
     }

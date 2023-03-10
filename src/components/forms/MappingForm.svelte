@@ -34,7 +34,7 @@ import type CSVMapping from "@/models/dto/import/CSVMapping";
 
 // Components
 import VLayout from "@/components/layouts/VLayout.svelte";
-import Input from "@/components/Input.svelte";
+import Input from "@/components/common/Input.svelte";
 
 // Props
 export var mapping: CSVMapping;

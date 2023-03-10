@@ -32,11 +32,11 @@ import { push } from "svelte-spa-router";
 import AuthenticationService from "@/services/AuthenticationService";
 
 // Components
-import Card from "@/components/Card.svelte";
-import Input from "@/components/Input.svelte";
+import Card from "@/components/common/Card.svelte";
+import Input from "@/components/common/Input.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
 import HLayout from "@/components/layouts/HLayout.svelte";
-import AsyncButton from "@/components/AsyncButton.svelte";
+import AsyncButton from "@/components/common/AsyncButton.svelte";
 import LoginIcon from "@/components/icons/LoginIcon.svelte";
 import ErrorText from "@/components/error/ErrorText.svelte";
 

@@ -6,7 +6,7 @@
 
     <tbody>
       {#each items as item}
-        <tr>
+        <tr class="{clickable && 'clickable'}" on:click={() => dispatchClick(item)}>
           <slot name="row" {item} />
         </tr>
       {/each}
@@ -19,24 +19,30 @@
 </div>
 
 <script lang="ts">
+// Imports
+import { createEventDispatcher, onMount } from "svelte";
+const dispatch = createEventDispatcher();
+
 // Generic
 type $$Generic = null;
 type T = $$Generic;
 
 // Props
 export var items: T[];
+export var clickable = false;
 
 // Data
+const observer = new ResizeObserver(() => {
+    bounding = box?.getClientRects();
+    calculateMaxWidth();
+});
 let box: HTMLElement = null;
 let bounding: DOMRectList;
 let maxWidth = [];
 
 // Computed
 $: {
-    // It's probably possible with just CSS, but I've been
-    // stuck at this for a week now so this will have
-    // to do.
-
+    // It's probably possible with just CSS, but I've been stuck at this for a week now so this will have to do.
     box; items;
     bounding = box?.getClientRects();
 
@@ -49,6 +55,10 @@ $: {
 }
 
 // Functions
+function dispatchClick(item: T) {
+    dispatch("click", item);
+}
+
 function calculateMaxWidth() {
     let [rect] = Array.from(bounding);
     let headerEls = Array.from(box.querySelectorAll("th"));
@@ -72,8 +82,6 @@ function calculateMaxWidth() {
             let paddingLeft = Number(computed.paddingLeft.replace("px", ""));
             let paddingRight = Number(computed.paddingRight.replace("px", ""));
 
-            console.log(paddingLeft, paddingRight);
-
             maxWidth[i] = widthPerEl - paddingLeft - paddingRight;
         }
     }
@@ -89,48 +97,12 @@ function calculateMaxWidth() {
             }
         }
     }
-
-    // let [rect] = Array.from(bounding);
-    // let headerEls = Array.from(box.querySelectorAll("th"));
-    //
-    // let wideEls: HTMLElement[] = [];
-    // let smallEls: HTMLElement[] = [];
-    //
-    // for (let el of headerEls) {
-    //     if (!el.classList.contains("minimize")) {
-    //         wideEls.push(el);
-    //     } else {
-    //         smallEls.push(el);
-    //     }
-    // }
-    //
-
-    //
-    // let remainingWidth = rect.width - smallWidth;
-    // let widthPerItem = (remainingWidth / wideEls.length) - headerEls.length * 3;
-    //
-
-    //
-    // maxWidth = maxWidth;
 }
 
-// let thead: HTMLElement = null;
-//
-// // Life-cycle
-// onMount(() => {
-//     if (thead === null) {
-//         throw new Error("Failed to mount");
-//     }
-//
-//     const childEls = Array.from(thead.children);
-//     const normalEls = childEls.filter(
-//         (el) => !el.classList.contains("minimize")
-//     ) as HTMLElement[];
-//
-//     for (const el of normalEls) {
-//         el.style.width = `${100 / normalEls.length}%`;
-//     }
-// });
+// Life-cycle
+onMount(() => {
+    observer.observe(box);
+});
 </script>
 
 <style lang="scss">
@@ -152,6 +124,14 @@ table {
 
     tbody {
         tr {
+            &.clickable {
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #f7f7f7;
+                }
+            }
+
             &:not(:last-child) {
                 box-shadow: 0 1px 0 #e3e3e3;
             }

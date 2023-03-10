@@ -18,6 +18,6 @@ export default abstract class JWTHelper {
             throw new Error("JWT token did now have three parts");
         }
 
-        return <JWTClaims>JSON.parse(atob(parts[0]));
+        return <JWTClaims>JSON.parse(atob(parts[1]));
     }
 }

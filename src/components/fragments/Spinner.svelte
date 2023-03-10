@@ -1,28 +1,4 @@
-<Button on:click={click}>
-    {#if !loading}
-        <slot />
-    {:else}
-        <span class="spinner"></span>
-    {/if}
-</Button>
-
-<script lang="ts">
-// Components
-import Button from "@/components/Button.svelte";
-
-// Props
-export var asyncClick: <T>() => Promise<T>;
-
-// Data
-let loading = false;
-
-// Functions
-function click() {
-    loading = true;
-    asyncClick()
-        .finally(() => (loading = false));
-}
-</script>
+<span class="spinner"></span>
 
 <style lang="scss">
 

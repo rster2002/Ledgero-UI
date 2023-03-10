@@ -37,6 +37,7 @@ button {
     justify-content: center;
     align-items: center;
     gap: 1em;
+    font-family: var(--font-family);
 
     --spinner-color: var(--text-on-accent);
 

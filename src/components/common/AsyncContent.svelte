@@ -14,16 +14,24 @@
 {/if}
 
 <script lang="ts">
+// Props
+export var promise: Promise<unknown> | null | undefined;
+
 // Data
 let error: Error | null = null;
-let loading = true;
-
-// Props
-export var promise: Promise<unknown>;
+let loading = !!promise;
 
 // Computed
-$: {
+$: handlePromise(promise);
+
+// Functions
+function handlePromise(promise: Promise<unknown> | null | undefined) {
+    if (!promise) {
+        return;
+    }
+
     loading = true;
+
     promise
         .catch(e => {
             error = e;

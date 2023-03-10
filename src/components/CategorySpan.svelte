@@ -1,8 +1,10 @@
-<span style={style} class="{navigation && 'navigationEnabled'} {navigation && category !== null && 'navigation'}" on:click={openCategory}>
-  {#if category}
-    <CategoryIcon />
-  {:else}
-    <NoCategoryIcon />
+<span {style} class="{navigation && 'navigationEnabled'} {navigation && category !== null && 'navigation'}" on:click={openCategory}>
+  {#if icon}
+    {#if category}
+      <CategoryIcon />
+    {:else}
+      <NoCategoryIcon />
+    {/if}
   {/if}
 
   {categoryName}
@@ -10,17 +12,18 @@
 
 <script lang="ts">
 // Imports
-import type CategoryDTO from "@/models/dto/categories/CategoryDTO";
 import textColorBasedOnHex from "@/utils/textForBackground";
+import { push } from "svelte-spa-router";
+import SlimCategoryDTO from "@/models/dto/categories/SlimCategoryDTO";
 
 // Components
 import CategoryIcon from "@/components/icons/CategoryIcon.svelte";
 import NoCategoryIcon from "@/components/icons/NoCategoryIcon.svelte";
-import { push } from "svelte-spa-router";
 
 // Props
-export var category: CategoryDTO | null;
+export var category: SlimCategoryDTO | null;
 export var navigation: boolean = false;
+export var icon = true;
 
 // Computed
 $: categoryName = category?.name ?? "No category";
@@ -41,18 +44,21 @@ function openCategory() {
 <style lang="scss">
 
 span {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5em;
+    max-width: 10em;
+
+    display: inline-block;
+    position: relative;
     padding: 0.2em 0.5em;
 
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
     font-family: var(--header-face);
-    border-radius: var(--border-radius-round);
+    border-radius: var(--border-radius-tiny);
     background-color: #f1f1f1;
 
     &.navigationEnabled {
-        cursor: default;
+        cursor: inherit;
     }
 
     &.navigation {

@@ -4,6 +4,7 @@
       "name": "Rabobank",
       "icon": "./img/rabobank.png",
       "mapping": {
+        "ordering": "newestLast",
         "accountIban": 0,
         "date": 4,
         "dateMapping": {

@@ -10,6 +10,9 @@ export default {
     "/transactions/upload": wrap({
         asyncComponent: () => import("./MainView/Transactions/UploadTransactions.svelte"),
     }),
+    "/transactions/:id": wrap({
+        asyncComponent: () => import("./MainView/Transactions/ViewTransaction.svelte"),
+    }),
     "/categories": wrap({
         asyncComponent: () => import("./MainView/Categories.svelte"),
     }),

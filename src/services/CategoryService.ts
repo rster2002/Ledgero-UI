@@ -2,7 +2,7 @@ import type NewCategoryDTO from "@/models/dto/categories/NewCategoryDTO";
 import type CategoryDTO from "@/models/dto/categories/CategoryDTO";
 import APIFetch from "@/helpers/APIFetch";
 
-export default class CategoriesService {
+export default class CategoryService {
     async getAllCategories(): Promise<CategoryDTO[]> {
         return await APIFetch("/categories");
     }
@@ -23,6 +23,13 @@ export default class CategoriesService {
         return await APIFetch("/categories", {
             method: "POST",
             body: JSON.stringify(category),
+        });
+    }
+
+    async deleteCategory(categoryId: string) {
+        await APIFetch(`/categories/${categoryId}`, {
+            method: "DELETE",
+            isJsonResponse: false,
         });
     }
 }

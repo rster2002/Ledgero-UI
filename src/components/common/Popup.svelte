@@ -1,5 +1,5 @@
 {#if open}
-  <div class="scim" on:click|self={close}>
+  <div class="scim" on:click|self={close} use:inject>
     <div class="popup {min && 'min'} {noPadding && 'noPadding'}">
 <!--      <button on:click={close}><span class="mdi mdi-close"></span></button>-->
       <slot />
@@ -8,6 +8,9 @@
 {/if}
 
 <script lang="ts">
+// Imports
+import inject from "svelte-inject";
+
 // Data
 export var open: boolean = false;
 export var min: boolean = false;

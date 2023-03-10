@@ -6,7 +6,7 @@
 
 <script lang="ts">
 // Components
-import Snackbar from "@/components/Snackbar.svelte";
+import Snackbar from "@/components/common/Snackbar.svelte";
 
 // Props
 export var message: [string];

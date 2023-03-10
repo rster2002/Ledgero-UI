@@ -22,6 +22,10 @@ th {
         font-size: 0.8em;
     }
 
+    &.wide {
+        width: 100%;
+    }
+
     &:first-child {
         border-top-left-radius: inherit;
     }

@@ -9,8 +9,8 @@
 import type NewCategoryDTO from "@/models/dto/categories/NewCategoryDTO";
 
 // Components
-import Input from "@/components/Input.svelte";
-import ColorPicker from "@/components/ColorPicker.svelte";
+import Input from "@/components/common/Input.svelte";
+import ColorPicker from "@/components/common/ColorPicker.svelte";
 
 // Props
 export var value: NewCategoryDTO = {

@@ -1,5 +1,5 @@
 <AsyncContent {promise}>
-  <Table {items}>
+  <Table {items} {clickable} on:click>
     <svelte:fragment slot="header">
       <slot name="header" />
     </svelte:fragment>
@@ -22,9 +22,9 @@
 
 <script lang="ts">
 // Components
-import AsyncContent from "@/components/AsyncContent.svelte";
+import AsyncContent from "@/components/common/AsyncContent.svelte";
 import Table from "@/components/Table.svelte";
-import AsyncButton from "@/components/AsyncButton.svelte";
+import AsyncButton from "@/components/common/AsyncButton.svelte";
 
 // Generic
 type $$Generic = null;
@@ -32,6 +32,10 @@ type T = $$Generic;
 
 // Props
 export var paginator: AsyncIterator<T[]>;
+export var clickable = false;
+export const updateFn = () => {
+    items = items;
+};
 
 // Data
 let loading = false;
@@ -44,8 +48,6 @@ async function next() {
     let iteration = await paginator.next();
 
     done = !!iteration.done;
-
-    console.log(iteration);
 
     for (let item of iteration.value) {
         items.push(<T>item);

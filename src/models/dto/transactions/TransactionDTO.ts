@@ -1,7 +1,7 @@
 import type TransactionType from "@/models/dto/transactions/TransactionType";
-import type CategoryDTO from "@/models/dto/categories/CategoryDTO";
 import type BankAccountDTO from "@/models/dto/bankAccounts/BankAccountDTO";
 import type ExternalAccountDTO from "@/models/dto/externalAccounts/ExternalAccountDTO";
+import type SlimCategoryDTO from "@/models/dto/categories/SlimCategoryDTO";
 
 export default interface TransactionDTO {
     id: string;
@@ -13,7 +13,7 @@ export default interface TransactionDTO {
     amount: number;
     date: string;
     bankAccount: BankAccountDTO;
-    category: CategoryDTO | null;
+    category: SlimCategoryDTO | null;
     externalAccountName: string;
     externalAccount: ExternalAccountDTO | null;
 }

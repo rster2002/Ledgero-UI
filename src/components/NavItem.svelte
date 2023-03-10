@@ -87,7 +87,7 @@ a {
         background-color: var(--text-on-accent);
         color: var(--accent-color);
 
-        --icon-color: var(--text-on-accent);
+        --icon-color: var(--accent-color);
     }
 }
 
