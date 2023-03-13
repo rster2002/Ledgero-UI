@@ -27,7 +27,8 @@ h1, h2 {
 }
 
 span {
-    background-color: #eeeeee;
+    background-color: var(--tint-100);
+    color: var(--tint-500);
     border-radius: var(--border-radius-round);
     padding: 0 0.7em;
 }

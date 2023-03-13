@@ -50,13 +50,15 @@
                 </TextColumn>
 
                 <TextColumn>
-                  <IconButton>
-                    <EditIcon />
-                  </IconButton>
+                  {#if item.id !== "remainder"}
+                    <IconButton>
+                      <EditIcon />
+                    </IconButton>
 
-                  <IconButton on:click={() => deleteSplit(item.id)}>
-                    <DeleteIcon />
-                  </IconButton>
+                    <IconButton on:click={() => deleteSplit(item.id)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  {/if}
                 </TextColumn>
               </svelte:fragment>
             </Table>
@@ -94,6 +96,19 @@
       <CardHeader>
         <h2>Edit transaction</h2>
       </CardHeader>
+
+      <Input label="Description" bind:value={updateDetails.description} />
+
+      <HLayout full>
+        <Button on:click={cancelEditingTransaction} secondary>
+          <CloseIcon />
+          Cancel
+        </Button>
+        <AsyncButton>
+          <SaveIcon />
+          Save changes
+        </AsyncButton>
+      </HLayout>
     </VLayout>
   </div>
 </Popup>
@@ -117,7 +132,6 @@ import VLayout from "@/components/layouts/VLayout.svelte";
 import HLayout from "@/components/layouts/HLayout.svelte";
 import Button from "@/components/common/Button.svelte";
 import EditIcon from "@/components/icons/EditIcon.svelte";
-import AddIcon from "@/components/icons/AddIcon.svelte";
 import Table from "@/components/Table.svelte";
 import TableHead from "@/components/Table/TableHead.svelte";
 import TextColumn from "@/components/Table/TextColumn.svelte";
@@ -136,6 +150,8 @@ import DeleteIcon from "@/components/icons/DeleteIcon.svelte";
 import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";
 import ErrorSnackbar from "@/components/Snackbars/ErrorSnackbar.svelte";
 import SplitIcon from "@/components/icons/SplitIcon.svelte";
+import SaveIcon from "@/components/icons/SaveIcon.svelte";
+import CloseIcon from "@/components/icons/CloseIcon.svelte";
 
 // Props
 export var params: { id: string } = {};
@@ -182,7 +198,23 @@ async function createSplit() {
 
 async function refresh() {
     transaction = await transactionService.getTransaction(params.id);
-    splits = await transactionService.getSplitsFor(params.id);
+
+    let newSplits: SplitDTO[] = [];
+    if (transaction.amount !== transaction.completeAmount && transaction.amount !== 0) {
+        newSplits.push({
+            amount: transaction.amount,
+            category: transaction.category,
+            description: "Remainder not part of a split",
+            id: "remainder"
+        });
+    }
+
+    newSplits = [
+        ...newSplits,
+        ...await transactionService.getSplitsFor(params.id)
+    ];
+
+    splits = newSplits;
 }
 
 async function deleteSplit(splitId: string) {
@@ -190,6 +222,10 @@ async function deleteSplit(splitId: string) {
         await transactionService.deleteSplit(params.id, splitId);
         promise = refresh();
     }
+}
+
+function cancelEditingTransaction() {
+
 }
 
 promise = refresh();

@@ -110,7 +110,7 @@ onMount(() => {
 table {
     width: 100%;
 
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-small);
     border: 1px solid #cecece;
     padding: 0;
     border-spacing: 0;

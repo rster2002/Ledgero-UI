@@ -1,6 +1,6 @@
 <header>
   <h2>
-    <AmountSpan amount={transaction.amount} />
+    <AmountSpan amount={transaction.completeAmount} />
   </h2>
   <h3>
     {formatDate(transaction.date, {

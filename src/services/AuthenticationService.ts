@@ -113,7 +113,7 @@ export default class AuthenticationService {
 
         const refreshExpireDate = new Date(refreshPayload.exp);
 
-        if (refreshExpireDate.getTime() < Date.now()) {
+        if (refreshExpireDate.getTime() * 1000 < Date.now()) {
             throw new Error("Refresh token has expired");
         }
 

@@ -15,6 +15,7 @@ header {
     :global(h1) {
         font-size: 2.3em;
         margin: 0;
+        color: var(--tint-700);
 
         :global(svg) {
             margin-right: 0.4em;

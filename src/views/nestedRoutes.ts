@@ -18,5 +18,8 @@ export default {
     }),
     "/categories/:id": wrap({
         asyncComponent: () => import("./MainView/Categories/ViewCategory.svelte"),
-    })
+    }),
+    "/bank-accounts": wrap({
+        asyncComponent: () => import("./MainView/BankAccounts.svelte"),
+    }),
 }

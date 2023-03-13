@@ -58,8 +58,20 @@ function conditionsFailed(event) {
     --header-face: "Ubuntu", sans-serif;
     --display-face: "Blanka", sans-serif;
 
+    // Tint colors
+    --tint-50: #E3ECFD;
+    --tint-100: #C2D6FA;
+    --tint-200: #8AAFF5;
+    --tint-300: #4D86EF;
+    --tint-400: #145EE6;
+    --tint-500: #0F46AB;
+    --tint-600: #0C3788;
+    --tint-700: #092A67;
+    --tint-800: #061D46;
+    --tint-900: #030D21;
+
     // Backdrop is the global container
-    --backdrop: #e9e9e9;
+    --backdrop: var(--tint-50);
     --header-on-backdrop: #000000;
     --text-on-backdrop: #49454f;
 
@@ -70,9 +82,9 @@ function conditionsFailed(event) {
     --low-on-background: #646464;
 
     // Theme colors
-    --primary-color: #1a1a1a;
+    --primary-color: var(--tint-900);
     --text-on-pimary: #ffffff;
-    --accent-color: #6083ff;
+    --accent-color: var(--tint-500);
     --display-on-accent: #ffffff;
     --text-on-accent: #ffffff;
     --disabled-color: #7e7e7e;

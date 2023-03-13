@@ -9,7 +9,7 @@
   <div class="grid">
     <Card>
       <AsyncContent {promise}>
-        <CardStat label="Net">
+        <CardStat label="Net worth">
           {formatMoney(total)}
         </CardStat>
       </AsyncContent>

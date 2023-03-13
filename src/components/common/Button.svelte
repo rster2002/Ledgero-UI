@@ -1,10 +1,13 @@
-<button on:click bind:this={el}>
+<button class="{secondary && 'secondary'}" on:click bind:this={el}>
     <slot />
 </button>
 
 <script lang="ts">
 // Imports
 import { onMount } from "svelte";
+
+// Props
+export var secondary = false;
 
 // Data
 let el: HTMLButtonElement;
@@ -26,7 +29,7 @@ button {
     color: var(--text-on-accent);
     font-weight: 700;
     font-size: 0.8em;
-    border: 2px solid var(--accent-color);
+    border: 0;
     box-sizing: border-box;
     cursor: pointer;
     transition: all 150ms var(--standard-easing);
@@ -41,8 +44,13 @@ button {
 
     --spinner-color: var(--text-on-accent);
 
-    &:hover {
+    &.secondary {
         background-color: transparent;
+        color: var(--accent-color);
+    }
+
+    &:hover {
+        background-color: var(--tint-50);
         color: var(--accent-color);
 
         --spinner-color: var(--accent-color);

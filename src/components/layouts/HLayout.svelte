@@ -1,10 +1,11 @@
-<div class="{right && 'right'}">
+<div class="{right && 'right'} {full && 'full'}">
     <slot />
 </div>
 
 <script lang="ts">
 // Props
 export var right = false;
+export var full = false;
 </script>
 
 <style lang="scss">
@@ -16,6 +17,10 @@ div {
 
     &.right {
         justify-content: right;
+    }
+
+    &.full > :global(*) {
+        width: 100%;
     }
 }
 

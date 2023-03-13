@@ -55,7 +55,9 @@ section {
     display: flex;
     flex-direction: row;
 
-    background-color: var(--backdrop);
+    //background-color: var(--backdrop);
+    background: rgb(227,236,253);
+    background: linear-gradient(0deg, rgba(227,236,253,1) 0%, rgba(255,255,255,1) 100%);
 }
 
 .content {

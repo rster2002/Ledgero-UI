@@ -103,7 +103,7 @@ aside {
             overflow: hidden;
 
             background-color: var(--accent-color);
-            border-radius: var(--border-radius-medium);
+            border-radius: var(--border-radius-small);
             transition: max-width 250ms var(--standard-easing);
 
             &:hover {

@@ -22,15 +22,22 @@
   <AsyncContent {promise}>
     <div class="grid">
       <DragAndDropSort items={categories} let:item let:drag on:change={() => orderChanged = true}>
-        <CategoryGridItem category={item} action={drag} />
+        <AmountGridItem
+          action={drag}
+          on:click={() => push(`/categories/${item.id}`)}
+          item={{
+            name: item.name,
+            description: item.description,
+            hexColor: item.hexColor,
+            amount: item.amount
+          }}
+        />
       </DragAndDropSort>
 
-      <button on:click={() => newPopupOpen = true}>
-        <span>
-          <AddIcon />
-          New category
-        </span>
-      </button>
+      <GridNewButton on:click={() => newPopupOpen = true}>
+        <AddIcon />
+        New category
+      </GridNewButton>
     </div>
   </AsyncContent>
 </Page>
@@ -66,11 +73,13 @@ import AsyncButton from "@/components/common/AsyncButton.svelte";
 import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";
 import ErrorSnackbar from "@/components/Snackbars/ErrorSnackbar.svelte";
 import AsyncContent from "@/components/common/AsyncContent.svelte";
-import CategoryGridItem from "@/components/fragments/CategoryGridItem.svelte";
 import PageHeader from "@/components/fragments/PageHeader.svelte";
 import CategoriesIcon from "@/components/icons/CategoriesIcon.svelte";
 import DragAndDropSort from "@/components/DragAndDropSort.svelte";
 import SaveIcon from "@/components/icons/SaveIcon.svelte";
+import AmountGridItem from "@/components/fragments/AmountGridItem.svelte";
+import { push } from "svelte-spa-router";
+import GridNewButton from "@/components/fragments/GridNewButton.svelte";
 
 // Data
 const categoriesService = new CategoryService();
@@ -127,27 +136,6 @@ promise = refresh();
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     grid-gap: 2em;
     justify-content: center;
-
-    button {
-        min-height: 200px;
-
-        background-color: transparent;
-        border: 2px solid var(--accent-color);
-        border-radius: var(--border-radius-medium);
-        color: var(--accent-color);
-        font-family: var(--header-face);
-        cursor: pointer;
-        transition: 150ms all var(--standard-easing);
-
-        span {
-            font-size: 1.5em;
-        }
-
-        &:hover {
-            background-color: var(--accent-color);
-            color: var(--text-on-accent);
-        }
-    }
 }
 
 </style>

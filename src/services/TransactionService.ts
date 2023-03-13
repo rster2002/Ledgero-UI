@@ -3,6 +3,7 @@ import type TransactionDTO from "@/models/dto/transactions/TransactionDTO";
 import APIFetch from "@/helpers/APIFetch";
 import type NewSplitDTO from "@/models/dto/transactions/NewSplitDTO";
 import type SplitDTO from "@/models/dto/transactions/SplitDTO";
+import type UpdateTransactionDetailsDTO from "@/models/dto/transactions/UpdateTransactionDetailsDTO";
 
 export default class TransactionService {
     createTransactionsIterator() {
@@ -22,6 +23,14 @@ export default class TransactionService {
                 subcategoryId,
             }),
         })
+    }
+
+    async updateDetails(transactionId: string, content: UpdateTransactionDetailsDTO): Promise<void> {
+        await APIFetch(`/transactions/${transactionId}/details`, {
+            method: "PATCH",
+            isJsonResponse: false,
+            body: JSON.stringify(content),
+        });
     }
 
     async createSplit(transactionId: string, split: NewSplitDTO): Promise<void> {

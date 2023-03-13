@@ -3,5 +3,6 @@ export default interface BankAccountDTO {
     iban: string;
     name: string;
     description: string;
-    hexColor: string;
+    hexColor: string
+    amount: number;
 }

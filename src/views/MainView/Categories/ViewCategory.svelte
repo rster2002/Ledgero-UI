@@ -12,14 +12,14 @@
       </Card>
 
       <Card>
-        <CardStat label="Current total">
+        <CardStat label="Category total">
           {formatMoney(category.amount)}
         </CardStat>
       </Card>
 
       <div class="span">
         <Card>
-          <AsyncButton asyncClick={deleteCategory} --accent-color="var(--negative-amount-on-bg)">
+          <AsyncButton asyncClick={deleteCategory} --accent-color="var(--negative-amount-on-bg)" --tint-50="#FFEBEB">
             <DeleteIcon />
             Delete category
           </AsyncButton>

@@ -1,12 +1,21 @@
 <VLayout>
   <IconSection center>
     <CategoryIcon slot="icon" />
-    <CategorySpan category={transaction.category} icon={false} />
+    <CategorySpan icon={false} category={transaction.category} />
   </IconSection>
 
   <IconSection center>
     <BankAccountIcon slot="icon" />
-    <BankAccountSpan bankAccount={transaction.bankAccount} icon={false} />
+    <BankAccountSpan icon={false} bankAccount={transaction.bankAccount} />
+  </IconSection>
+
+  <IconSection center>
+    <ExternalAccountIcon slot="icon" />
+    <ExternalAccountSpan
+      icon={false}
+      externalAccount={transaction.externalAccount}
+      externalAccountName={transaction.externalAccountName}
+    />
   </IconSection>
 
   <IconSection>
@@ -27,6 +36,8 @@ import BankAccountSpan from "@/components/BankAccountSpan.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
 import CategoryIcon from "@/components/icons/CategoryIcon.svelte";
 import CategorySpan from "@/components/CategorySpan.svelte";
+import ExternalAccountIcon from "@/components/icons/ExternalAccountIcon.svelte";
+import ExternalAccountSpan from "@/components/ExternalAccountSpan.svelte";
 
 // Props
 export var transaction: TransactionDTO;

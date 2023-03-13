@@ -59,7 +59,7 @@ a {
             place-items: center;
 
             border: 2px solid transparent;
-            border-radius: 0.8em;
+            border-radius: var(--border-radius-small);
 
             :global(svg) {
                 font-size: 1.4em;
