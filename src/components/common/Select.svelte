@@ -1,15 +1,16 @@
-<div class="select" on:click={() => selectOpen = true}>
-  {#if value}
-    <slot name="currentValue" item={value}>
-      <slot item={value} />
+<div class="selectWrapper" on:click={() => selectOpen = true}>
+  {#if currentValue}
+    <slot name="currentValue" item={currentValue}>
+      <slot item={currentValue} />
     </slot>
   {:else}
-    <slot name="noValue" item={value}>
-      <slot name="currentValue" item={value}>
-        <slot item={value} />
+    <slot name="noValue" item={currentValue}>
+      <slot name="currentValue" item={currentValue}>
+        <slot item={currentValue} />
       </slot>
     </slot>
   {/if}
+  <label>{label}</label>
 </div>
 
 <Popup bind:open={selectOpen} min noPadding>
@@ -47,9 +48,11 @@ const dispatch = createEventDispatcher();
 import Popup from "@/components/common/Popup.svelte";
 
 // Props
+export var label: string;
 export var items: unknown[];
 export var value: unknown = null;
 export var searchKey: (x: unknown) => string = null;
+export var valueKey: (x: unknown) => unknown = null;
 
 // Data
 let focusedItemIndex = 0;
@@ -62,6 +65,8 @@ $: {
     filteredItems;
     focusedItemIndex = 0;
 }
+$: selectedIndex = getSelectedIndex(value, items);
+$: currentValue = items[selectedIndex] ?? null;
 $: {
     if (!selectOpen) {
         query = "";
@@ -70,6 +75,14 @@ $: {
 }
 
 // Functions
+function getSelectedIndex(selectedValue: unknown, items: unknown[]): number {
+    if (valueKey) {
+        return items.findIndex(item => valueKey(item) === selectedValue);
+    } else {
+        return items.findIndex(item => item === selectedValue);
+    }
+}
+
 function filterList(items: unknown[], query: string, searchKey: (x: unknown) => string | null): unknown[] {
     if (searchKey === null) {
         return items;
@@ -82,7 +95,7 @@ function filterList(items: unknown[], query: string, searchKey: (x: unknown) => 
 }
 
 function selectItem(item: unknown) {
-    value = item;
+    value = valueKey ? valueKey(item) : item;
     selectOpen = false;
     dispatch("change", item);
 }
@@ -124,10 +137,43 @@ function onKeydown(e: KeyboardEvent) {
 
 <style lang="scss">
 
-.select {
-    display: contents;
+.selectWrapper {
+    width: 100%;
 
+    position: relative;
+    padding: 0.75em 0.75em 0.25em;
+    box-sizing: border-box;
+
+    border-radius: 0.5em;
+    color: var(--text-on-background);
+    font-weight: bold;
+    outline: 0;
+    border: 2px solid var(--accent-color);
+    font-family: var(--font-family);
     cursor: pointer;
+
+    label {
+        position: absolute;
+        padding: 0 0.3em;
+        left: 0.9em;
+        top: -0.7em;
+
+        font-size: 0.75em;
+        font-weight: 700;
+        transition: all 150ms var(--standard-easing);
+        background-color: var(--background);
+        cursor: text;
+        color: var(--accent-color);
+    }
+
+    //input {
+    //
+    //
+    //    &:focus ~ label,
+    //    &:not(:placeholder-shown) ~ label {
+
+    //    }
+    //}
 }
 
 .popupContent {

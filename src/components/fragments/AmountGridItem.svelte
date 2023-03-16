@@ -28,7 +28,7 @@
 import textColorBasedOnHex from "@/utils/textForBackground";
 
 // Components
-import AmountSpan from "@/components/AmountSpan.svelte";
+import AmountSpan from "@/components/spans/AmountSpan.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
 import ExpandIcon from "@/components/icons/ExpandIcon.svelte";
 import { push } from "svelte-spa-router";

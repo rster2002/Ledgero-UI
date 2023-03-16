@@ -50,7 +50,7 @@
 
 <script lang="ts">
 // Imports
-import type NewCategoryDTO from "@/models/dto/categories/NewCategoryDTO";
+import type CategoryDetailsDTO from "@/models/dto/categories/CategoryDetailsDTO";
 import type CategoryDTO from "@/models/dto/categories/CategoryDTO";
 import CategoryService from "@/services/CategoryService";
 
@@ -58,7 +58,7 @@ import CategoryService from "@/services/CategoryService";
 import Page from "@/components/Page.svelte";
 import AddIcon from "@/components/icons/AddIcon.svelte";
 import Popup from "@/components/common/Popup.svelte";
-import NewCategoryForm from "@/components/forms/NewCategoryForm.svelte";
+import NewCategoryForm from "@/components/forms/CategoryDetailsForm.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
 import AsyncButton from "@/components/common/AsyncButton.svelte";
 import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";

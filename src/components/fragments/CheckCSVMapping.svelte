@@ -30,7 +30,7 @@ import formatDate from "@/utils/formatDate";
 import type CheckCsvMappingDTO from "@/models/dto/import/CheckCsvMappingDTO";
 
 // Components
-import AmountSpan from "@/components/AmountSpan.svelte";
+import AmountSpan from "@/components/spans/AmountSpan.svelte";
 
 // Props
 export var result: CheckCsvMappingDTO;

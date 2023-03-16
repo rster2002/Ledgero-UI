@@ -1,7 +1,7 @@
-<span {style} class="{navigation && 'navigationEnabled'} {navigation && category !== null && 'navigation'}" on:click={openCategory}>
+<span {style} class="{navigation && 'navigationEnabled'} {navigation && subcategory !== null && 'navigation'}">
   {#if icon}
-    {#if category}
-      <CategoryIcon />
+    {#if subcategory}
+      <SubcategoryIcon />
     {:else}
       <NoCategoryIcon />
     {/if}
@@ -13,32 +13,23 @@
 <script lang="ts">
 // Imports
 import textColorBasedOnHex from "@/utils/textForBackground";
-import { push } from "svelte-spa-router";
-import SlimCategoryDTO from "@/models/dto/categories/SlimCategoryDTO";
+import type SlimSubcategoryDTO from "@/models/dto/categories/subcategories/SlimSubcategoryDTO";
 
 // Components
 import CategoryIcon from "@/components/icons/CategoryIcon.svelte";
 import NoCategoryIcon from "@/components/icons/NoCategoryIcon.svelte";
+import SubcategoryIcon from "@/components/icons/SubcategoryIcon.svelte";
 
 // Props
-export var category: SlimCategoryDTO | null;
+export var subcategory: SlimSubcategoryDTO | null;
 export var navigation: boolean = false;
 export var icon = true;
 
 // Computed
-$: categoryName = category?.name ?? "No category";
-$: backgroundColor = category?.hexColor ?? "f1f1f1";
+$: categoryName = subcategory?.name ?? "No subcategory";
+$: backgroundColor = subcategory?.hexColor ?? "f1f1f1";
 $: foregroundColor = textColorBasedOnHex(backgroundColor);
 $: style = `background-color: #${backgroundColor}; color: #${foregroundColor};`
-
-// Functions
-function openCategory() {
-    if (category === null || !navigation) {
-        return;
-    }
-
-    push("/categories/" + category.id);
-}
 </script>
 
 <style lang="scss">

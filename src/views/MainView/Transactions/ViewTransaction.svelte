@@ -80,7 +80,7 @@
       <Input bind:value={newSplit.description} label="Description" />
 
       <div>
-        <CategorySelect bind:value={newSplitSelectedCategory} />
+        <CategorySelect bind:value={newSplit.categoryId} />
       </div>
 
       <AsyncButton asyncClick={createSplit}>
@@ -97,14 +97,14 @@
         <h2>Edit transaction</h2>
       </CardHeader>
 
-      <Input label="Description" bind:value={updateDetails.description} />
+      <UpdateTransactionDetailsForm bind:updateDetails />
 
       <HLayout full>
         <Button on:click={cancelEditingTransaction} secondary>
           <CloseIcon />
           Cancel
         </Button>
-        <AsyncButton>
+        <AsyncButton asyncClick={saveDetails}>
           <SaveIcon />
           Save changes
         </AsyncButton>
@@ -135,8 +135,8 @@ import EditIcon from "@/components/icons/EditIcon.svelte";
 import Table from "@/components/Table.svelte";
 import TableHead from "@/components/Table/TableHead.svelte";
 import TextColumn from "@/components/Table/TextColumn.svelte";
-import AmountSpan from "@/components/AmountSpan.svelte";
-import CategorySpan from "@/components/CategorySpan.svelte";
+import AmountSpan from "@/components/spans/AmountSpan.svelte";
+import CategorySpan from "@/components/spans/CategorySpan.svelte";
 import Popup from "@/components/common/Popup.svelte";
 import Input from "@/components/common/Input.svelte";
 import AsyncButton from "@/components/common/AsyncButton.svelte";
@@ -152,6 +152,8 @@ import ErrorSnackbar from "@/components/Snackbars/ErrorSnackbar.svelte";
 import SplitIcon from "@/components/icons/SplitIcon.svelte";
 import SaveIcon from "@/components/icons/SaveIcon.svelte";
 import CloseIcon from "@/components/icons/CloseIcon.svelte";
+import UpdateTransactionDetailsForm from "@/components/forms/UpdateTransactionDetailsForm.svelte";
+import type UpdateTransactionDetailsDTO from "@/models/dto/transactions/UpdateTransactionDetailsDTO";
 
 // Props
 export var params: { id: string } = {};
@@ -164,10 +166,16 @@ let transaction: TransactionDTO;
 let splits: SplitDTO[] = [];
 let promise: Promise<unknown>;
 let newSplitPopupOpen = false;
-let newSplitSelectedCategory: CategoryDTO = null;
+let updateDetails: UpdateTransactionDetailsDTO = {
+    description: "",
+    categoryId: null,
+    subcategoryId: null,
+    externalAccountId: null,
+}
 let newSplit: NewSplitDTO = {
     amount: 0,
     description: "",
+    categoryId: null,
 };
 let editTransactionPopupOpen = false;
 
@@ -177,7 +185,6 @@ async function createSplit() {
         ...newSplit,
     }
 
-    split.categoryId = newSplitSelectedCategory?.id ?? null;
     split.amount = Number(Number(newSplit.amount).toFixed(2)) * 100;
 
     try {
@@ -215,6 +222,8 @@ async function refresh() {
     ];
 
     splits = newSplits;
+
+    resetUpdateDetails();
 }
 
 async function deleteSplit(splitId: string) {
@@ -224,8 +233,28 @@ async function deleteSplit(splitId: string) {
     }
 }
 
-function cancelEditingTransaction() {
+function resetUpdateDetails() {
+    updateDetails.description = transaction.description;
+    updateDetails.categoryId  = transaction.category?.id ?? null;
+    updateDetails.subcategoryId  = transaction.subcategory?.id ?? null;
+    updateDetails.externalAccountId  = transaction.externalAccount?.id ?? null;
+}
 
+function cancelEditingTransaction() {
+    resetUpdateDetails();
+    editTransactionPopupOpen = false;
+}
+
+async function saveDetails() {
+    try {
+        await transactionService.updateDetails(transaction.id, updateDetails);
+        successMessage = ["Updated transaction"];
+        editTransactionPopupOpen = false;
+
+        promise = refresh();
+    } catch (e) {
+        errorMessage = [e.message];
+    }
 }
 
 promise = refresh();

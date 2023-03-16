@@ -32,12 +32,12 @@ import type TransactionDTO from "@/models/dto/transactions/TransactionDTO";
 import IconSection from "@/components/common/IconSection.svelte";
 import TextIcon from "@/components/icons/TextIcon.svelte";
 import BankAccountIcon from "@/components/icons/BankAccountIcon.svelte";
-import BankAccountSpan from "@/components/BankAccountSpan.svelte";
+import BankAccountSpan from "@/components/spans/BankAccountSpan.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
 import CategoryIcon from "@/components/icons/CategoryIcon.svelte";
-import CategorySpan from "@/components/CategorySpan.svelte";
+import CategorySpan from "@/components/spans/CategorySpan.svelte";
 import ExternalAccountIcon from "@/components/icons/ExternalAccountIcon.svelte";
-import ExternalAccountSpan from "@/components/ExternalAccountSpan.svelte";
+import ExternalAccountSpan from "@/components/spans/ExternalAccountSpan.svelte";
 
 // Props
 export var transaction: TransactionDTO;

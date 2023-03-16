@@ -1,6 +1,6 @@
 <header>
   <h2>
-    <AmountSpan amount={transaction.completeAmount} />
+    <AmountSpan amount={transaction.completeAmount} sign />
   </h2>
   <h3>
     {formatDate(transaction.date, {
@@ -15,7 +15,7 @@ import type TransactionDTO from "@/models/dto/transactions/TransactionDTO";
 import formatDate from "@/utils/formatDate";
 
 // Components
-import AmountSpan from "@/components/AmountSpan.svelte";
+import AmountSpan from "@/components/spans/AmountSpan.svelte";
 
 // Props
 export var transaction: TransactionDTO;

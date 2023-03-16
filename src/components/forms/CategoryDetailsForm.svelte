@@ -2,18 +2,16 @@
 <Input label="Description" bind:value={value.description} />
 <ColorPicker bind:value={value.hexColor} />
 
-<!--<Input label="Color" type="color" bind:value={value.hexColor} />-->
-
 <script lang="ts">
 // Imports
-import type NewCategoryDTO from "@/models/dto/categories/NewCategoryDTO";
+import type CategoryDetailsDTO from "@/models/dto/categories/CategoryDetailsDTO";
 
 // Components
 import Input from "@/components/common/Input.svelte";
 import ColorPicker from "@/components/common/ColorPicker.svelte";
 
 // Props
-export var value: NewCategoryDTO = {
+export var value: CategoryDetailsDTO = {
     name: "New category",
     description: "",
     hexColor: "ff3030",

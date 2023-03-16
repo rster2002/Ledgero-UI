@@ -1,6 +1,6 @@
 <div class="inputWrapper">
-    <input placeholder=" " {id} {...$$props} bind:value />
-    <label for={id}>{label}</label>
+  <input placeholder=" " {id} {...$$props} bind:value />
+  <label for={id}>{label}</label>
 </div>
 
 <script lang="ts">
@@ -20,9 +20,11 @@ const id = String(Math.random());
     label {
         position: absolute;
         padding: 0 0.3em;
-        left: 0.2em;
-        top: 0.65em;
+        left: 0.9em;
+        top: -0.5em;
 
+        font-size: 0.75em;
+        font-weight: 700;
         transition: all 150ms var(--standard-easing);
         background-color: var(--background);
         cursor: text;
@@ -42,14 +44,14 @@ const id = String(Math.random());
         border: 2px solid var(--accent-color);
         font-family: var(--font-family);
 
-        &:focus ~ label,
-        &:not(:placeholder-shown) ~ label {
-            left: 0.9em;
-            top: -0.5em;
-
-            font-size: 0.75em;
-            font-weight: 700;
-        }
+        //&:focus ~ label,
+        //&:not(:placeholder-shown) ~ label {
+        //    left: 0.9em;
+        //    top: -0.5em;
+        //
+        //    font-size: 0.75em;
+        //    font-weight: 700;
+        //}
     }
 }
 

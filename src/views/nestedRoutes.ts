@@ -13,6 +13,9 @@ export default {
     "/transactions/:id": wrap({
         asyncComponent: () => import("./MainView/Transactions/ViewTransaction.svelte"),
     }),
+    "/categories/:id/subcategory/:subcategoryId": wrap({
+        asyncComponent: () => import("./MainView/Categories/ViewSubcategory.svelte"),
+    }),
     "/categories": wrap({
         asyncComponent: () => import("./MainView/Categories.svelte"),
     }),
