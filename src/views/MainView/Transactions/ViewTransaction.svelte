@@ -80,7 +80,7 @@
       <Input bind:value={newSplit.description} label="Description" />
 
       <div>
-        <CategorySelect bind:value={newSplit.categoryId} />
+        <CategorySelect bind:categoryId={newSplit.categoryId} />
       </div>
 
       <AsyncButton asyncClick={createSplit}>
@@ -209,10 +209,10 @@ async function refresh() {
     let newSplits: SplitDTO[] = [];
     if (transaction.amount !== transaction.completeAmount && transaction.amount !== 0) {
         newSplits.push({
+            id: "remainder",
             amount: transaction.amount,
             category: transaction.category,
             description: "Remainder not part of a split",
-            id: "remainder"
         });
     }
 

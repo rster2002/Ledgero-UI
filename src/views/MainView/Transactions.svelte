@@ -29,37 +29,7 @@
             </Button>
           </HLayout>
 
-          <PaginationTable
-            paginator={transactionsIterator}
-            on:click={(e) => openTransaction(e.detail)}
-            bind:updateFn={updateFn}
-            clickable
-          >
-            <svelte:fragment slot="header">
-              <TableHead>Amount</TableHead>
-              <TableHead>Category</TableHead>
-              <TableHead wide>Description</TableHead>
-              <TableHead />
-            </svelte:fragment>
-
-            <svelte:fragment slot="row" let:item>
-              <TextColumn>
-                <AmountSpan amount={item.completeAmount} sign />
-              </TextColumn>
-
-              <TextColumn>
-                <CategorySpan category={item.category} />
-              </TextColumn>
-
-              <TextColumn>
-                {item.description}
-              </TextColumn>
-
-              <CenterColumn>
-                <ArrowRightIcon />
-              </CenterColumn>
-            </svelte:fragment>
-          </PaginationTable>
+          <PaginatedTransactionsTable paginator={transactionPaginator} />
         </VLayout>
       </Card>
     </div>
@@ -94,12 +64,14 @@ import PageHeader from "@/components/fragments/PageHeader.svelte";
 import TransactionsIcon from "@/components/icons/TransactionsIcon.svelte";
 import CenterColumn from "@/components/Table/CenterColumn.svelte";
 import ArrowRightIcon from "@/components/icons/ArrowRightIcon.svelte";
+import FullCategorySpan from "@/components/spans/FullCategorySpan.svelte";
+import PaginatedTransactionsTable from "@/components/tables/PaginatedTransactionsTable.svelte";
 
 // Data
 const aggregateService = new AggregateService();
 const transactionsService = new TransactionService();
 const categoriesService = new CategoryService();
-const transactionsIterator = transactionsService.createTransactionsIterator();
+const transactionPaginator = transactionsService.createTransactionsIterator();
 let updateFn;
 let categories: CategoryDTO[] = [];
 let total: number = 0;

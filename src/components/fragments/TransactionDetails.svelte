@@ -5,6 +5,11 @@
   </IconSection>
 
   <IconSection center>
+    <SubcategoryIcon slot="icon" />
+    <SubcategorySpan icon={false} subcategory={transaction.subcategory} />
+  </IconSection>
+
+  <IconSection center>
     <BankAccountIcon slot="icon" />
     <BankAccountSpan icon={false} bankAccount={transaction.bankAccount} />
   </IconSection>
@@ -38,6 +43,8 @@ import CategoryIcon from "@/components/icons/CategoryIcon.svelte";
 import CategorySpan from "@/components/spans/CategorySpan.svelte";
 import ExternalAccountIcon from "@/components/icons/ExternalAccountIcon.svelte";
 import ExternalAccountSpan from "@/components/spans/ExternalAccountSpan.svelte";
+import SubcategoryIcon from "@/components/icons/SubcategoryIcon.svelte";
+import SubcategorySpan from "@/components/spans/SubcategorySpan.svelte";
 
 // Props
 export var transaction: TransactionDTO;

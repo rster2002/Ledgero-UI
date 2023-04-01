@@ -1,7 +1,8 @@
 <Input label="Description" bind:value={updateDetails.description} />
 
 <CategorySelect
-  bind:value={updateDetails.categoryId}
+  bind:categoryId={updateDetails.categoryId}
+  bind:subcategoryId={updateDetails.subcategoryId}
 />
 
 <script lang="ts">

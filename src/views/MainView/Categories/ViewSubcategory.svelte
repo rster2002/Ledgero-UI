@@ -32,31 +32,9 @@
               </AsyncButton>
             </HLayout>
 
-<!--            <Table-->
-<!--              items={subcategories}-->
-<!--              on:click={(e) => openSubcategory(e.detail.id)}-->
-<!--              clickable-->
-<!--            >-->
-<!--              <svelte:fragment slot="header">-->
-<!--                <TableHead>Amount</TableHead>-->
-<!--                <TableHead wide>Name</TableHead>-->
-<!--                <TableHead />-->
-<!--              </svelte:fragment>-->
+            <h2>Transactions</h2>
 
-<!--              <svelte:fragment let:item slot="row">-->
-<!--                <TextColumn>-->
-<!--                  <AmountSpan amount={item.amount} />-->
-<!--                </TextColumn>-->
-
-<!--                <TextColumn>-->
-<!--                  <SubcategorySpan subcategory={item} />-->
-<!--                </TextColumn>-->
-
-<!--                <CenterColumn>-->
-<!--                  <ArrowRightIcon />-->
-<!--                </CenterColumn>-->
-<!--              </svelte:fragment>-->
-<!--            </Table>-->
+            <PaginatedTransactionsTable paginator={transactionPaginator} showCategory={false} />
           </VLayout>
         </Card>
       </div>
@@ -116,6 +94,7 @@ import CloseIcon from "@/components/icons/CloseIcon.svelte";
 import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";
 import ErrorSnackbar from "@/components/Snackbars/ErrorSnackbar.svelte";
 import SubcategorySpan from "@/components/spans/SubcategorySpan.svelte";
+import PaginatedTransactionsTable from "@/components/tables/PaginatedTransactionsTable.svelte";
 
 // Props
 export var params: { id: string, subcategoryId: string } = {};
@@ -123,6 +102,7 @@ export var params: { id: string, subcategoryId: string } = {};
 // Data
 const categoryService = new CategoryService();
 let promise: Promise<unknown>;
+let transactionPaginator;
 let successMessage = [""];
 let errorMessage = [""];
 let subcategory: SubcategoryDTO;
@@ -136,6 +116,7 @@ let editDetails: CategoryDetailsDTO = {
 // Functions
 async function refresh() {
     subcategory = await categoryService.getSubcategoryById(params.id, params.subcategoryId);
+    transactionPaginator = categoryService.createTransactionIteratorForSubcategory(params.id, params.subcategoryId);
     refreshEditor();
 }
 

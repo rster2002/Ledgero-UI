@@ -21,11 +21,6 @@
         <Card>
           <VLayout>
             <HLayout>
-              <Button on:click={() => newSubcategoryOpen = true}>
-                <AddIcon />
-                Add subcategory
-              </Button>
-
               <Button on:click={() => editPopupOpen = true}>
                 <EditIcon />
                 Edit category
@@ -35,6 +30,15 @@
                 <DeleteIcon />
                 Delete category
               </AsyncButton>
+            </HLayout>
+
+            <h2>Subcategories</h2>
+
+            <HLayout>
+              <Button on:click={() => newSubcategoryOpen = true}>
+                <AddIcon />
+                Add subcategory
+              </Button>
             </HLayout>
 
             <Table
@@ -62,6 +66,10 @@
                 </CenterColumn>
               </svelte:fragment>
             </Table>
+
+            <h2>Transactions</h2>
+
+            <PaginatedTransactionsTable paginator={transactionPaginator} showCategory={false} />
           </VLayout>
         </Card>
       </div>
@@ -153,6 +161,7 @@ import ColorSpan from "@/components/spans/ColorSpan.svelte";
 import CenterColumn from "@/components/Table/CenterColumn.svelte";
 import ArrowRightIcon from "@/components/icons/ArrowRightIcon.svelte";
 import SubcategorySpan from "@/components/spans/SubcategorySpan.svelte";
+import PaginatedTransactionsTable from "@/components/tables/PaginatedTransactionsTable.svelte";
 
 // Props
 export var params: { id: string } = {};
@@ -160,6 +169,7 @@ export var params: { id: string } = {};
 // Data
 const categoryService = new CategoryService();
 let promise: Promise<unknown>;
+let transactionPaginator;
 let successMessage = [""];
 let errorMessage = [""];
 let category: CategoryDTO;
@@ -181,6 +191,7 @@ let newSubcategoryDetails: CategoryDetailsDTO = {
 async function refresh() {
     category = await categoryService.getCategoryById(params.id);
     subcategories = await categoryService.getSubcategories(params.id);
+    transactionPaginator = categoryService.createTransactionIteratorForCategory(params.id);
     refreshEditor();
 }
 

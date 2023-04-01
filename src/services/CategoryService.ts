@@ -2,6 +2,8 @@ import type CategoryDetailsDTO from "@/models/dto/categories/CategoryDetailsDTO"
 import type CategoryDTO from "@/models/dto/categories/CategoryDTO";
 import APIFetch from "@/helpers/APIFetch";
 import type SubcategoryDTO from "@/models/dto/categories/subcategories/SubcategoryDTO";
+import paginationIterator from "@/helpers/paginationIterator";
+import type TransactionDTO from "@/models/dto/transactions/TransactionDTO";
 
 export default class CategoryService {
     async getAllCategories(): Promise<CategoryDTO[]> {
@@ -68,5 +70,13 @@ export default class CategoryService {
             method: "PUT",
             body: JSON.stringify(details),
         });
+    }
+
+    createTransactionIteratorForCategory(categoryId: string) {
+        return paginationIterator<TransactionDTO>(`/categories/${categoryId}/transactions`);
+    }
+
+    createTransactionIteratorForSubcategory(categoryId: string, subcategoryId: string) {
+        return paginationIterator<TransactionDTO>(`/categories/${categoryId}/subcategories/${subcategoryId}/transactions`);
     }
 }
