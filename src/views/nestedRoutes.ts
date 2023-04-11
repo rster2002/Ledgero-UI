@@ -25,4 +25,7 @@ export default {
     "/bank-accounts": wrap({
         asyncComponent: () => import("./MainView/BankAccounts.svelte"),
     }),
+    "/bank-accounts/:id": wrap({
+        asyncComponent: () => import("./MainView/BankAccounts/ViewBankAccount.svelte"),
+    }),
 }

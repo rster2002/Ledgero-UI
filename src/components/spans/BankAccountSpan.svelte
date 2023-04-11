@@ -33,7 +33,7 @@ span {
     padding: 0.2em 0.5em;
 
     font-family: var(--header-face);
-    border-radius: var(--border-radius-round);
+    border-radius: var(--border-radius-tiny);
     background-color: #f1f1f1;
 }
 
