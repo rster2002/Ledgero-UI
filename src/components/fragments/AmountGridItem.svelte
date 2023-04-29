@@ -17,9 +17,13 @@
       <p>{item.description}</p>
     </VLayout>
 
-    <h2 slot="bottom">
-      <AmountSpan amount={item.amount} background />
-    </h2>
+    <svelte:fragment slot="bottom">
+      {#if item.amount !== undefined}
+        <h2>
+          <AmountSpan amount={item.amount} background />
+        </h2>
+      {/if}
+    </svelte:fragment>
   </TopBottomLayout>
 </div>
 
@@ -39,7 +43,7 @@ interface GridItemContent {
     name: string;
     description: string;
     hexColor: string;
-    amount: number;
+    amount?: number;
 }
 
 export var item: GridItemContent;

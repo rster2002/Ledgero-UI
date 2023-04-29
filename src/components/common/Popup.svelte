@@ -45,6 +45,7 @@ function close() {
 
         position: relative;
         padding: 32px;
+        top: -25%;
         overflow-y: auto;
         overflow-x: hidden;
 

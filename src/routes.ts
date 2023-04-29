@@ -10,6 +10,9 @@ export default {
             async () => !(await authenticationService.isLoggedIn()),
         ],
     }),
+    "/test": wrap({
+        asyncComponent: () => import("./views/TestView.svelte"),
+    }),
     "/*": wrap({
         asyncComponent: () => import("./views/MainView.svelte"),
         conditions: [

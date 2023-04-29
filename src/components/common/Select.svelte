@@ -1,217 +1,107 @@
-<div class="selectWrapper" on:click={() => selectOpen = true}>
-  {#if currentValue}
-    <slot name="currentValue" item={currentValue}>
-      <slot item={currentValue} />
-    </slot>
-  {:else}
-    <slot name="noValue" item={currentValue}>
-      <slot name="currentValue" item={currentValue}>
-        <slot item={currentValue} />
-      </slot>
-    </slot>
-  {/if}
-  <label>{label}</label>
+<div
+  class="ref"
+  use:floatingRef
+  on:click={() => open = true}
+>
+  <InputWrapper {label} padding>
+    <slot name="selected" />
+  </InputWrapper>
 </div>
 
-<Popup bind:open={selectOpen} min noPadding>
-  <div class="popupContent">
-    {#if searchKey !== null}
-      <input
-        type="text"
-        placeholder="Search options"
-        bind:value={query}
-        use:focus
-        on:keydown={onKeydown}
-      />
-    {/if}
+<div
+  class="options {open && 'open'}"
+  use:floatingContent
+  use:inject
+  bind:this={selectEl}
+>
+  <slot />
+</div>
 
-    <div class="options">
-      {#each filteredItems as item, i}
-        <div
-          class="option {i === focusedItemIndex && 'focus'}"
-          on:click={() => selectItem(item)}
-        >
-          <slot {item} />
-        </div>
-      {/each}
-    </div>
-  </div>
-</Popup>
+{#if open}
+  <div class="scim" on:click|self={() => open = false}></div>
+{/if}
 
 <script lang="ts">
 // Imports
-import focus from "@/actions/focus";
-import { createEventDispatcher } from "svelte";
-const dispatch = createEventDispatcher();
+//@ts-ignore
+import inject from "svelte-inject";
+import { offset, flip, size, shift } from "svelte-floating-ui/dom";
+import { createFloatingActions } from "svelte-floating-ui";
 
 // Components
-import Popup from "@/components/common/Popup.svelte";
+import InputWrapper from "@/components/fragments/InputWrapper.svelte";
+import { onMount } from "svelte";
+import { onSelectSymbol, selectRootSymbol } from "@/components/common/Select/sharedSymbols";
 
 // Props
 export var label: string;
-export var items: unknown[];
-export var value: unknown = null;
-export var searchKey: (x: unknown) => string = null;
-export var valueKey: (x: unknown) => unknown = null;
+export var value: unknown[];
+export var open: boolean = false;
 
 // Data
-let focusedItemIndex = 0;
-let query = "";
-let selectOpen = false;
-
-// Computed
-$: filteredItems = filterList(items, query, searchKey);
-$: {
-    filteredItems;
-    focusedItemIndex = 0;
-}
-$: selectedIndex = getSelectedIndex(value, items);
-$: currentValue = items[selectedIndex] ?? null;
-$: {
-    if (!selectOpen) {
-        query = "";
-        focusedItemIndex = 0;
-    }
-}
+let selectEl: HTMLDivElement;
 
 // Functions
-function getSelectedIndex(selectedValue: unknown, items: unknown[]): number {
-    if (valueKey) {
-        return items.findIndex(item => valueKey(item) === selectedValue);
-    } else {
-        return items.findIndex(item => item === selectedValue);
-    }
+function onSelect(newValue: unknown[]) {
+    value = newValue;
 }
 
-function filterList(items: unknown[], query: string, searchKey: (x: unknown) => string | null): unknown[] {
-    if (searchKey === null) {
-        return items;
-    }
+// Actions
+const [floatingRef, floatingContent] = createFloatingActions({
+    placement: "bottom-start",
+    strategy: "fixed",
+    middleware: [
+        offset(),
+        shift(),
+        flip(),
+        size({
+            apply({availableWidth, availableHeight, elements}) {
+                // Do things with the data, e.g.
+                Object.assign(elements.floating.style, {
+                    maxWidth: `${availableWidth}px`,
+                    maxHeight: `${availableHeight - 16}px`,
+                });
+            },
+        }),
+    ],
+});
 
-    return items.filter((item) => {
-        let key = searchKey(item).toLowerCase();
-        return key.includes(query.toLowerCase());
-    });
-}
-
-function selectItem(item: unknown) {
-    value = valueKey ? valueKey(item) : item;
-    selectOpen = false;
-    dispatch("change", item);
-}
-
-function onKeydown(e: KeyboardEvent) {
-    if (e.key === "Enter") {
-        let item = filteredItems[focusedItemIndex];
-
-        if (item) {
-            selectItem(item);
-            return;
-        }
-    }
-
-    if (e.key === "Escape") {
-        close();
-        return;
-    }
-
-    if (e.key === "ArrowDown" || e.key === "Tab") {
-        e.preventDefault();
-        focusedItemIndex++;
-    }
-
-    if (e.key === "ArrowUp") {
-        e.preventDefault();
-        focusedItemIndex--;
-    }
-
-    if (focusedItemIndex >= filteredItems.length) {
-        focusedItemIndex = 0;
-    }
-
-    if (focusedItemIndex < 0) {
-        focusedItemIndex = filteredItems.length - 1;
-    }
-}
+// Lifecycle
+onMount(() => {
+    selectEl[selectRootSymbol] = true;
+    selectEl[onSelectSymbol] = onSelect;
+});
 </script>
 
 <style lang="scss">
 
-.selectWrapper {
+.scim {
+    height: 100%;
     width: 100%;
 
-    position: relative;
-    padding: 0.75em 0.75em 0.25em;
-    box-sizing: border-box;
-
-    border-radius: 0.5em;
-    color: var(--text-on-background);
-    font-weight: bold;
-    outline: 0;
-    border: 2px solid var(--accent-color);
-    font-family: var(--font-family);
-    cursor: pointer;
-
-    label {
-        position: absolute;
-        padding: 0 0.3em;
-        left: 0.9em;
-        top: -0.7em;
-
-        font-size: 0.75em;
-        font-weight: 700;
-        transition: all 150ms var(--standard-easing);
-        background-color: var(--background);
-        cursor: text;
-        color: var(--accent-color);
-    }
-
-    //input {
-    //
-    //
-    //    &:focus ~ label,
-    //    &:not(:placeholder-shown) ~ label {
-
-    //    }
-    //}
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 127;
 }
 
-.popupContent {
-    width: 300px;
+.options {
+    position: fixed;
+    padding: 0.5em 0;
+    z-index: 128;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow-y: auto;
 
-    input {
-        padding: 1em;
-        box-sizing: border-box;
-        font-family: var(--font-family);
+    background-color: #fff;
+    border: 1px solid #cecece;
+    display: none;
 
-        border: 0;
-        outline: 0;
-        font-size: 1em;
+    &.open {
+        display: flex;
     }
-
-    .option {
-        width: 100%;
-        max-height: 400px;
-
-        overflow-y: auto;
-        overflow-x: hidden;
-        padding: 0.5em 1em;
-
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        cursor: pointer;
-        border: 2px solid transparent;
-        box-sizing: border-box;
-        border-radius: var(--border-radius-small);
-
-        &.focus {
-            border-color: var(--accent-color);
-        }
-
-        &:hover {
-            background-color: var(--backdrop);
-        }
-    }
+    //box-shadow: var(--box-shadow);
+    //border-radius: var(--border-radius-small);
 }
 
 </style>

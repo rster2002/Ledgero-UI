@@ -1,5 +1,4 @@
-export default interface ExternalAccountDTO {
-    id: string;
+export default interface ExternalAccountDetailsDTO {
     name: string;
     description: string;
     hexColor: string;

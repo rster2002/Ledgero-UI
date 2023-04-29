@@ -26,7 +26,7 @@
     </NavItem>
   </NavBar>
 
-  <div class="content">
+  <div class="options">
     <Router routes={nestedRoutes} />
   </div>
 </section>
@@ -60,7 +60,7 @@ section {
     background: linear-gradient(0deg, rgba(227,236,253,1) 0%, rgba(255,255,255,1) 100%);
 }
 
-.content {
+.options {
     width: 100%;
 }
 
