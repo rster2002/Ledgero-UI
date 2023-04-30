@@ -70,7 +70,7 @@ function onClick(event: PointerEvent) {
 // Lifecycle
 onMount(() => {
     optionEl[onSelectSymbol] = onSelect;
-    let possibleNestedOptions = optionEl.querySelector(".nestedOptions");
+    let possibleNestedOptions = optionEl.querySelector(".optionsContainer");
 
     if (possibleNestedOptions && possibleNestedOptions[nestedOptionsIndicator]) {
         nestedOptionsEl = possibleNestedOptions as HTMLDivElement;
@@ -119,7 +119,7 @@ onMount(() => {
     &:hover {
         background-color: #e7e7e7;
 
-        & > :global(.nestedOptions) {
+        & > :global(.optionsContainer) {
             display: flex;
         }
     }

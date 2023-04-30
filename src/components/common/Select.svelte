@@ -1,6 +1,6 @@
 <div
   class="ref"
-  use:floatingRef
+  bind:this={targetEl}
   on:click={() => open = true}
 >
   <InputWrapper {label} padding>
@@ -8,17 +8,29 @@
   </InputWrapper>
 </div>
 
-<div
-  class="options {open && 'open'}"
-  use:floatingContent
-  use:inject
-  bind:this={selectEl}
+<OptionsContainer
+  bind:parent={selectEl}
+  action={inject}
+  open={open}
 >
   <slot />
-</div>
+</OptionsContainer>
+
+<!--<div-->
+<!--  class="options {open && 'open'}"-->
+<!--  use:floatingContent-->
+<!--  use:inject-->
+<!--  bind:this={selectEl}-->
+<!--&gt;-->
+<!--  <slot />-->
+<!--</div>-->
 
 {#if open}
-  <div class="scim" on:click|self={() => open = false}></div>
+  <div
+    class="scim"
+    on:click|self={() => open = false}
+    use:inject
+  ></div>
 {/if}
 
 <script lang="ts">
@@ -32,6 +44,9 @@ import { createFloatingActions } from "svelte-floating-ui";
 import InputWrapper from "@/components/fragments/InputWrapper.svelte";
 import { onMount } from "svelte";
 import { onSelectSymbol, selectRootSymbol } from "@/components/common/Select/sharedSymbols";
+import OptionsContainer from "@/components/common/Select/OptionsContainer.svelte";
+import applyAction from "@/utils/applyAction";
+import type { Action } from "@/utils/applyAction";
 
 // Props
 export var label: string;
@@ -39,37 +54,42 @@ export var value: unknown[];
 export var open: boolean = false;
 
 // Data
-let selectEl: HTMLDivElement;
+let targetEl: HTMLDivElement;
+let selectEl: HTMLElement;
 
 // Functions
 function onSelect(newValue: unknown[]) {
     value = newValue;
+    open = false;
 }
-
-// Actions
-const [floatingRef, floatingContent] = createFloatingActions({
-    placement: "bottom-start",
-    strategy: "fixed",
-    middleware: [
-        offset(),
-        shift(),
-        flip(),
-        size({
-            apply({availableWidth, availableHeight, elements}) {
-                // Do things with the data, e.g.
-                Object.assign(elements.floating.style, {
-                    maxWidth: `${availableWidth}px`,
-                    maxHeight: `${availableHeight - 16}px`,
-                });
-            },
-        }),
-    ],
-});
 
 // Lifecycle
 onMount(() => {
     selectEl[selectRootSymbol] = true;
     selectEl[onSelectSymbol] = onSelect;
+
+    const [floatingRef, floatingContent] = createFloatingActions({
+        placement: "bottom-start",
+        strategy: "fixed",
+        middleware: [
+            offset(),
+            shift(),
+            flip(),
+            size({
+                apply({availableWidth, availableHeight, elements}) {
+                    // Do things with the data, e.g.
+                    Object.assign(elements.floating.style, {
+                        maxWidth: `${availableWidth}px`,
+                        maxHeight: `${availableHeight - 16}px`,
+                    });
+                },
+            }),
+        ],
+    });
+
+    console.log(targetEl, selectEl);
+    applyAction(targetEl, floatingRef as Action<unknown>);
+    applyAction(selectEl, floatingContent as Action<unknown>);
 });
 </script>
 
@@ -91,7 +111,7 @@ onMount(() => {
     z-index: 128;
     flex-direction: column;
     box-sizing: border-box;
-    overflow-y: auto;
+    overflow-y: hidden;
 
     background-color: #fff;
     border: 1px solid #cecece;
