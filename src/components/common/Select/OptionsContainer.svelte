@@ -1,9 +1,21 @@
 <div
   class="optionsContainer {open && 'open'}"
   use:action
-  bind:this={parent}
+  bind:this={root}
+  on:wheel={onWheel}
 >
-  <slot />
+  <div
+    class="innerWrapper"
+    bind:this={wrapperEl}
+  >
+    <slot />
+  </div>
+
+  {#if showScrollbar}
+    <div class="scrollbar">
+      <div class="bar"></div>
+    </div>
+  {/if}
 </div>
 
 <script lang="ts">
@@ -12,19 +24,46 @@ import { nestedOptionsIndicator, onSelectSymbol } from "@/components/common/Sele
 import { onMount } from "svelte";
 
 // Props
-export let parent: HTMLElement;
+export let root: HTMLElement;
 export var open: boolean = false;
 export var action: any = () => {};
 
+// Data
+let wrapperEl: HTMLElement;
+let showScrollbar: boolean = false;
+
 // Functions
 function onSelect(value: unknown[]) {
-    parent.parentElement[onSelectSymbol]?.(value);
+    root[onSelectSymbol]?.(value);
+}
+
+function onWheel(event: WheelEvent) {
+    wrapperEl.scrollTop += event.deltaY;
 }
 
 // Lifecycle
 onMount(() => {
-    parent[onSelectSymbol] = onSelect;
-    parent[nestedOptionsIndicator] = true;
+    wrapperEl[onSelectSymbol] = onSelect;
+    root[nestedOptionsIndicator] = true;
+
+    const observer = new MutationObserver(() => {
+        if (!wrapperEl) {
+            return;
+        }
+
+        showScrollbar = wrapperEl.clientHeight < wrapperEl.scrollHeight;
+    });
+
+    observer.observe(wrapperEl, {
+        childList: true,
+        subtree: false,
+    });
+
+    return {
+        destroy() {
+            observer.disconnect();
+        }
+    }
 });
 </script>
 
@@ -32,9 +71,8 @@ onMount(() => {
 
 .optionsContainer {
     position: fixed;
-    padding: 0.5em 0;
     z-index: 128;
-    flex-direction: column;
+    flex-direction: row;
     box-sizing: border-box;
     overflow-y: hidden;
     display: none;
@@ -44,6 +82,21 @@ onMount(() => {
 
     &.open {
         display: flex;
+    }
+
+    .innerWrapper {
+        padding: 0.5em 0;
+        overflow-y: hidden;
+    }
+
+    .scrollbar {
+        width: 0.75em;
+        background-color: #ebebeb;
+
+        .bar {
+            width: 100%;
+            background-color: red;
+        }
     }
     //box-shadow: var(--box-shadow);
     //border-radius: var(--border-radius-small);

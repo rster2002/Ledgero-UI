@@ -8,7 +8,7 @@ export default function applyAction<T>(target: HTMLElement, action: Action<T>, o
             const removed = Array.from(mutation.removedNodes).includes(target);
 
             if (removed) {
-                actionInstance.destroy();
+                actionInstance?.destroy?.();
             }
         }
     });

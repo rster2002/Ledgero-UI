@@ -2,6 +2,10 @@
   {JSON.stringify(value)}
 
   <Select bind:value>
+    <svelte:fragment slot="selected">
+      {value.join(", ")}
+    </svelte:fragment>
+
     <Option value="Alice">Alice</Option>
     <Option value="Bob">Bob</Option>
 

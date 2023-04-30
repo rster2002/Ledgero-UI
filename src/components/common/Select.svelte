@@ -1,5 +1,5 @@
 <div
-  class="ref"
+  class="select"
   bind:this={targetEl}
   on:click={() => open = true}
 >
@@ -9,21 +9,12 @@
 </div>
 
 <OptionsContainer
-  bind:parent={selectEl}
+  bind:root={selectEl}
   action={inject}
   open={open}
 >
   <slot />
 </OptionsContainer>
-
-<!--<div-->
-<!--  class="options {open && 'open'}"-->
-<!--  use:floatingContent-->
-<!--  use:inject-->
-<!--  bind:this={selectEl}-->
-<!--&gt;-->
-<!--  <slot />-->
-<!--</div>-->
 
 {#if open}
   <div
@@ -39,14 +30,16 @@
 import inject from "svelte-inject";
 import { offset, flip, size, shift } from "svelte-floating-ui/dom";
 import { createFloatingActions } from "svelte-floating-ui";
+import { onMount } from "svelte";
+import { onSelectSymbol, selectRootSymbol } from "@/components/common/Select/sharedSymbols";
+import applyAction from "@/utils/applyAction";
+import type { Action } from "@/utils/applyAction";
+import { createEventDispatcher } from "svelte";
+const dispatch = createEventDispatcher();
 
 // Components
 import InputWrapper from "@/components/fragments/InputWrapper.svelte";
-import { onMount } from "svelte";
-import { onSelectSymbol, selectRootSymbol } from "@/components/common/Select/sharedSymbols";
 import OptionsContainer from "@/components/common/Select/OptionsContainer.svelte";
-import applyAction from "@/utils/applyAction";
-import type { Action } from "@/utils/applyAction";
 
 // Props
 export var label: string;
@@ -87,13 +80,16 @@ onMount(() => {
         ],
     });
 
-    console.log(targetEl, selectEl);
     applyAction(targetEl, floatingRef as Action<unknown>);
     applyAction(selectEl, floatingContent as Action<unknown>);
 });
 </script>
 
 <style lang="scss">
+
+.select {
+    cursor: default;
+}
 
 .scim {
     height: 100%;
