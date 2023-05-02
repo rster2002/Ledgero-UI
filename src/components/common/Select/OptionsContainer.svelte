@@ -13,7 +13,7 @@
 
   {#if showScrollbar}
     <div class="scrollbar">
-      <div class="bar"></div>
+      <div class="bar" style="height: {barHeight}%; top: {barTop}%;"></div>
     </div>
   {/if}
 </div>
@@ -31,6 +31,8 @@ export var action: any = () => {};
 // Data
 let wrapperEl: HTMLElement;
 let showScrollbar: boolean = false;
+let barHeight = 100;
+let barTop = 0;
 
 // Functions
 function onSelect(value: unknown[]) {
@@ -39,6 +41,17 @@ function onSelect(value: unknown[]) {
 
 function onWheel(event: WheelEvent) {
     wrapperEl.scrollTop += event.deltaY;
+    updateScrollbar();
+}
+
+function updateScrollbar() {
+    if (!wrapperEl) {
+        return;
+    }
+
+    showScrollbar = wrapperEl.clientHeight < wrapperEl.scrollHeight;
+    barHeight = (wrapperEl.clientHeight / wrapperEl.scrollHeight) * 100;
+    barTop = (wrapperEl.scrollTop / wrapperEl.scrollHeight) * 100;
 }
 
 // Lifecycle
@@ -46,22 +59,22 @@ onMount(() => {
     wrapperEl[onSelectSymbol] = onSelect;
     root[nestedOptionsIndicator] = true;
 
-    const observer = new MutationObserver(() => {
-        if (!wrapperEl) {
-            return;
-        }
+    const resizeObserver = new ResizeObserver(updateScrollbar);
+    const mutationObserver = new MutationObserver(updateScrollbar);
 
-        showScrollbar = wrapperEl.clientHeight < wrapperEl.scrollHeight;
-    });
-
-    observer.observe(wrapperEl, {
+    mutationObserver.observe(wrapperEl, {
         childList: true,
         subtree: false,
     });
 
+    resizeObserver.observe(wrapperEl, {
+        box: "border-box",
+    });
+
     return {
         destroy() {
-            observer.disconnect();
+            mutationObserver.disconnect();
+            resizeObserver.disconnect();
         }
     }
 });
@@ -91,16 +104,17 @@ onMount(() => {
 
     .scrollbar {
         width: 0.75em;
+
         background-color: #ebebeb;
 
         .bar {
             width: 100%;
-            background-color: red;
+
+            position: relative;
+
+            background-color: #828282;
         }
     }
-    //box-shadow: var(--box-shadow);
-    //border-radius: var(--border-radius-small);
-    //border-top-left-radius: 0;
 }
 
 </style>
