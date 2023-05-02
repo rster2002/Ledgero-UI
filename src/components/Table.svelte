@@ -1,12 +1,26 @@
 <div class="tableWrapper" bind:this={box}>
   <table>
     <thead>
-      <slot name="header" />
+      <tr>
+        {#if checkboxes}
+          <th>
+            <Checkbox />
+          </th>
+        {/if}
+
+        <slot name="header" />
+      </tr>
     </thead>
 
     <tbody>
       {#each items as item}
         <tr class="{clickable && 'clickable'}" on:click={() => dispatchClick(item)}>
+          {#if checkboxes}
+            <td>
+              <Checkbox />
+            </td>
+          {/if}
+
           <slot name="row" {item} />
         </tr>
       {/each}
@@ -23,6 +37,9 @@
 import { createEventDispatcher, onMount } from "svelte";
 const dispatch = createEventDispatcher();
 
+// Components
+import Checkbox from "@/components/Checkbox.svelte";
+
 // Generic
 type $$Generic = null;
 type T = $$Generic;
@@ -30,6 +47,7 @@ type T = $$Generic;
 // Props
 export var items: T[];
 export var clickable = false;
+export var checkboxes = false;
 
 // Data
 const observer = new ResizeObserver(() => {

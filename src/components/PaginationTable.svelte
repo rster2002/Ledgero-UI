@@ -1,5 +1,10 @@
 <AsyncContent {promise}>
-  <Table {items} {clickable} on:click>
+  <Table
+    on:click
+    {items}
+    {clickable}
+    {checkboxes}
+  >
     <svelte:fragment slot="header">
       <slot name="header" />
     </svelte:fragment>
@@ -33,6 +38,7 @@ type T = $$Generic;
 // Props
 export var paginator: AsyncIterator<T[]>;
 export var clickable = false;
+export var checkboxes = false;
 export const updateFn = () => {
     items = items;
 };

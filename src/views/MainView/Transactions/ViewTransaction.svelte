@@ -97,7 +97,10 @@
         <h2>Edit transaction</h2>
       </CardHeader>
 
-      <UpdateTransactionDetailsForm bind:updateDetails />
+      <UpdateTransactionDetailsForm
+        externalAccountName={transaction.externalAccountName}
+        bind:updateDetails
+      />
 
       <HLayout full>
         <Button on:click={cancelEditingTransaction} secondary>

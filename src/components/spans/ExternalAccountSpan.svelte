@@ -1,6 +1,10 @@
 <span {style}>
   {#if icon}
-    <ExternalAccountIcon />
+    {#if externalAccount}
+      <ExternalAccountIcon />
+    {:else}
+      <NoExternalAccountIcon />
+    {/if}
   {/if}
 
   {accountName}
@@ -9,18 +13,19 @@
 <script lang="ts">
 // Imports
 import type ExternalAccountDTO from "@/models/dto/externalAccounts/ExternalAccountDTO";
+import textColorBasedOnHex from "@/utils/textForBackground";
 
 // Components
-import textColorBasedOnHex from "@/utils/textForBackground";
 import ExternalAccountIcon from "@/components/icons/ExternalAccountIcon.svelte";
+import NoExternalAccountIcon from "@/components/icons/NoExternalAccountIcon.svelte";
 
 // Props
 export var externalAccount: ExternalAccountDTO | null;
-export var externalAccountName: string;
+export var externalAccountName: string | undefined;
 export var icon = true;
 
 // Computed
-$: accountName = externalAccount?.name ?? externalAccountName;
+$: accountName = externalAccount?.name ?? externalAccountName ?? "No external account";
 $: backgroundColor = externalAccount?.hexColor ?? "f1f1f1";
 $: foregroundColor = textColorBasedOnHex(backgroundColor);
 $: style = `background-color: #${backgroundColor}; color: #${foregroundColor};`
