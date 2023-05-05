@@ -44,9 +44,9 @@ import NestedOptions from "@/components/common/Select/NestedOptions.svelte";
 import FullCategorySpan from "@/components/spans/FullCategorySpan.svelte";
 
 // Props
+export var label: string = "Category";
 export var categoryId: string | null = null;
 export var subcategoryId: string | null = null;
-export var label: string = "Category";
 
 // Data
 const categoriesService = new CategoryService();

@@ -31,4 +31,7 @@ export default {
     "/external-accounts": wrap({
         asyncComponent: () => import("./MainView/ExternalAccounts.svelte"),
     }),
+    "/external-accounts/:id": wrap({
+        asyncComponent: () => import("./MainView/ExternalAccounts/ViewExternalAccount.svelte"),
+    }),
 }

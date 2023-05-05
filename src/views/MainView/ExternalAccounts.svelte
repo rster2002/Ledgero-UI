@@ -14,7 +14,7 @@
     <div class="grid">
       {#each externalAccounts as externalAccount}
         <AmountGridItem
-          on:click={() => push(`/categories/${externalAccount.id}`)}
+          on:click={() => push(`/external-accounts/${externalAccount.id}`)}
           item={{
             name: externalAccount.name,
             description: externalAccount.description,
@@ -33,14 +33,7 @@
 
 <Popup bind:open={newPopupOpen}>
   <VLayout>
-    <Input label="Name" bind:value={newExternalAccount.name} />
-    <Input label="Description" bind:value={newExternalAccount.description} />
-    <ColorPicker bind:value={newExternalAccount.hexColor} />
-
-    <CategorySelect
-      bind:categoryId={newExternalAccount.defaultCategoryId}
-      bind:subcategoryId={newExternalAccount.defaultSubcategoryId}
-    />
+    <ExternalAccountDetailsForm bind:value={newExternalAccount} />
 
     <div>
       <AsyncButton asyncClick={createExternalAccount}>
@@ -55,38 +48,28 @@
 
 <script lang="ts">
 // Imports
-import type CategoryDetailsDTO from "@/models/dto/categories/CategoryDetailsDTO";
-import type CategoryDTO from "@/models/dto/categories/CategoryDTO";
-import CategoryService from "@/services/CategoryService";
+import { push } from "svelte-spa-router";
+import type ExternalAccountDTO from "@/models/dto/externalAccounts/ExternalAccountDTO";
+import ExternalAccountService from "@/services/ExternalAccountService";
+import type ExternalAccountDetailsDTO from "@/models/dto/externalAccounts/ExternalAccountDetailsDTO";
 
 // Components
 import Page from "@/components/Page.svelte";
 import AddIcon from "@/components/icons/AddIcon.svelte";
 import Popup from "@/components/common/Popup.svelte";
-import NewCategoryForm from "@/components/forms/CategoryDetailsForm.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
 import AsyncButton from "@/components/common/AsyncButton.svelte";
 import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";
 import ErrorSnackbar from "@/components/Snackbars/ErrorSnackbar.svelte";
 import AsyncContent from "@/components/common/AsyncContent.svelte";
 import PageHeader from "@/components/fragments/PageHeader.svelte";
-import CategoriesIcon from "@/components/icons/CategoriesIcon.svelte";
-import DragAndDropSort from "@/components/DragAndDropSort.svelte";
-import SaveIcon from "@/components/icons/SaveIcon.svelte";
 import AmountGridItem from "@/components/fragments/AmountGridItem.svelte";
-import { push } from "svelte-spa-router";
 import GridNewButton from "@/components/fragments/GridNewButton.svelte";
 import ExternalAccountIcon from "@/components/icons/ExternalAccountIcon.svelte";
-import type ExternalAccountDTO from "@/models/dto/externalAccounts/ExternalAccountDTO";
-import ExternalAccountService from "@/services/ExternalAccountService";
-import Input from "@/components/common/Input.svelte";
-import type ExternalAccountDetailsDTO from "@/models/dto/externalAccounts/ExternalAccountDetailsDTO";
-import ColorPicker from "@/components/common/ColorPicker.svelte";
-import CategorySelect from "@/components/CategorySelect.svelte";
+import ExternalAccountDetailsForm from "@/components/forms/ExternalAccountDetailsForm.svelte";
 
 // Data
 const externalAccountService = new ExternalAccountService();
-let orderChanged = false;
 let successMessage = [""];
 let errorMessage = [""];
 let newPopupOpen = false;
