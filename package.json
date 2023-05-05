@@ -18,7 +18,7 @@
     "@types/papaparse": "^5.3.7",
     "cross-env": "^7.0.3",
     "sass": "^1.39.0",
-    "svelte": "^3.37.0",
+    "svelte": "^3.49.0",
     "svelte-check": "^2.2.4",
     "svelte-preprocess": "^4.7.4",
     "svelte-reactive-preprocessor": "^0.6.0",
