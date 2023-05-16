@@ -1,5 +1,10 @@
 <section>
   <NavBar>
+    <Fab>
+      <UploadIcon />
+      <span>Upload CSV</span>
+    </Fab>
+
     <NavItem route="/">
       <HomeIcon slot="icon" />
       Home
@@ -17,17 +22,19 @@
 
     <NavItem route="/bank-accounts">
       <BankAccountIcon slot="icon" />
-      Bank accounts
+      Accounts
     </NavItem>
 
     <NavItem route="/external-accounts">
       <ExternalAccountIcon slot="icon" />
-      External accounts
+      External
     </NavItem>
   </NavBar>
 
-  <div class="options">
-    <Router routes={nestedRoutes} />
+  <div class="routeWrapper">
+    <div class="routeContainer">
+      <Router routes={nestedRoutes} />
+    </div>
   </div>
 </section>
 
@@ -44,9 +51,12 @@ import TransactionsIcon from "@/components/icons/TransactionsIcon.svelte";
 import CategoriesIcon from "@/components/icons/CategoriesIcon.svelte";
 import ExternalAccountIcon from "@/components/icons/ExternalAccountIcon.svelte";
 import BankAccountIcon from "@/components/icons/BankAccountIcon.svelte";
+import UploadIcon from "@/components/icons/UploadIcon.svelte";
+import Fab from "@/components/Fab.svelte";
 </script>
 
 <style lang="scss">
+@import "../shared";
 
 section {
     height: 100%;
@@ -55,13 +65,32 @@ section {
     display: flex;
     flex-direction: row;
 
+    background-color: var(--backdrop);
     //background-color: var(--backdrop);
-    background: rgb(227,236,253);
-    background: linear-gradient(0deg, rgba(227,236,253,1) 0%, rgba(255,255,255,1) 100%);
+    //background: rgb(227,236,253);
+    //background: linear-gradient(0deg, rgba(227,236,253,1) 0%, rgba(255,255,255,1) 100%);
 }
 
-.options {
+.routeWrapper {
     width: 100%;
+    padding: 2em 2em 2em 0;
+    box-sizing: border-box;
+
+    .routeContainer {
+        height: 100%;
+        background-color: var(--background);
+        border-radius: var(--border-radius-medium);
+    }
+}
+
+@media only screen and (max-width: $compact-breakpoint){
+    section {
+        flex-direction: column-reverse;
+    }
+
+    .routeWrapper {
+        padding: 0;
+    }
 }
 
 </style>

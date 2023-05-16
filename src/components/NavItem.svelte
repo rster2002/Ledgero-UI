@@ -1,14 +1,10 @@
-<a href={route} use:link>
-    <div class="wrapper {isCurrent && 'current'}">
-        <div class="icon">
-            <div class="innerIcon">
-                <slot name="icon" class="iconSlot" />
-            </div>
-        </div>
-        <div class="text">
-            <slot />
-        </div>
-    </div>
+<a href={route} class="{isCurrent && 'current'}" use:link>
+  <span class="iconSpan">
+    <slot name="icon" class="iconSlot" />
+  </span>
+  <span class="textSpan">
+    <slot />
+  </span>
 </a>
 
 <script lang="ts">
@@ -32,62 +28,85 @@ function checkIsCurrent(location: string, route: string): boolean {
 </script>
 
 <style lang="scss">
+@import "../shared";
 
 a {
-    text-decoration: none;
-}
+    height: 3.5em;
 
-.wrapper {
-    --width: var(--inner-width);
-
-    color: var(--text-on-accent);
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    gap: 0.75em;
+    padding: 0 1em;
 
-    --icon-color: var(--text-on-accent);
+    text-decoration: none;
+    border-radius: var(--border-radius-full);
+    font-weight: 500;
 
-    .icon {
-        min-width: var(--width);
-        height: var(--width);
-
-        display: grid;
-        place-items: center;
-
-        .innerIcon {
-            padding: 0.6em;
-            display: grid;
-            place-items: center;
-
-            border: 2px solid transparent;
-            border-radius: var(--border-radius-small);
-
-            :global(svg) {
-                font-size: 1.4em;
-            }
-        }
-    }
-
-    &.current .icon .innerIcon {
-        border-color: var(--icon-color);
-    }
-
-    .text {
-        padding: 0 0.5em;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        text-decoration-line: none;
-        font-family: var(--header-face);
-        font-weight: 700;
-        white-space: nowrap;
+    :global(svg) {
+        font-size: 1.5em;
     }
 
     &:hover {
-        background-color: var(--text-on-accent);
-        color: var(--accent-color);
+        background-color: #d7e4fc;
+    }
 
-        --icon-color: var(--accent-color);
+    &:active {
+        background-color: #d2e1fc;
+        color: var(--text-on-backdrop);
+    }
+
+    &.current {
+        background-color: var(--tint-100);
+    }
+}
+
+@media only screen and (max-width: $medium-breakpoint){
+    a .textSpan {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: $compact-breakpoint){
+    a {
+        height: unset;
+        background-color: transparent;
+
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+
+        .iconSpan {
+            height: dp(32);
+            width: dp(64);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: var(--border-radius-full);
+        }
+
+        .textSpan {
+            display: initial;
+
+            font-family: var(--font-label-medium-font-family);
+            font-size: var(--font-label-medium-font-size);
+            font-weight: var(--font-label-medium-weight);
+            line-height: var(--font-label-medium-line-height);
+            letter-spacing: var(--font-label-medium-tracking);
+        }
+
+        &.current {
+            background-color: transparent;
+
+            .iconSpan {
+                background-color: var(--tint-100);
+            }
+
+            .textSpan {
+                font-weight: 600;
+            }
+        }
     }
 }
 

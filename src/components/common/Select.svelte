@@ -101,7 +101,7 @@ onMount(() => {
     z-index: 127;
 }
 
-.options {
+.routeWrapper {
     position: fixed;
     padding: 0.5em 0;
     z-index: 128;

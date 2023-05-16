@@ -11,6 +11,10 @@ services:
     ports:
       - "5470:5432"
 
+  memcached:
+    image: docker.io/memcached
+    restart: always
+
   backend:
     image: ledgero-api
     restart: always
@@ -20,6 +24,7 @@ services:
       ROCKET_ADDRESS: 0.0.0.0
       ROCKET_PORT: 8000
       DATABASE_URL: postgres://test:test@database:5432/piggybanks
+      MEMCACHED_URL: memcache://memcached:11211
       PRIVATE_PEM_PATH: /jwtRS256.key
       JWT_EXPIRE_SECONDS: 3600
       JWT_ISSUER: ledgero-ui-dev

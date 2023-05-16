@@ -2,7 +2,7 @@
   <div class="icon {center && 'center'}">
     <slot name="icon" />
   </div>
-  <div class="options">
+  <div class="routeWrapper">
     <slot />
   </div>
 </section>
@@ -28,7 +28,7 @@ section {
         }
     }
 
-    .options {
+    .routeWrapper {
         width: 100%;
     }
 }

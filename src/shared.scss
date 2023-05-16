@@ -1,0 +1,6 @@
+@function dp($param) {
+    @return #{($param/16)}em;
+}
+
+$compact-breakpoint: dp(600);
+$medium-breakpoint: dp(840);
