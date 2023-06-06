@@ -2,5 +2,13 @@
     @return #{($param/16)}em;
 }
 
+@mixin mdl-font($name) {
+    font-family: var(--font-#{$name}-font-family);
+    font-size: var(--font-#{$name}-font-size);
+    font-weight: var(--font-#{$name}-weight);
+    line-height: var(--font-#{$name}-line-height);
+    letter-spacing: var(--font-#{$name}-tracking);
+}
+
 $compact-breakpoint: dp(600);
 $medium-breakpoint: dp(840);

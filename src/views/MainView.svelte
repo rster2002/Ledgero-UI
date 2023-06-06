@@ -1,6 +1,6 @@
 <section>
   <NavBar>
-    <Fab>
+    <Fab on:click={() => push("/transactions/upload")}>
       <UploadIcon />
       <span>Upload CSV</span>
     </Fab>
@@ -40,7 +40,7 @@
 
 <script lang="ts">
 // Imports
-import Router from "svelte-spa-router";
+import Router, { push } from "svelte-spa-router";
 import nestedRoutes from "@/views/nestedRoutes";
 
 // Components
@@ -78,8 +78,8 @@ section {
 
     .routeContainer {
         height: 100%;
-        background-color: var(--background);
-        border-radius: var(--border-radius-medium);
+        //background-color: var(--background);
+        //border-radius: var(--border-radius-medium);
     }
 }
 

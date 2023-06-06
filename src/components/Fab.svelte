@@ -1,4 +1,4 @@
-<button class="fab">
+<button class="fab" on:click>
   <slot />
 </button>
 

@@ -15,7 +15,7 @@ export var hexColor: string;
 
     display: inline-block;
 
-    border-radius: var(--border-radius-tiny);
+    border-radius: var(--border-radius-full);
 }
 
 </style>

@@ -54,7 +54,7 @@ span {
     text-overflow: ellipsis;
     overflow: hidden;
     font-family: var(--header-face);
-    border-radius: var(--border-radius-tiny);
+    border-radius: var(--border-radius-full);
     background-color: #f1f1f1;
 
     &.navigationEnabled {

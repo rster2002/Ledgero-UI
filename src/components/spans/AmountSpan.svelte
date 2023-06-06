@@ -23,7 +23,7 @@ span {
     padding: 0.2em 0.5em;
 
     font-family: var(--header-face);
-    border-radius: var(--border-radius-tiny);
+    border-radius: var(--border-radius-full);
     background-color: var(--positive-amount);
 
     &.negative {

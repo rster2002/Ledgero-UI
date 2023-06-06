@@ -2,6 +2,11 @@
   <slot />
 </nav>
 
+<script lang="ts">
+// Components
+import MenuIcon from "@/components/icons/MenuIcon.svelte";
+</script>
+
 <style lang="scss">
 @import "../shared";
 
