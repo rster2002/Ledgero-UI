@@ -1,16 +1,17 @@
 <div class="transactionListItem" on:click>
-
-
   <div class="text">
     <p class="headline">
       {#if transaction.externalAccount}
         {transaction.externalAccount.name}
-        <ExternalAccountIcon />
+        <ContactIcon />
       {:else}
         {transaction.externalAccountName}
       {/if}
     </p>
     <p class="supportingText">{transaction.description}</p>
+    <p>
+      <FullCategorySpan category={transaction.category} subcategory={transaction.subcategory} />
+    </p>
   </div>
 
   <div class="amount">
@@ -24,7 +25,8 @@ import type TransactionDTO from "@/models/dto/transactions/TransactionDTO";
 
 // Components
 import AmountSpan from "@/components/spans/AmountSpan.svelte";
-import ExternalAccountIcon from "@/components/icons/ExternalAccountIcon.svelte";
+import FullCategorySpan from "@/components/spans/FullCategorySpan.svelte";
+import ContactIcon from "@/components/icons/ContactIcon.svelte";
 
 // Props
 export var transaction: TransactionDTO;

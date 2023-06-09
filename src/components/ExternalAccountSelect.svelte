@@ -29,7 +29,7 @@ import type ExternalAccountDTO from "@/models/dto/externalAccounts/ExternalAccou
 import AsyncContent from "@/components/common/AsyncContent.svelte";
 import Select from "@/components/common/Select.svelte";
 import Option from "@/components/common/Select/Option.svelte";
-import ExternalAccountSpan from "@/components/spans/ExternalAccountSpan.svelte";
+import ExternalAccountSpan from "@/components/spans/ContactSpan.svelte";
 
 // Props
 export var label: string = "External account";

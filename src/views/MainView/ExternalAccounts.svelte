@@ -1,7 +1,7 @@
 <Page>
   <PageHeader>
     <h1>
-      <ExternalAccountIcon />
+      <ContactsIcon />
       External accounts
     </h1>
 
@@ -65,8 +65,8 @@ import AsyncContent from "@/components/common/AsyncContent.svelte";
 import PageHeader from "@/components/fragments/PageHeader.svelte";
 import AmountGridItem from "@/components/fragments/AmountGridItem.svelte";
 import GridNewButton from "@/components/fragments/GridNewButton.svelte";
-import ExternalAccountIcon from "@/components/icons/ExternalAccountIcon.svelte";
 import ExternalAccountDetailsForm from "@/components/forms/ExternalAccountDetailsForm.svelte";
+import ContactsIcon from "@/components/icons/ContactsIcon.svelte";
 
 // Data
 const externalAccountService = new ExternalAccountService();

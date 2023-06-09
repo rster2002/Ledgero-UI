@@ -93,6 +93,8 @@ function conditionsFailed(event) {
     --error-color: #b40e0e;
     --text-on-error: #ffffff;
 
+    --md-sys-color-outline: #79747E;
+
     // Typography
     --font-display-large-font-family: var(--font-family);
     --font-display-large-line-height: 4em;

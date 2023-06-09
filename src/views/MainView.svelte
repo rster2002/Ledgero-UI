@@ -20,14 +20,14 @@
       Categories
     </NavItem>
 
+    <NavItem route="/external-accounts">
+      <ContactsIcon slot="icon" />
+      Contacts
+    </NavItem>
+
     <NavItem route="/bank-accounts">
       <BankAccountIcon slot="icon" />
       Accounts
-    </NavItem>
-
-    <NavItem route="/external-accounts">
-      <ExternalAccountIcon slot="icon" />
-      External
     </NavItem>
   </NavBar>
 
@@ -49,10 +49,10 @@ import NavItem from "@/components/NavItem.svelte";
 import HomeIcon from "@/components/icons/HomeIcon.svelte";
 import TransactionsIcon from "@/components/icons/TransactionsIcon.svelte";
 import CategoriesIcon from "@/components/icons/CategoriesIcon.svelte";
-import ExternalAccountIcon from "@/components/icons/ExternalAccountIcon.svelte";
 import BankAccountIcon from "@/components/icons/BankAccountIcon.svelte";
 import UploadIcon from "@/components/icons/UploadIcon.svelte";
 import Fab from "@/components/Fab.svelte";
+import ContactsIcon from "@/components/icons/ContactsIcon.svelte";
 </script>
 
 <style lang="scss">
