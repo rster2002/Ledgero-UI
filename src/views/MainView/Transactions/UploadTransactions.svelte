@@ -189,7 +189,7 @@ h1 {
 
     button {
         background-color: transparent;
-        border: 2px solid #cecece;
+        border: 2px solid var(--md-sys-color-on-surface);
         border-radius: var(--border-radius-small);
         cursor: pointer;
         font-family: var(--header-face);
@@ -200,7 +200,7 @@ h1 {
         }
 
         &.selected {
-            border-color: var(--accent-color);
+            border-color: var(--md-sys-color-primary);
         }
     }
 }

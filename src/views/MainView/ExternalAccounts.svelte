@@ -2,11 +2,11 @@
   <PageHeader>
     <h1>
       <ContactsIcon />
-      External accounts
+      Contacts
     </h1>
 
     <p>
-      Manage external accounts.
+      Manage contacts
     </p>
   </PageHeader>
 
@@ -25,7 +25,7 @@
 
       <GridNewButton on:click={() => newPopupOpen = true}>
         <AddIcon />
-        New external account
+        New contact
       </GridNewButton>
     </div>
   </AsyncContent>
@@ -37,7 +37,7 @@
 
     <div>
       <AsyncButton asyncClick={createExternalAccount}>
-        Create external account
+        Create contact
       </AsyncButton>
     </div>
   </VLayout>

@@ -17,9 +17,9 @@
     border-radius: var(--border-radius-large);
     border: 0;
     cursor: pointer;
-    box-shadow: #b6a1f0 0 0 0.5em;
-    background-color: var(--accent-color);
-    color: var(--text-on-accent);
+    box-shadow: var(--md-sys-elevation-level3);
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
     font-family: var(--font-label-large-font-family);
     font-size: var(--font-label-large-font-size);
     font-weight: var(--font-label-large-weight);

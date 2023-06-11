@@ -41,22 +41,20 @@ a {
     text-decoration: none;
     border-radius: var(--border-radius-full);
     font-weight: 500;
+    color: var(--md-sys-color-on-surface-variant);
 
     :global(svg) {
         font-size: 1.5em;
     }
 
     &:hover {
-        background-color: #d7e4fc;
-    }
-
-    &:active {
-        background-color: #d2e1fc;
-        color: var(--text-on-backdrop);
+        background-color: rgb(var(--md-sys-color-on-surface-rgb) / var(--md-sys-state-hover-state-layer-opacity));
+        color: var(--md-sys-color-on-surface-variant);
     }
 
     &.current {
-        background-color: var(--tint-100);
+        background-color: var(--md-sys-color-secondary-container);
+        color: var(--md-sys-color-on-secondary-container);
     }
 }
 

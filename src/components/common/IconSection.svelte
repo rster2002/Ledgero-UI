@@ -19,7 +19,7 @@ section {
     flex-direction: row;
 
     .icon {
-        padding: 0 1em;
+        padding: 0 1em 0 0;
         box-sizing: border-box;
 
         &.center {

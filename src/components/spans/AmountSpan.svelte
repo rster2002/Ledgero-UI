@@ -25,6 +25,7 @@ span {
     font-family: var(--header-face);
     border-radius: var(--border-radius-full);
     background-color: var(--positive-amount);
+    color: var(--md-ref-palette-neutral20);
 
     &.negative {
         background-color: var(--negative-amount);

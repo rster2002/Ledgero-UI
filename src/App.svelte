@@ -23,6 +23,7 @@ function conditionsFailed(event) {
 
 <style lang="scss">
 @import "shared";
+@import "./scss/colors";
 
 @font-face {
     font-family: "Roboto";
@@ -53,7 +54,15 @@ function conditionsFailed(event) {
     font-weight: 700;
 }
 
-:root {
+:global(html), :global(body) {
+    height: 100%;
+    width: 100%;
+
+    padding: 0;
+    margin: 0;
+}
+
+:global(body) {
     // Font
     --font-family: "Roboto", sans-serif;
     --header-face: "Ubuntu", sans-serif;
@@ -71,6 +80,14 @@ function conditionsFailed(event) {
     --tint-700: #092A67;
     --tint-800: #061D46;
     --tint-900: #030D21;
+
+    // Elevation
+    --md-sys-elevation-level0: 0 0;
+    --md-sys-elevation-level1: 0 0;
+    --md-sys-elevation-level2: 0 0;
+    --md-sys-elevation-level3: var(--md-ref-palette-neutral87) 0 0 0.5em;
+    --md-sys-elevation-level4: 0 0;
+    --md-sys-elevation-level5: 0 0;
 
     // Backdrop is the global container
     --backdrop: var(--tint-50);
@@ -93,7 +110,70 @@ function conditionsFailed(event) {
     --error-color: #b40e0e;
     --text-on-error: #ffffff;
 
-    --md-sys-color-outline: #79747E;
+    $colors: (
+            "md-ref-palette-primary10": #21005E,
+            "md-ref-palette-primary20": #371E73,
+            "md-ref-palette-primary30": #4F378B,
+            "md-ref-palette-primary40": #6750A4,
+            "md-ref-palette-primary80": #D0BCFF,
+            "md-ref-palette-primary90": #EADDFF,
+            "md-ref-palette-primary100": #FFFFFF,
+
+            "md-ref-palette-secondary10": #1E192B,
+            "md-ref-palette-secondary20": #332D41,
+            "md-ref-palette-secondary30": #4A4458,
+            "md-ref-palette-secondary40": #625B71,
+            "md-ref-palette-secondary80": #CCC2DC,
+            "md-ref-palette-secondary90": #E8DEF8,
+            "md-ref-palette-secondary100": #FFFFFF,
+
+            "md-ref-palette-tertiary10": #370B1E,
+            "md-ref-palette-tertiary20": #492532,
+            "md-ref-palette-tertiary30": #633B48,
+            "md-ref-palette-tertiary40": #7D5260,
+            "md-ref-palette-tertiary80": #EFB8C8,
+            "md-ref-palette-tertiary90": #FFD8E4,
+            "md-ref-palette-tertiary100": #FFFFFF,
+
+            "md-ref-palette-neutral0": #000000,
+            "md-ref-palette-neutral4": #0F0D13,
+            "md-ref-palette-neutral6": #141218,
+            "md-ref-palette-neutral10": #1D1B20,
+            "md-ref-palette-neutral12": #211F26,
+            "md-ref-palette-neutral17": #2B2930,
+            "md-ref-palette-neutral20": #313033,
+            "md-ref-palette-neutral22": #36343B,
+            "md-ref-palette-neutral24": #3B383E,
+            "md-ref-palette-neutral87": #DED8E1,
+            "md-ref-palette-neutral90": #E6E0E9,
+            "md-ref-palette-neutral92": #ECE6F0,
+            "md-ref-palette-neutral94": #F3EDF7,
+            "md-ref-palette-neutral95": #F4EFF4,
+            "md-ref-palette-neutral96": #F7F2FA,
+            "md-ref-palette-neutral98": #FEF7FF,
+            "md-ref-palette-neutral100": #FFFFFF,
+            "md-ref-palette-neutral-variant30": #49454E,
+            "md-ref-palette-neutral-variant50": #79747E,
+            "md-ref-palette-neutral-variant60": #938F99,
+            "md-ref-palette-neutral-variant80": #C4C7C5,
+            "md-ref-palette-neutral-variant90": #CAC4D0,
+
+            "md-ref-palette-error10": #410E0B,
+            "md-ref-palette-error20": #601410,
+            "md-ref-palette-error30": #8C1D18,
+            "md-ref-palette-error40": #B3261E,
+            "md-ref-palette-error80": #F2B8B5,
+            "md-ref-palette-error90": #F9DEDC,
+            "md-ref-palette-error100": #FFFFFF
+    );
+
+    @include create-rgb-color-palette($colors);
+    @include full-color-palette;
+    @include light-color-tokens;
+    @include full-tokens;
+
+    // State labels
+    --md-sys-state-hover-state-layer-opacity: 0.08;
 
     // Typography
     --font-display-large-font-family: var(--font-family);
@@ -228,19 +308,17 @@ function conditionsFailed(event) {
     --medium-break: 52.5em;
 }
 
-:global(html), :global(body) {
-    height: 100%;
-    width: 100%;
-
-    padding: 0;
-    margin: 0;
-
-    font-family: var(--font-family);
-}
-
 main {
     height: 100%;
     width: 100%;
+
+    font-family: var(--font-family);
+
+    &.dark {
+        color-scheme: dark;
+
+        @include dark-color-tokens;
+    }
 }
 
 </style>

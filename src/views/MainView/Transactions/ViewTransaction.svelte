@@ -229,13 +229,6 @@ async function refresh() {
     resetUpdateDetails();
 }
 
-async function deleteSplit(splitId: string) {
-    if (confirm("Are you sure you want to delete this split?")) {
-        await transactionService.deleteSplit(params.id, splitId);
-        promise = refresh();
-    }
-}
-
 function resetUpdateDetails() {
     updateDetails.description = transaction.description;
     updateDetails.categoryId  = transaction.category?.id ?? null;

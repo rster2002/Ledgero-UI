@@ -1,5 +1,5 @@
 @function dp($param) {
-    @return #{($param/16)}em;
+    @return #{($param/16)}rem;
 }
 
 @mixin mdl-font($name) {

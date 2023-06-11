@@ -109,7 +109,7 @@ onMount(() => {
     box-sizing: border-box;
     overflow-y: hidden;
 
-    background-color: #fff;
+    background-color: #ffffff;
     border: 1px solid #cecece;
     display: none;
 

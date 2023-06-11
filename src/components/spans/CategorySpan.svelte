@@ -1,4 +1,4 @@
-<Chip color={categoryColor}>
+<Chip color={category?.hexColor}>
   {#if icon}
     {#if category}
       <CategoryIcon />
@@ -9,14 +9,6 @@
 
   {categoryName}
 </Chip>
-
-<!--<span-->
-<!--&lt;!&ndash;  class="chip {navigation && 'navigationEnabled'} {navigation && category !== null && 'navigation'}"&ndash;&gt;-->
-<!--  on:click={openCategory}-->
-<!--&gt;-->
-
-<!--  {categoryName}-->
-<!--</span>-->
 
 <script lang="ts">
 // Imports
@@ -36,11 +28,6 @@ export var icon = true;
 
 // Computed
 $: categoryName = category?.name ?? "No category";
-$: categoryColor = category?.hexColor ?? "f1f1f1";
-// $: borderColor = category?.hexColor ?? "f1f1f1";
-// $: foregroundColor = textColorBasedOnHex(backgroundColor);
-// $: lightened = lighten(backgroundColor, 0.85);
-// $: style = `background-color: #${backgroundColor}; color: #${foregroundColor};`
 
 // Functions
 function openCategory() {

@@ -15,7 +15,14 @@
   </IconSection>
 
   <IconSection center>
-    <ContactIcon slot="icon" />
+    <svelte:fragment slot="icon">
+      {#if transaction.externalAccount}
+        <ContactIcon />
+      {:else}
+        <NoContactIcon />
+      {/if}
+    </svelte:fragment>
+
     <ExternalAccountSpan
       icon={false}
       externalAccount={transaction.externalAccount}
@@ -45,6 +52,7 @@ import ExternalAccountSpan from "@/components/spans/ContactSpan.svelte";
 import SubcategoryIcon from "@/components/icons/SubcategoryIcon.svelte";
 import SubcategorySpan from "@/components/spans/SubcategorySpan.svelte";
 import ContactIcon from "@/components/icons/ContactIcon.svelte";
+import NoContactIcon from "@/components/icons/NoContactIcon.svelte";
 
 // Props
 export var transaction: TransactionDTO;

@@ -27,7 +27,7 @@
         <Card>
           <VLayout>
             <HLayout>
-              <Button on:click={() => editPopupOpen = true}>
+              <Button icon outline on:click={() => editPopupOpen = true}>
                 <EditIcon />
                 Edit external account
               </Button>

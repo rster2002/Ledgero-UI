@@ -1,4 +1,4 @@
-<Chip color={subcategoryColor}>
+<Chip color={subcategory?.hexColor}>
   {#if icon}
     {#if subcategory}
       <SubcategoryIcon />
@@ -27,7 +27,6 @@ export var icon = true;
 
 // Computed
 $: subcategoryName = subcategory?.name ?? "No subcategory";
-$: subcategoryColor = subcategory?.hexColor ?? "f1f1f1";
 </script>
 
 <style lang="scss">

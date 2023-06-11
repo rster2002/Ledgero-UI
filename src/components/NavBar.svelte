@@ -16,7 +16,7 @@ nav {
     padding: dp(32);
     box-sizing: border-box;
 
-    background-color: var(--backdrop);
+    background-color: var(--md-sys-color-surface);
     color: var(--text-on-backdrop);
 
     :global(.fab) {

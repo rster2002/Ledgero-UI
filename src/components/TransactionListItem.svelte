@@ -46,11 +46,11 @@ export var transaction: TransactionDTO;
     padding: dp(8) dp(24) dp(8) dp(16);
     box-sizing: border-box;
 
-    border-bottom: dp(1) var(--tint-50) solid;
+    border-bottom: dp(1) var(--md-sys-color-surface-variant) solid;
     cursor: pointer;
 
     &:hover {
-        background-color: var(--tint-50);
+        background-color: rgb(var(--md-sys-color-on-surface-rgb) / var(--md-sys-state-hover-state-layer-opacity));
     }
 
     .headline {

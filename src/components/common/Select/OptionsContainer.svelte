@@ -90,7 +90,7 @@ onMount(() => {
     overflow-y: hidden;
     display: none;
 
-    background-color: #fff;
+    background-color: var(--md-sys-color-surface-variant);
     border: 1px solid #cecece;
 
     &.open {

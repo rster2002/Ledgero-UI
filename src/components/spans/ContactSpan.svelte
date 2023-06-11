@@ -1,4 +1,4 @@
-<Chip color={accountColor}>
+<Chip color={externalAccount?.hexColor}>
   {#if icon}
     {#if externalAccount}
       <ContactIcon />
@@ -27,7 +27,6 @@ export var icon = true;
 
 // Computed
 $: accountName = externalAccount?.name ?? externalAccountName ?? "No external account";
-$: accountColor = externalAccount?.hexColor ?? "f1f1f1";
 </script>
 
 <style lang="scss">
