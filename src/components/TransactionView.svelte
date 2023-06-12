@@ -20,7 +20,7 @@
         <VLayout>
           <TransactionDetails {transaction} />
           <HLayout>
-            <Button icon outline>
+            <Button on:click={() => editTransactionPopupOpen = true} icon outline>
               <EditIcon />
               Edit details
             </Button>
@@ -88,26 +88,59 @@
   </div>
 </div>
 
-<Popup bind:open={newSplitPopupOpen} min>
-  <div class="minForm">
-    <VLayout>
-      <CardHeader>
-        <h2>New split</h2>
-      </CardHeader>
+<Dialog bind:open={newSplitPopupOpen} fullScreen>
+  <h2 slot="header">
+    Create split
+  </h2>
 
-      <Input bind:value={newSplit.amount} label="Amount" type="number" />
-      <Input bind:value={newSplit.description} label="Description" />
+  <VLayout>
+    <Input bind:value={newSplit.amount} label="Amount" type="number" />
+    <Input bind:value={newSplit.description} label="Description" />
+  </VLayout>
 
-      <div>
-        <CategorySelect bind:categoryId={newSplit.categoryId} />
-      </div>
+  <svelte:fragment slot="actions">
+    <Button text on:click={() => newSplitPopupOpen = false}>
+      Cancel
+    </Button>
+    <Button text>
+      Create
+    </Button>
+  </svelte:fragment>
 
-      <AsyncButton asyncClick={createSplit}>
-        Create
-      </AsyncButton>
-    </VLayout>
-  </div>
-</Popup>
+  <svelte:fragment slot="fullscreen-actions">
+    <Button text>
+      Create
+    </Button>
+  </svelte:fragment>
+</Dialog>
+
+<Dialog bind:open={editTransactionPopupOpen} fullScreen>
+  <h2 slot="header">
+    Edit details
+  </h2>
+
+  <VLayout>
+    <UpdateTransactionDetailsForm
+      externalAccountName={transaction.externalAccountName}
+      bind:updateDetails
+    />
+  </VLayout>
+
+  <svelte:fragment slot="actions">
+    <Button text on:click={() => newSplitPopupOpen = false}>
+      Cancel
+    </Button>
+    <Button text>
+      Save
+    </Button>
+  </svelte:fragment>
+
+  <svelte:fragment slot="fullscreen-actions">
+    <Button text>
+      Save
+    </Button>
+  </svelte:fragment>
+</Dialog>
 
 <SuccessSnackbar message={successMessage} />
 <ErrorSnackbar message={errorMessage} />
@@ -139,9 +172,11 @@ import CategorySelect from "@/components/CategorySelect.svelte";
 import Input from "@/components/common/Input.svelte";
 import CardHeader from "@/components/fragments/CardHeader.svelte";
 import AsyncButton from "@/components/common/AsyncButton.svelte";
-import Popup from "@/components/common/Popup.svelte";
 import HLayout from "@/components/layouts/HLayout.svelte";
 import SuggestionIcon from "@/components/icons/SuggestionIcon.svelte";
+import Dialog from "@/components/common/Dialog.svelte";
+import UpdateTransactionDetailsForm from "@/components/forms/UpdateTransactionDetailsForm.svelte";
+import type UpdateTransactionDetailsDTO from "@/models/dto/transactions/UpdateTransactionDetailsDTO";
 
 // Props
 export var transaction: TransactionDTO;
@@ -151,12 +186,19 @@ const transactionService = new TransactionService();
 let successMessage = [""];
 let errorMessage = [""];
 let splits: SplitDTO[] = [];
+let updateDetails: UpdateTransactionDetailsDTO = {
+    description: "",
+    categoryId: null,
+    subcategoryId: null,
+    externalAccountId: null,
+};
 let newSplit: NewSplitDTO = {
     amount: 0,
     description: "",
     categoryId: null,
 };
 let newSplitPopupOpen = false;
+let editTransactionPopupOpen = false;
 let suggestionsAvailable = false; // TODO implement
 let promise;
 

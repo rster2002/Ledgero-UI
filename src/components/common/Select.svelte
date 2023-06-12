@@ -3,7 +3,7 @@
   bind:this={targetEl}
   on:click={() => open = true}
 >
-  <InputWrapper {label} padding>
+  <InputWrapper {label} padding active>
     <slot name="selected" />
   </InputWrapper>
 </div>
