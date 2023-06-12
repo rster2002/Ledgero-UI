@@ -1,4 +1,4 @@
-<span {style} class="{navigation && 'navigationEnabled'} {navigation && subcategory !== null && 'navigation'}">
+<Chip color={subcategory?.hexColor}>
   {#if icon}
     {#if subcategory}
       <SubcategoryIcon />
@@ -7,18 +7,18 @@
     {/if}
   {/if}
 
-  {categoryName}
-</span>
+  {subcategoryName}
+</Chip>
 
 <script lang="ts">
 // Imports
-import textColorBasedOnHex from "@/utils/textForBackground";
+import textColorBasedOnHex, { lighten } from "@/utils/textForBackground";
 import type SlimSubcategoryDTO from "@/models/dto/categories/subcategories/SlimSubcategoryDTO";
 
 // Components
-import CategoryIcon from "@/components/icons/CategoryIcon.svelte";
 import NoCategoryIcon from "@/components/icons/NoCategoryIcon.svelte";
 import SubcategoryIcon from "@/components/icons/SubcategoryIcon.svelte";
+import Chip from "@/components/spans/Chip.svelte";
 
 // Props
 export var subcategory: SlimSubcategoryDTO | null;
@@ -26,10 +26,7 @@ export var navigation: boolean = false;
 export var icon = true;
 
 // Computed
-$: categoryName = subcategory?.name ?? "No subcategory";
-$: backgroundColor = subcategory?.hexColor ?? "f1f1f1";
-$: foregroundColor = textColorBasedOnHex(backgroundColor);
-$: style = `background-color: #${backgroundColor}; color: #${foregroundColor};`
+$: subcategoryName = subcategory?.name ?? "No subcategory";
 </script>
 
 <style lang="scss">
@@ -45,7 +42,7 @@ span {
     text-overflow: ellipsis;
     overflow: hidden;
     font-family: var(--header-face);
-    border-radius: var(--border-radius-tiny);
+    border-radius: var(--border-radius-full);
     background-color: #f1f1f1;
 
     &.navigationEnabled {

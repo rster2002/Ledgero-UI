@@ -20,3 +20,18 @@ export default function textColorBasedOnHex(hex: string) {
 
     return (brightness > 175) ? "000000" : "ffffff";
 }
+
+export function lighten(hex: string, f: number = 0) {
+    let rgb = hexToRgb(hex);
+
+    let r = factor(rgb.r, f);
+    let g = factor(rgb.g, f);
+    let b = factor(rgb.b, f);
+
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
+function factor(v: number, f: number): number {
+    let distance = 255 - v;
+    return v + (distance * f);
+}

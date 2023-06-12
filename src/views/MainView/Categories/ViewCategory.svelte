@@ -21,12 +21,12 @@
         <Card>
           <VLayout>
             <HLayout>
-              <Button on:click={() => editPopupOpen = true}>
+              <Button icon outline on:click={() => editPopupOpen = true}>
                 <EditIcon />
                 Edit category
               </Button>
 
-              <AsyncButton asyncClick={deleteCategory} --accent-color="var(--negative-amount-on-bg)" --tint-50="#FFEBEB">
+              <AsyncButton icon text asyncClick={deleteCategory} --accent-color="var(--negative-amount-on-bg)" --tint-50="#FFEBEB">
                 <DeleteIcon />
                 Delete category
               </AsyncButton>

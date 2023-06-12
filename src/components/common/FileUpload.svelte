@@ -71,15 +71,15 @@ input {
     width: 100%;
     height: 150px;
     margin-bottom: 16px;
-    border: 2px solid var(--accent-color);
+    border: 2px solid var(--md-sys-color-primary);
     box-sizing: border-box;
     border-radius: var(--border-radius-small);
-    color: var(--accent-color);
+    color: var(--md-sys-color-primary);
     cursor: pointer;
 
     &.draggingOver {
-        background-color: var(--accent-color);
-        color: var(--text-on-accent);
+        background-color: var(--md-sys-color-primary);
+        color: var(--md-sys-color-on-primary);
     }
 
     h1 {

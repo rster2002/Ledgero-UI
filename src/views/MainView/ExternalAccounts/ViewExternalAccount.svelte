@@ -27,7 +27,7 @@
         <Card>
           <VLayout>
             <HLayout>
-              <Button on:click={() => editPopupOpen = true}>
+              <Button icon outline on:click={() => editPopupOpen = true}>
                 <EditIcon />
                 Edit external account
               </Button>
@@ -94,7 +94,7 @@ import CardHeader from "@/components/fragments/CardHeader.svelte";
 import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";
 import ErrorSnackbar from "@/components/Snackbars/ErrorSnackbar.svelte";
 import ExternalAccountDetailsForm from "@/components/forms/ExternalAccountDetailsForm.svelte";
-import ExternalAccountSpan from "@/components/spans/ExternalAccountSpan.svelte";
+import ExternalAccountSpan from "@/components/spans/ContactSpan.svelte";
 import IconSection from "@/components/common/IconSection.svelte";
 import TextIcon from "@/components/icons/TextIcon.svelte";
 import CategoryIcon from "@/components/icons/CategoryIcon.svelte";

@@ -1,4 +1,9 @@
-<Button on:click={click}>
+<Button
+  on:click={click}
+  {outline}
+  {text}
+  {icon}
+>
     {#if !loading}
         <slot />
     {:else}
@@ -13,6 +18,9 @@ import Spinner from "@/components/fragments/Spinner.svelte";
 
 // Props
 export var asyncClick: <T>() => Promise<T>;
+export var outline = false;
+export var text = false;
+export var icon = false;
 
 // Data
 let loading = false;

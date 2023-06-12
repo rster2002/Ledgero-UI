@@ -2,7 +2,7 @@
   <div class="icon {center && 'center'}">
     <slot name="icon" />
   </div>
-  <div class="options">
+  <div class="routeWrapper">
     <slot />
   </div>
 </section>
@@ -19,7 +19,7 @@ section {
     flex-direction: row;
 
     .icon {
-        padding: 0 1em;
+        padding: 0 1em 0 0;
         box-sizing: border-box;
 
         &.center {
@@ -28,7 +28,7 @@ section {
         }
     }
 
-    .options {
+    .routeWrapper {
         width: 100%;
     }
 }

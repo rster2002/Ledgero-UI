@@ -1,14 +1,14 @@
-<span {style}>
+<Chip color={externalAccount?.hexColor}>
   {#if icon}
     {#if externalAccount}
-      <ExternalAccountIcon />
+      <ContactIcon />
     {:else}
-      <NoExternalAccountIcon />
+      <NoContactIcon />
     {/if}
   {/if}
 
   {accountName}
-</span>
+</Chip>
 
 <script lang="ts">
 // Imports
@@ -16,8 +16,9 @@ import type ExternalAccountDTO from "@/models/dto/externalAccounts/ExternalAccou
 import textColorBasedOnHex from "@/utils/textForBackground";
 
 // Components
-import ExternalAccountIcon from "@/components/icons/ExternalAccountIcon.svelte";
-import NoExternalAccountIcon from "@/components/icons/NoExternalAccountIcon.svelte";
+import Chip from "@/components/spans/Chip.svelte";
+import NoContactIcon from "@/components/icons/NoContactIcon.svelte";
+import ContactIcon from "@/components/icons/ContactIcon.svelte";
 
 // Props
 export var externalAccount: ExternalAccountDTO | null;
@@ -26,9 +27,6 @@ export var icon = true;
 
 // Computed
 $: accountName = externalAccount?.name ?? externalAccountName ?? "No external account";
-$: backgroundColor = externalAccount?.hexColor ?? "f1f1f1";
-$: foregroundColor = textColorBasedOnHex(backgroundColor);
-$: style = `background-color: #${backgroundColor}; color: #${foregroundColor};`
 </script>
 
 <style lang="scss">
@@ -41,7 +39,7 @@ span {
     padding: 0.2em 0.5em;
 
     font-family: var(--header-face);
-    border-radius: var(--border-radius-tiny);
+    border-radius: var(--border-radius-full);
     background-color: #f1f1f1;
 }
 

@@ -1,12 +1,12 @@
 <Page>
   <PageHeader>
     <h1>
-      <ExternalAccountIcon />
-      External accounts
+      <ContactsIcon />
+      Contacts
     </h1>
 
     <p>
-      Manage external accounts.
+      Manage contacts
     </p>
   </PageHeader>
 
@@ -25,7 +25,7 @@
 
       <GridNewButton on:click={() => newPopupOpen = true}>
         <AddIcon />
-        New external account
+        New contact
       </GridNewButton>
     </div>
   </AsyncContent>
@@ -37,7 +37,7 @@
 
     <div>
       <AsyncButton asyncClick={createExternalAccount}>
-        Create external account
+        Create contact
       </AsyncButton>
     </div>
   </VLayout>
@@ -65,8 +65,8 @@ import AsyncContent from "@/components/common/AsyncContent.svelte";
 import PageHeader from "@/components/fragments/PageHeader.svelte";
 import AmountGridItem from "@/components/fragments/AmountGridItem.svelte";
 import GridNewButton from "@/components/fragments/GridNewButton.svelte";
-import ExternalAccountIcon from "@/components/icons/ExternalAccountIcon.svelte";
 import ExternalAccountDetailsForm from "@/components/forms/ExternalAccountDetailsForm.svelte";
+import ContactsIcon from "@/components/icons/ContactsIcon.svelte";
 
 // Data
 const externalAccountService = new ExternalAccountService();
