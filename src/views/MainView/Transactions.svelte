@@ -1,10 +1,17 @@
 <div class="wrapper">
   <div class="transactions">
-
     <Card>
       {#each transactions as transaction}
         <TransactionListItem {transaction} on:click={() => openTransaction(transaction)} />
       {/each}
+
+      {#if !transactionsDone}
+        <footer>
+          <AsyncButton asyncClick={nextPage}>
+            Load more
+          </AsyncButton>
+        </footer>
+      {/if}
     </Card>
   </div>
 
@@ -26,10 +33,12 @@ import type TransactionDTO from "@/models/dto/transactions/TransactionDTO";
 import Card from "@/components/common/Card.svelte";
 import TransactionListItem from "@/components/TransactionListItem.svelte";
 import TransactionView from "@/components/TransactionView.svelte";
+import AsyncButton from "@/components/common/AsyncButton.svelte";
 
 // Data
 const transactionsService = new TransactionService();
 let transactions: TransactionDTO[] = [];
+let transactionsDone = false;
 let transactionPaginator = transactionsService.createTransactionsIterator();
 let openedTransaction: TransactionDTO | null = null;
 
@@ -39,14 +48,26 @@ function openTransaction(transaction: TransactionDTO) {
   openedTransaction = transaction;
 }
 
+async function nextPage() {
+    let iteration = await transactionPaginator.next();
+
+    transactionsDone = iteration.done;
+
+    transactions = [
+        ...transactions,
+        ...iteration.value,
+    ]
+}
+
 async function refresh() {
-    transactions = (await transactionPaginator.next()).value;
+    await nextPage();
 }
 
 const promise = refresh();
 </script>
 
 <style lang="scss">
+@import "../../shared";
 
 .wrapper {
     height: 100%;
@@ -60,17 +81,23 @@ const promise = refresh();
     .transactions  {
         height: 100%;
 
-        grid-column: span 3;
+        grid-column: span 4;
     }
 
     .details  {
-        grid-column: span 9;
+        grid-column: span 8;
     }
 
     :global(.card) {
         height: 100%;
         overflow-y: auto;
     }
+}
+
+.transactions footer {
+    display: grid;
+    place-items: center;
+    padding: dp(16);
 }
 
 </style>

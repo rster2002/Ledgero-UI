@@ -89,6 +89,8 @@ onMount(() => {
 
 .select {
     cursor: default;
+
+    background-color: inherit;
 }
 
 .scim {

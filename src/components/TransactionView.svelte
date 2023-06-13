@@ -127,7 +127,7 @@
   </VLayout>
 
   <svelte:fragment slot="actions">
-    <Button text on:click={() => newSplitPopupOpen = false}>
+    <Button text on:click={cancelEditingTransaction}>
       Cancel
     </Button>
     <Button text>
@@ -212,6 +212,18 @@ async function refresh() {
     splits = await transactionService.getSplitsFor(transaction.id);
 }
 
+function resetUpdateDetails() {
+    updateDetails.description = transaction.description;
+    updateDetails.categoryId  = transaction.category?.id ?? null;
+    updateDetails.subcategoryId  = transaction.subcategory?.id ?? null;
+    updateDetails.externalAccountId  = transaction.externalAccount?.id ?? null;
+}
+
+function cancelEditingTransaction() {
+    resetUpdateDetails();
+    editTransactionPopupOpen = false;
+}
+
 async function createSplit() {
     let split = {
         ...newSplit,
@@ -241,10 +253,16 @@ async function deleteSplit(splitId: string) {
         promise = refresh();
     }
 }
+
+resetUpdateDetails();
 </script>
 
 <style lang="scss">
 @import "../shared";
+
+.transactionView {
+    container-name: details;
+}
 
 h2 {
     font-size: dp(38);
@@ -267,5 +285,9 @@ h3 {
 .splits {
     grid-column: span 2;
 }
+
+//@container details (max-width: 400px) {
+//
+//}
 
 </style>
