@@ -1,4 +1,4 @@
-<main>
+<main class="dark">
     <Router {routes} on:conditionsFailed={conditionsFailed} />
 </main>
 

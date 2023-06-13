@@ -1,6 +1,6 @@
 <div class="transactionView">
   <div class="grid">
-    <Card>
+    <Card outlineCompact>
       <header>
         <h2>
           <AmountSpan amount={transaction.amount} sign />
@@ -16,7 +16,7 @@
     </Card>
 
     <div class="details">
-      <Card>
+      <Card outlineCompact>
         <VLayout>
           <TransactionDetails {transaction} />
           <HLayout wrap>
@@ -37,7 +37,7 @@
     </div>
 
     <div class="splits">
-      <Card>
+      <Card outlineCompact>
         <VLayout>
           <header>
             <Button icon on:click={() => newSplitPopupOpen = true}>
@@ -266,7 +266,7 @@ resetUpdateDetails();
 }
 
 h2 {
-    font-size: dp(38);
+    @include mdl-font(headline-medium);
 }
 
 h3 {

@@ -1,26 +1,34 @@
 <div class="wrapper">
   <div class="transactions">
-    <Card>
-      {#each transactions as transaction}
-        <TransactionListItem {transaction} on:click={() => openTransaction(transaction)} />
-      {/each}
+    <Card disappearCompact>
+      <AsyncContent {promise}>
+        {#each transactions as transaction}
+          <TransactionListItem {transaction} on:click={() => openTransaction(transaction)} />
+        {/each}
 
-      {#if !transactionsDone}
-        <footer>
-          <AsyncButton asyncClick={nextPage}>
-            Load more
-          </AsyncButton>
-        </footer>
-      {/if}
+        {#if !transactionsDone}
+          <footer>
+            <AsyncButton asyncClick={nextPage}>
+              Load more
+            </AsyncButton>
+          </footer>
+        {/if}
+      </AsyncContent>
     </Card>
   </div>
 
-  <div class="details {openedTransaction !== null && 'open'}">
-    {#if openedTransaction === null}
-      No transaction open
-    {:else}
-      <TransactionView transaction={openedTransaction} />
-    {/if}
+  <div class="details">
+    <InlinePage
+      title="Transaction"
+      open={openedTransaction !== null}
+      on:close={() => openedTransaction = null}
+    >
+      {#if openedTransaction === null}
+        No transaction open
+      {:else}
+        <TransactionView transaction={openedTransaction} />
+      {/if}
+    </InlinePage>
   </div>
 </div>
 
@@ -34,6 +42,8 @@ import Card from "@/components/common/Card.svelte";
 import TransactionListItem from "@/components/TransactionListItem.svelte";
 import TransactionView from "@/components/TransactionView.svelte";
 import AsyncButton from "@/components/common/AsyncButton.svelte";
+import InlinePage from "@/components/InlinePage.svelte";
+import AsyncContent from "@/components/common/AsyncContent.svelte";
 
 // Data
 const transactionsService = new TransactionService();
@@ -73,6 +83,9 @@ const promise = refresh();
     height: 100%;
     width: 100%;
 
+    container-type: inline-size;
+    container-name: transactions;
+
     display: grid;
     grid-gap: dp(24);
     grid-template-columns: repeat(12, 1fr);
@@ -100,7 +113,7 @@ const promise = refresh();
     padding: dp(16);
 }
 
-@media only screen and (max-width: $medium-breakpoint){
+@container transactions (max-width: 40rem) {
     .wrapper {
         .transactions {
             grid-column: span 6;
@@ -112,7 +125,11 @@ const promise = refresh();
     }
 }
 
-@media only screen and (max-width: $compact-breakpoint){
+//@media only screen and (max-width: $medium-breakpoint){
+
+//}
+
+@media only screen and (max-width: $compact-breakpoint) {
     .wrapper {
         display: block;
 
@@ -123,24 +140,24 @@ const promise = refresh();
             }
         }
 
-        .details {
-            height: 100%;
-            width: 100%;
-
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            padding: dp(24);
-            box-sizing: border-box;
-            overflow-y: auto;
-
-            background-color: var(--md-sys-color-surface);
-
-            &.open {
-                display: block;
-            }
-        }
+        //.details {
+        //    height: 100%;
+        //    width: 100%;
+        //
+        //    display: none;
+        //    position: fixed;
+        //    top: 0;
+        //    left: 0;
+        //    padding: dp(24);
+        //    box-sizing: border-box;
+        //    overflow-y: auto;
+        //
+        //    background-color: var(--md-sys-color-surface);
+        //
+        //    &.open {
+        //        display: block;
+        //    }
+        //}
     }
 }
 

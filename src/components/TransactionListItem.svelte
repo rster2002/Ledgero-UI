@@ -8,7 +8,11 @@
         {transaction.externalAccountName}
       {/if}
     </p>
-    <p class="supportingText">{transaction.description}</p>
+
+    <p class="supportingText">
+      {transaction.description}
+    </p>
+
     <p>
       <FullCategorySpan category={transaction.category} subcategory={transaction.subcategory} />
     </p>
@@ -56,11 +60,23 @@ export var transaction: TransactionDTO;
     .headline {
         margin: 0;
 
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+
         @include mdl-font(body-large);
     }
 
     .supportingText {
         margin: 0;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
 
         @include mdl-font(body-medium);
     }
