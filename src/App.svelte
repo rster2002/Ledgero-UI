@@ -81,14 +81,6 @@ function conditionsFailed(event) {
     --tint-800: #061D46;
     --tint-900: #030D21;
 
-    // Elevation
-    --md-sys-elevation-level0: 0 0;
-    --md-sys-elevation-level1: 0 0;
-    --md-sys-elevation-level2: 0 0;
-    --md-sys-elevation-level3: var(--md-ref-palette-neutral87) 0 0 0.5em;
-    --md-sys-elevation-level4: 0 0;
-    --md-sys-elevation-level5: 0 0;
-
     // Backdrop is the global container
     --backdrop: var(--tint-50);
     --header-on-backdrop: #000000;
@@ -159,60 +151,28 @@ function conditionsFailed(event) {
         "md-ref-palette-tertiary98": #fefdc2,
         "md-ref-palette-tertiary99": #fffbff,
         "md-ref-palette-tertiary100": #ffffff,
-            "md-ref-palette-neutral0": #000000,
-            "md-ref-palette-neutral4": #0F0D13,
-            "md-ref-palette-neutral6": #141218,
-            "md-ref-palette-neutral10": #1D1B20,
-            "md-ref-palette-neutral12": #211F26,
-            "md-ref-palette-neutral17": #2B2930,
-            "md-ref-palette-neutral20": #313033,
-            "md-ref-palette-neutral22": #36343B,
-            "md-ref-palette-neutral24": #3B383E,
-            "md-ref-palette-neutral87": #DED8E1,
-            "md-ref-palette-neutral90": #E6E0E9,
-            "md-ref-palette-neutral92": #ECE6F0,
-            "md-ref-palette-neutral94": #F3EDF7,
-            "md-ref-palette-neutral95": #F4EFF4,
-            "md-ref-palette-neutral96": #F7F2FA,
-            "md-ref-palette-neutral98": #FEF7FF,
-            "md-ref-palette-neutral100": #FFFFFF,
-        //"md-ref-palette-neutral0": #000000,
-        //"md-ref-palette-neutral10": #201a17,
-        //"md-ref-palette-neutral20": #362f2b,
-        //"md-ref-palette-neutral25": #413a36,
-        //"md-ref-palette-neutral30": #4d4541,
-        //"md-ref-palette-neutral35": #59514d,
-        //"md-ref-palette-neutral40": #655d58,
-        //"md-ref-palette-neutral50": #7e7571,
-        //"md-ref-palette-neutral60": #998f8a,
-        //"md-ref-palette-neutral70": #b4a9a4,
-        //"md-ref-palette-neutral80": #d0c4bf,
-        //"md-ref-palette-neutral90": #ece0da,
-        //"md-ref-palette-neutral95": #fbeee8,
-        //"md-ref-palette-neutral98": #fff8f5,
-        //"md-ref-palette-neutral99": #fffbff,
-        //"md-ref-palette-neutral100": #ffffff,
-            "md-ref-palette-neutral-variant30": #49454E,
-            "md-ref-palette-neutral-variant50": #79747E,
-            "md-ref-palette-neutral-variant60": #938F99,
-            "md-ref-palette-neutral-variant80": #C4C7C5,
-            "md-ref-palette-neutral-variant90": #CAC4D0,
-        //"md-ref-palette-neutral-variant0": #000000,
-        //"md-ref-palette-neutral-variant10": #241913,
-        //"md-ref-palette-neutral-variant20": #3a2e26,
-        //"md-ref-palette-neutral-variant25": #463931,
-        //"md-ref-palette-neutral-variant30": #52443c,
-        //"md-ref-palette-neutral-variant35": #5e4f47,
-        //"md-ref-palette-neutral-variant40": #6b5b53,
-        //"md-ref-palette-neutral-variant50": #84746a,
-        //"md-ref-palette-neutral-variant60": #9f8d83,
-        //"md-ref-palette-neutral-variant70": #bba79d,
-        //"md-ref-palette-neutral-variant80": #d7c3b8,
-        //"md-ref-palette-neutral-variant90": #f4ded3,
-        //"md-ref-palette-neutral-variant95": #ffede4,
-        //"md-ref-palette-neutral-variant98": #fff8f5,
-        //"md-ref-palette-neutral-variant99": #fffbff,
-        //"md-ref-palette-neutral-variant100": #ffffff,
+        "md-ref-palette-neutral0": #000000,
+        "md-ref-palette-neutral4": #0F0D13,
+        "md-ref-palette-neutral6": #141218,
+        "md-ref-palette-neutral10": #1D1B20,
+        "md-ref-palette-neutral12": #211F26,
+        "md-ref-palette-neutral17": #2B2930,
+        "md-ref-palette-neutral20": #313033,
+        "md-ref-palette-neutral22": #36343B,
+        "md-ref-palette-neutral24": #3B383E,
+        "md-ref-palette-neutral87": #DED8E1,
+        "md-ref-palette-neutral90": #E6E0E9,
+        "md-ref-palette-neutral92": #ECE6F0,
+        "md-ref-palette-neutral94": #F3EDF7,
+        "md-ref-palette-neutral95": #F4EFF4,
+        "md-ref-palette-neutral96": #F7F2FA,
+        "md-ref-palette-neutral98": #FEF7FF,
+        "md-ref-palette-neutral100": #FFFFFF,
+        "md-ref-palette-neutral-variant30": #49454E,
+        "md-ref-palette-neutral-variant50": #79747E,
+        "md-ref-palette-neutral-variant60": #938F99,
+        "md-ref-palette-neutral-variant80": #C4C7C5,
+        "md-ref-palette-neutral-variant90": #CAC4D0,
         "md-ref-palette-error0": #000000,
         "md-ref-palette-error10": #410002,
         "md-ref-palette-error20": #690005,
@@ -231,63 +191,18 @@ function conditionsFailed(event) {
         "md-ref-palette-error100": #ffffff
     );
 
-    //$colors: (
-    //        "md-ref-palette-primary10": #21005E,
-    //        "md-ref-palette-primary20": #371E73,
-    //        "md-ref-palette-primary30": #4F378B,
-    //        "md-ref-palette-primary40": #6750A4,
-    //        "md-ref-palette-primary80": #D0BCFF,
-    //        "md-ref-palette-primary90": #EADDFF,
-    //        "md-ref-palette-primary100": #FFFFFF,
-    //
-    //        "md-ref-palette-secondary10": #1E192B,
-    //        "md-ref-palette-secondary20": #332D41,
-    //        "md-ref-palette-secondary30": #4A4458,
-    //        "md-ref-palette-secondary40": #625B71,
-    //        "md-ref-palette-secondary80": #CCC2DC,
-    //        "md-ref-palette-secondary90": #E8DEF8,
-    //        "md-ref-palette-secondary100": #FFFFFF,
-    //
-    //        "md-ref-palette-tertiary10": #370B1E,
-    //        "md-ref-palette-tertiary20": #492532,
-    //        "md-ref-palette-tertiary30": #633B48,
-    //        "md-ref-palette-tertiary40": #7D5260,
-    //        "md-ref-palette-tertiary80": #EFB8C8,
-    //        "md-ref-palette-tertiary90": #FFD8E4,
-    //        "md-ref-palette-tertiary100": #FFFFFF,
-    //
-    //        "md-ref-palette-neutral0": #000000,
-    //        "md-ref-palette-neutral4": #0F0D13,
-    //        "md-ref-palette-neutral6": #141218,
-    //        "md-ref-palette-neutral10": #1D1B20,
-    //        "md-ref-palette-neutral12": #211F26,
-    //        "md-ref-palette-neutral17": #2B2930,
-    //        "md-ref-palette-neutral20": #313033,
-    //        "md-ref-palette-neutral22": #36343B,
-    //        "md-ref-palette-neutral24": #3B383E,
-    //        "md-ref-palette-neutral87": #DED8E1,
-    //        "md-ref-palette-neutral90": #E6E0E9,
-    //        "md-ref-palette-neutral92": #ECE6F0,
-    //        "md-ref-palette-neutral94": #F3EDF7,
-    //        "md-ref-palette-neutral95": #F4EFF4,
-    //        "md-ref-palette-neutral96": #F7F2FA,
-    //        "md-ref-palette-neutral98": #FEF7FF,
-    //        "md-ref-palette-neutral100": #FFFFFF,
-
-    //
-    //        "md-ref-palette-error10": #410E0B,
-    //        "md-ref-palette-error20": #601410,
-    //        "md-ref-palette-error30": #8C1D18,
-    //        "md-ref-palette-error40": #B3261E,
-    //        "md-ref-palette-error80": #F2B8B5,
-    //        "md-ref-palette-error90": #F9DEDC,
-    //        "md-ref-palette-error100": #FFFFFF
-    //);
-
     @include create-rgb-color-palette($colors);
     @include full-color-palette;
     @include light-color-tokens;
     @include full-tokens;
+
+    // Elevation
+    --md-sys-elevation-level0: 0 0;
+    --md-sys-elevation-level1: 0 0;
+    --md-sys-elevation-level2: 0 0;
+    --md-sys-elevation-level3: var(--md-sys-shadow) 0 0 0.5em;
+    --md-sys-elevation-level4: 0 0;
+    --md-sys-elevation-level5: 0 0;
 
     // State labels
     --md-sys-state-hover-state-layer-opacity: 0.08;
@@ -431,7 +346,7 @@ main {
 
     font-family: var(--font-family);
 
-    &.dark {
+    &:global(.dark) {
         color-scheme: dark;
 
         @include dark-color-tokens;

@@ -72,6 +72,7 @@ a {
         padding: 0;
         display: flex;
         flex-direction: column;
+        color: var(--md-sys-color-on-surface-variant);
 
         .iconSpan {
             height: dp(32);
@@ -87,22 +88,19 @@ a {
         .textSpan {
             display: initial;
 
-            font-family: var(--font-label-medium-font-family);
-            font-size: var(--font-label-medium-font-size);
-            font-weight: var(--font-label-medium-weight);
-            line-height: var(--font-label-medium-line-height);
-            letter-spacing: var(--font-label-medium-tracking);
+            @include mdl-font(label-medium);
         }
 
         &.current {
             background-color: transparent;
 
             .iconSpan {
-                background-color: var(--tint-100);
+                background-color: var(--md-sys-color-secondary-container);
+                color: var(--md-sys-color-on-secondary-container);
             }
 
             .textSpan {
-                font-weight: 600;
+                color: var(--md-sys-color-on-surface);
             }
         }
     }

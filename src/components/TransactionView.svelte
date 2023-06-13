@@ -19,7 +19,7 @@
       <Card>
         <VLayout>
           <TransactionDetails {transaction} />
-          <HLayout>
+          <HLayout wrap>
             <Button on:click={() => editTransactionPopupOpen = true} icon outline>
               <EditIcon />
               Edit details
@@ -199,7 +199,7 @@ let newSplit: NewSplitDTO = {
 };
 let newSplitPopupOpen = false;
 let editTransactionPopupOpen = false;
-let suggestionsAvailable = false; // TODO implement
+let suggestionsAvailable = true; // TODO implement
 let promise;
 
 // Computed
@@ -262,6 +262,7 @@ resetUpdateDetails();
 
 .transactionView {
     container-name: details;
+    container-type: inline-size;
 }
 
 h2 {
@@ -286,8 +287,25 @@ h3 {
     grid-column: span 2;
 }
 
-//@container details (max-width: 400px) {
-//
-//}
+@container details (max-width: 700px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .details {
+        grid-column: span 1;
+    }
+}
+
+@container details (max-width: 700px) {
+    .grid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .details {
+        grid-column: span 1;
+    }
+}
 
 </style>

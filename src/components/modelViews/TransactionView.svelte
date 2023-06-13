@@ -86,7 +86,6 @@ import CategorySelect from "@/components/CategorySelect.svelte";
 import Input from "@/components/common/Input.svelte";
 import CardHeader from "@/components/fragments/CardHeader.svelte";
 import AsyncButton from "@/components/common/AsyncButton.svelte";
-import Popup from "@/components/common/Popup.svelte";
 
 // Props
 export var transaction: TransactionDTO;

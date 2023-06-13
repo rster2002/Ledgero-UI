@@ -15,7 +15,7 @@
     </Card>
   </div>
 
-  <div class="details">
+  <div class="details {openedTransaction !== null && 'open'}">
     {#if openedTransaction === null}
       No transaction open
     {:else}
@@ -74,14 +74,14 @@ const promise = refresh();
     width: 100%;
 
     display: grid;
-    grid-gap: 2em;
+    grid-gap: dp(24);
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: 100%;
 
     .transactions  {
         height: 100%;
 
-        grid-column: span 4;
+      grid-column: span 4;
     }
 
     .details  {
@@ -98,6 +98,50 @@ const promise = refresh();
     display: grid;
     place-items: center;
     padding: dp(16);
+}
+
+@media only screen and (max-width: $medium-breakpoint){
+    .wrapper {
+        .transactions {
+            grid-column: span 6;
+        }
+
+        .details {
+            grid-column: span 6;
+        }
+    }
+}
+
+@media only screen and (max-width: $compact-breakpoint){
+    .wrapper {
+        display: block;
+
+        .transactions {
+            :global(.card) {
+                height: 100%;
+                box-sizing: border-box;
+            }
+        }
+
+        .details {
+            height: 100%;
+            width: 100%;
+
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: dp(24);
+            box-sizing: border-box;
+            overflow-y: auto;
+
+            background-color: var(--md-sys-color-surface);
+
+            &.open {
+                display: block;
+            }
+        }
+    }
 }
 
 </style>

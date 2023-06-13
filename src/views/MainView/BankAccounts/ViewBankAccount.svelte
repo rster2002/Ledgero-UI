@@ -37,33 +37,34 @@
   </AsyncContent>
 </Page>
 
-<Popup bind:open={editPopupOpen}>
+<Dialog bind:open={editPopupOpen}>
+  <h2 slot="header">Edit category</h2>
+
   <VLayout>
-    <CardHeader>
-      <h2>Edit category</h2>
-    </CardHeader>
-
     <CategoryDetailsForm bind:value={editDetails} />
-
-    <HLayout full>
-      <Button on:click={cancelEditing} secondary>
-        <CloseIcon />
-        Cancel
-      </Button>
-
-      <AsyncButton asyncClick={saveChanges}>
-        <SaveIcon />
-        Save changes
-      </AsyncButton>
-    </HLayout>
   </VLayout>
-</Popup>
+
+  <svelte:fragment slot="actions">
+    <Button on:click={cancelEditing} secondary>
+      <CloseIcon />
+      Cancel
+    </Button>
+  </svelte:fragment>
+
+  <svelte:fragment slot="fullscreen-actions">
+    <AsyncButton asyncClick={saveChanges}>
+      <SaveIcon />
+      Save changes
+    </AsyncButton>
+  </svelte:fragment>
+</Dialog>
 
 <SuccessSnackbar message={successMessage} />
 <ErrorSnackbar message={errorMessage} />
 
 <script lang="ts">
 // Components
+import Dialog from "@/components/common/Dialog.svelte";
 import Page from "@/components/Page.svelte";
 import AsyncContent from "@/components/common/AsyncContent.svelte";
 import Card from "@/components/common/Card.svelte";
@@ -75,11 +76,9 @@ import PaginatedTransactionsTable from "@/components/tables/PaginatedTransaction
 import Button from "@/components/common/Button.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
 import BankAccountSpan from "@/components/spans/BankAccountSpan.svelte";
-import Popup from "@/components/common/Popup.svelte";
 import CategoryDetailsForm from "@/components/forms/CategoryDetailsForm.svelte";
 import CloseIcon from "@/components/icons/CloseIcon.svelte";
 import SaveIcon from "@/components/icons/SaveIcon.svelte";
-import CardHeader from "@/components/fragments/CardHeader.svelte";
 import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";
 import ErrorSnackbar from "@/components/Snackbars/ErrorSnackbar.svelte";
 

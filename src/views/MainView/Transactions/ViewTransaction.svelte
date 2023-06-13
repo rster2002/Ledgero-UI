@@ -69,52 +69,52 @@
   </AsyncContent>
 </Page>
 
-<Popup bind:open={newSplitPopupOpen} min>
-  <div class="minForm">
-    <VLayout>
-      <CardHeader>
-        <h2>New split</h2>
-      </CardHeader>
+<!--<Popup bind:open={newSplitPopupOpen} min>-->
+<!--  <div class="minForm">-->
+<!--    <VLayout>-->
+<!--      <CardHeader>-->
+<!--        <h2>New split</h2>-->
+<!--      </CardHeader>-->
 
-      <Input bind:value={newSplit.amount} label="Amount" type="number" />
-      <Input bind:value={newSplit.description} label="Description" />
+<!--      <Input bind:value={newSplit.amount} label="Amount" type="number" />-->
+<!--      <Input bind:value={newSplit.description} label="Description" />-->
 
-      <div>
-        <CategorySelect bind:categoryId={newSplit.categoryId} />
-      </div>
+<!--      <div>-->
+<!--        <CategorySelect bind:categoryId={newSplit.categoryId} />-->
+<!--      </div>-->
 
-      <AsyncButton asyncClick={createSplit}>
-        Create
-      </AsyncButton>
-    </VLayout>
-  </div>
-</Popup>
+<!--      <AsyncButton asyncClick={createSplit}>-->
+<!--        Create-->
+<!--      </AsyncButton>-->
+<!--    </VLayout>-->
+<!--  </div>-->
+<!--</Popup>-->
 
-<Popup bind:open={editTransactionPopupOpen}>
-  <div class="minForm">
-    <VLayout>
-      <CardHeader>
-        <h2>Edit transaction</h2>
-      </CardHeader>
+<!--<Popup bind:open={editTransactionPopupOpen}>-->
+<!--  <div class="minForm">-->
+<!--    <VLayout>-->
+<!--      <CardHeader>-->
+<!--        <h2>Edit transaction</h2>-->
+<!--      </CardHeader>-->
 
-      <UpdateTransactionDetailsForm
-        externalAccountName={transaction.externalAccountName}
-        bind:updateDetails
-      />
+<!--      <UpdateTransactionDetailsForm-->
+<!--        externalAccountName={transaction.externalAccountName}-->
+<!--        bind:updateDetails-->
+<!--      />-->
 
-      <HLayout full>
-        <Button on:click={cancelEditingTransaction} secondary>
-          <CloseIcon />
-          Cancel
-        </Button>
-        <AsyncButton asyncClick={saveDetails}>
-          <SaveIcon />
-          Save changes
-        </AsyncButton>
-      </HLayout>
-    </VLayout>
-  </div>
-</Popup>
+<!--      <HLayout full>-->
+<!--        <Button on:click={cancelEditingTransaction} secondary>-->
+<!--          <CloseIcon />-->
+<!--          Cancel-->
+<!--        </Button>-->
+<!--        <AsyncButton asyncClick={saveDetails}>-->
+<!--          <SaveIcon />-->
+<!--          Save changes-->
+<!--        </AsyncButton>-->
+<!--      </HLayout>-->
+<!--    </VLayout>-->
+<!--  </div>-->
+<!--</Popup>-->
 
 <SuccessSnackbar message={successMessage} />
 <ErrorSnackbar message={errorMessage} />
@@ -140,7 +140,6 @@ import TableHead from "@/components/Table/TableHead.svelte";
 import TextColumn from "@/components/Table/TextColumn.svelte";
 import AmountSpan from "@/components/spans/AmountSpan.svelte";
 import CategorySpan from "@/components/spans/CategorySpan.svelte";
-import Popup from "@/components/common/Popup.svelte";
 import Input from "@/components/common/Input.svelte";
 import AsyncButton from "@/components/common/AsyncButton.svelte";
 import type NewSplitDTO from "@/models/dto/transactions/NewSplitDTO";

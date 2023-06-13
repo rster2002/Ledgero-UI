@@ -31,17 +31,17 @@
   </AsyncContent>
 </Page>
 
-<Popup bind:open={newPopupOpen}>
-  <VLayout>
-    <ExternalAccountDetailsForm bind:value={newExternalAccount} />
+<!--<Popup bind:open={newPopupOpen}>-->
+<!--  <VLayout>-->
+<!--    <ExternalAccountDetailsForm bind:value={newExternalAccount} />-->
 
-    <div>
-      <AsyncButton asyncClick={createExternalAccount}>
-        Create contact
-      </AsyncButton>
-    </div>
-  </VLayout>
-</Popup>
+<!--    <div>-->
+<!--      <AsyncButton asyncClick={createExternalAccount}>-->
+<!--        Create contact-->
+<!--      </AsyncButton>-->
+<!--    </div>-->
+<!--  </VLayout>-->
+<!--</Popup>-->
 
 <SuccessSnackbar message={successMessage} />
 <ErrorSnackbar message={errorMessage} />
@@ -56,7 +56,7 @@ import type ExternalAccountDetailsDTO from "@/models/dto/externalAccounts/Extern
 // Components
 import Page from "@/components/Page.svelte";
 import AddIcon from "@/components/icons/AddIcon.svelte";
-import Popup from "@/components/common/Popup.svelte";
+// import Popup from "@/components/common/Popup.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
 import AsyncButton from "@/components/common/AsyncButton.svelte";
 import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";

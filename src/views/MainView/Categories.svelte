@@ -42,17 +42,17 @@
   </AsyncContent>
 </Page>
 
-<Popup bind:open={newPopupOpen}>
-  <VLayout>
-    <NewCategoryForm bind:value={newCategory} />
+<!--<Popup bind:open={newPopupOpen}>-->
+<!--  <VLayout>-->
+<!--    <NewCategoryForm bind:value={newCategory} />-->
 
-    <div>
-      <AsyncButton asyncClick={createCategory}>
-        Create category
-      </AsyncButton>
-    </div>
-  </VLayout>
-</Popup>
+<!--    <div>-->
+<!--      <AsyncButton asyncClick={createCategory}>-->
+<!--        Create category-->
+<!--      </AsyncButton>-->
+<!--    </div>-->
+<!--  </VLayout>-->
+<!--</Popup>-->
 
 <SuccessSnackbar message={successMessage} />
 <ErrorSnackbar message={errorMessage} />
@@ -66,7 +66,7 @@ import CategoryService from "@/services/CategoryService";
 // Components
 import Page from "@/components/Page.svelte";
 import AddIcon from "@/components/icons/AddIcon.svelte";
-import Popup from "@/components/common/Popup.svelte";
+// import Popup from "@/components/common/Popup.svelte";
 import NewCategoryForm from "@/components/forms/CategoryDetailsForm.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
 import AsyncButton from "@/components/common/AsyncButton.svelte";

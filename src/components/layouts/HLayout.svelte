@@ -1,4 +1,4 @@
-<div class="{right && 'right'} {full && 'full'}">
+<div class="{right && 'right'} {full && 'full'} {wrap && 'wrap'}">
     <slot />
 </div>
 
@@ -6,6 +6,7 @@
 // Props
 export var right = false;
 export var full = false;
+export var wrap = false;
 </script>
 
 <style lang="scss">
@@ -21,6 +22,10 @@ div {
 
     &.full > :global(*) {
         width: 100%;
+    }
+
+    &.wrap {
+        flex-wrap: wrap;
     }
 }
 

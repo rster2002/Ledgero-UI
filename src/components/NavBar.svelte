@@ -15,6 +15,7 @@ nav {
 
     padding: dp(32);
     box-sizing: border-box;
+    flex: 0;
 
     background-color: var(--md-sys-color-surface);
     color: var(--text-on-backdrop);
@@ -40,6 +41,8 @@ nav {
         flex-direction: row;
         gap: dp(8);
         padding: dp(12) 0 dp(16) 0;
+
+        background-color: var(--md-sys-color-surface-container);
     }
 }
 

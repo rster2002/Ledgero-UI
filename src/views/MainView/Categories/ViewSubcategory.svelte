@@ -42,27 +42,27 @@
   </AsyncContent>
 </Page>
 
-<Popup bind:open={editPopupOpen}>
-  <VLayout>
-    <CardHeader>
-      <h2>Edit subcategory</h2>
-    </CardHeader>
+<!--<Popup bind:open={editPopupOpen}>-->
+<!--  <VLayout>-->
+<!--    <CardHeader>-->
+<!--      <h2>Edit subcategory</h2>-->
+<!--    </CardHeader>-->
 
-    <CategoryDetailsForm bind:value={editDetails} />
+<!--    <CategoryDetailsForm bind:value={editDetails} />-->
 
-    <HLayout full>
-      <Button on:click={cancelEditing} secondary>
-        <CloseIcon />
-        Cancel
-      </Button>
+<!--    <HLayout full>-->
+<!--      <Button on:click={cancelEditing} secondary>-->
+<!--        <CloseIcon />-->
+<!--        Cancel-->
+<!--      </Button>-->
 
-      <AsyncButton asyncClick={saveChanges}>
-        <SaveIcon />
-        Save changes
-      </AsyncButton>
-    </HLayout>
-  </VLayout>
-</Popup>
+<!--      <AsyncButton asyncClick={saveChanges}>-->
+<!--        <SaveIcon />-->
+<!--        Save changes-->
+<!--      </AsyncButton>-->
+<!--    </HLayout>-->
+<!--  </VLayout>-->
+<!--</Popup>-->
 
 <SuccessSnackbar message={successMessage} />
 <ErrorSnackbar message={errorMessage} />
@@ -85,7 +85,7 @@ import DeleteIcon from "@/components/icons/DeleteIcon.svelte";
 import Button from "@/components/common/Button.svelte";
 import EditIcon from "@/components/icons/EditIcon.svelte";
 import HLayout from "@/components/layouts/HLayout.svelte";
-import Popup from "@/components/common/Popup.svelte";
+// import Popup from "@/components/common/Popup.svelte";
 import CategoryDetailsForm from "@/components/forms/CategoryDetailsForm.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
 import CardHeader from "@/components/fragments/CardHeader.svelte";

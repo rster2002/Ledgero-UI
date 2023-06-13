@@ -43,27 +43,32 @@
   </AsyncContent>
 </Page>
 
-<Popup bind:open={editPopupOpen}>
+<Dialog bind:open={editPopupOpen} fullScreen>
+  <h2 slot="header">Edit external account</h2>
+
   <VLayout>
-    <CardHeader>
-      <h2>Edit external account</h2>
-    </CardHeader>
-
     <ExternalAccountDetailsForm bind:value={editDetails} />
-
-    <HLayout full>
-      <Button on:click={cancelEditing} secondary>
-        <CloseIcon />
-        Cancel
-      </Button>
-
-      <AsyncButton asyncClick={saveChanges}>
-        <SaveIcon />
-        Save changes
-      </AsyncButton>
-    </HLayout>
   </VLayout>
-</Popup>
+
+  <svelte:fragment slot="actions">
+    <Button on:click={cancelEditing} secondary>
+      <CloseIcon />
+      Cancel
+    </Button>
+
+    <AsyncButton asyncClick={saveChanges}>
+      <SaveIcon />
+      Save changes
+    </AsyncButton>
+  </svelte:fragment>
+
+  <svelte:fragment slot="fullscreen-actions">
+    <AsyncButton asyncClick={saveChanges}>
+      <SaveIcon />
+      Save changes
+    </AsyncButton>
+  </svelte:fragment>
+</Dialog>
 
 <SuccessSnackbar message={successMessage} />
 <ErrorSnackbar message={errorMessage} />
@@ -78,6 +83,7 @@ import type CategoryDTO from "@/models/dto/categories/CategoryDTO";
 import type SubcategoryDTO from "@/models/dto/categories/subcategories/SubcategoryDTO";
 
 // Components
+import Dialog from "@/components/common/Dialog.svelte";
 import Page from "@/components/Page.svelte";
 import AsyncContent from "@/components/common/AsyncContent.svelte";
 import Card from "@/components/common/Card.svelte";
@@ -87,7 +93,6 @@ import EditIcon from "@/components/icons/EditIcon.svelte";
 import PaginatedTransactionsTable from "@/components/tables/PaginatedTransactionsTable.svelte";
 import Button from "@/components/common/Button.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
-import Popup from "@/components/common/Popup.svelte";
 import CloseIcon from "@/components/icons/CloseIcon.svelte";
 import SaveIcon from "@/components/icons/SaveIcon.svelte";
 import CardHeader from "@/components/fragments/CardHeader.svelte";

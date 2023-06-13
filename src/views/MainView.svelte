@@ -72,7 +72,12 @@ section {
 }
 
 .routeWrapper {
+    //height: 100%;
     width: 100%;
+    flex: 1;
+
+    overflow-y: auto;
+
     padding: 2em 2em 2em 0;
     box-sizing: border-box;
 
