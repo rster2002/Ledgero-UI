@@ -1,5 +1,7 @@
+@use "sass:math";
+
 @function dp($param) {
-    @return #{($param/16)}rem;
+    @return #{(math.div($param, 16))}rem;
 }
 
 @mixin mdl-font($name) {

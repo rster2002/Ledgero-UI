@@ -12,7 +12,7 @@ import routes from "@/routes";
 // Functions
 function conditionsFailed(event) {
     console.error('conditionsFailed event', event.detail)
-    //
+
     if (event.detail.route === "/*") {
         replace("/login");
     } else {

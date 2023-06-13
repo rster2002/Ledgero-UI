@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import path from "path";
 import autoPreprocess from "svelte-preprocess";
-import loadVersion from "vite-plugin-package-version";
 
 export default defineConfig({
     base: "./",
@@ -22,7 +21,6 @@ export default defineConfig({
         },
     },
     plugins: [
-        loadVersion(),
         svelte({
             preprocess: autoPreprocess(),
         }),

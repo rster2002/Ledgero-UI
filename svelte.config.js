@@ -1,5 +1,5 @@
-const sveltePreprocess = require('svelte-preprocess');
-module.exports = {
+import sveltePreprocess from "svelte-preprocess";
+export default {
     preprocess: sveltePreprocess({
         scss: {
             includePaths: ['src'],

@@ -2,6 +2,7 @@
   "name": "ledgero",
   "version": "1.0.0",
   "license": "AGPL-3.0-or-later",
+  "type": "module",
   "scripts": {
     "build": "vite build",
     "dev": "cross-env DEV=true vite --host",
@@ -13,18 +14,17 @@
     "@rollup/plugin-alias": "^3.0.0",
     "@rollup/plugin-json": "^4.0.1",
     "@rollup/plugin-node-resolve": "^6.0.0",
-    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.12",
+    "@sveltejs/vite-plugin-svelte": "^2.4.1",
     "@tsconfig/svelte": "^3.0.0",
     "@types/papaparse": "^5.3.7",
     "cross-env": "^7.0.3",
     "sass": "^1.39.0",
     "svelte": "^3.59.1",
     "svelte-check": "^2.2.4",
-    "svelte-preprocess": "^4.7.4",
+    "svelte-preprocess": "^5.0.4",
     "svelte-reactive-preprocessor": "^0.6.0",
     "typescript": "^4.5.4",
-    "vite": "^2.4.1",
-    "vite-plugin-package-version": "^1.0.2"
+    "vite": "^4.3.9"
   },
   "dependencies": {
     "csv-parse": "^5.3.5",
