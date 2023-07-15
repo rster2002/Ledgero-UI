@@ -1,50 +1,33 @@
-<div class="card {minimal && 'minimal'} {disappearCompact && 'disappearCompact'} {outlineCompact && 'outlineCompact'} {outline && 'outline'}">
-    <slot />
-</div>
+<section class="card {min && 'min'} {noOverflow && 'noOverflow'}">
+  <slot />
+</section>
 
 <script lang="ts">
 // Props
-export var minimal = false;
-export var outline = false;
-export var outlineCompact = false;
-export var disappearCompact = false;
+export var min: boolean = false;
+export var noOverflow: boolean = false;
 </script>
 
 <style lang="scss">
-@import "../../shared";
+@use "../../scss/color";
+@use "../../scss/dp";
 
 .card {
-    padding: 2em;
+    padding: dp.dp(16);
     box-sizing: border-box;
 
-    background-color: var(--md-sys-color-surface-container-low);
-    color: var(--md-sys-color-on-surface);
+    background-color: color.use(--md-sys-color-surface-container-low);
+    color: color.use(--md-sys-color-on-surface);
     filter: drop-shadow(0 0 9px rgba(0, 0, 0, 0.1));
-    //box-shadow: 0 0 9px rgba(0, 0, 0, 0.1);
-    border-radius: dp(12);
+    border-radius: dp.dp(12);
 
-    &.minimal {
-        padding: 0;
+    &:not(.min) {
+        height: 100%;
+        width: 100%;
     }
 
-    &.outline {
-        filter: none;
-        background-color: var(--md-sys-color-surface);
-        border: dp(1) solid var(--md-sys-color-outline);
+    &:not(.noOverflow) {
+        overflow-y: auto;
     }
 }
-
-@media only screen and (max-width: $compact-breakpoint){
-    .card.disappearCompact {
-        display: contents;
-    }
-
-    // TODO this should be done in a different way
-    .card.outlineCompact {
-        filter: none;
-        background-color: var(--md-sys-color-surface);
-        border: dp(1) solid var(--md-sys-color-outline);
-    }
-}
-
 </style>

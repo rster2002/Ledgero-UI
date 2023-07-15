@@ -1,16 +1,21 @@
-<button
+<svelte:element
+  this={href === '' ? 'button' : 'a'}
   class="
-    {icon && 'icon'}
-    {secondary && 'secondary'}
-    {outline && 'outline'}
-    {text && 'text'}
-  "
+      button
+      {icon && 'icon'}
+      {elevated && 'elevated'}
+      {tonal && 'tonal'}
+      {outline && 'outline'}
+      {text && 'text'}
+      {disabled && 'disabled'}
+    "
   on:click
   bind:this={el}
   {disabled}
+  {href}
 >
   <slot />
-</button>
+</svelte:element>
 
 <script lang="ts">
 // Imports
@@ -18,10 +23,13 @@ import { onMount } from "svelte";
 
 // Props
 export var icon = false;
-export var secondary = false;
+export var elevated = false;
+export var tonal = false;
 export var outline = false;
 export var text = false;
 export var disabled = false;
+
+export var href: string = "";
 
 // Data
 let el: HTMLButtonElement;
@@ -34,66 +42,103 @@ onMount(() => {
 </script>
 
 <style lang="scss">
-@import "../../shared.scss";
+@use "../../scss/dp";
+@use "../../scss/typescale";
+@use "../../scss/state-layer";
+@use "../../scss/color";
 
-button {
-    height: dp(40);
-    padding: 0 dp(24);
+.button {
+    height: dp.dp(40);
+    padding: 0 dp.dp(24);
 
     position: relative;
-    border-radius: var(--border-radius-full);
-    background-color: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
-    border: 0;
     box-sizing: border-box;
-    cursor: pointer;
-    transition: all 150ms var(--standard-easing);
-    transition-property: color, background-color;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 1em;
+    gap: dp.dp(8);
+    white-space: nowrap;
 
-    @include mdl-font(label-large);
+    text-decoration: none;
+    border-radius: var(--md-sys-shape-corner-full);
+    background-color: color.use(--md-sys-color-primary);
+    color: color.use(--md-sys-color-on-primary);
+    border: 0;
+    cursor: pointer;
+    transition: var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard) all;
+    transition-property: color, background-color;
+    -webkit-user-select: none;
+    user-select: none;
 
-    --spinner-color: var(--text-on-accent);
+    @include typescale.use-scale(label-large);
+
+    --spinner-color: color.use(--md-sys-color-on-primary);
 
     &.icon {
-        padding-left: dp(16);
+        padding-left: dp.dp(16);
     }
 
-    &.secondary {
-        background-color: transparent;
-        color: var(--accent-color);
+    &.elevated {
+        background-color: color.use(--md-sys-color-surface-container-low);
+        box-shadow: var(--md-sys-elevation-level1);
+        color: color.use(--md-sys-color-primary);
+    }
+
+    &.tonal {
+        background-color: color.use(--md-sys-color-secondary-container);
+        color: color.use(--md-sys-color-on-secondary-container);
     }
 
     &.outline {
         background-color: transparent;
-        color: var(--md-sys-color-primary);
-        border: dp(1) solid var(--md-sys-color-outline);
+        color: color.use(--md-sys-color-primary);
+        border: dp.dp(1) solid color.use(--md-sys-color-outline);
     }
 
     &.text {
         background-color: transparent;
-        color: var(--md-sys-color-primary);
+        color: color.use(--md-sys-color-primary);
     }
 
-    // TODO implement state layers
-    &:hover {
-        background-color: rgb(var(--md-sys-color-primary-rgb) / 0.92);
+    &:disabled, &.disabled {
+        pointer-events: none;
+
+        background-color: color.use(--md-sys-color-on-surface, 0.12);
+        color: color.use(--md-sys-color-on-surface, 0.38);
+        cursor: default;
+        box-shadow: none;
+
+        &.outline {
+            border-color: color.use(--md-sys-color-outline, 0.12);
+            background-color: transparent;
+        }
+
+        &.text {
+            background-color: transparent;
+        }
+    }
+
+    &:hover:not(:disabled) {
+        background-color: state-layer.hover-state-layer(--md-sys-color-primary, --md-sys-color-on-primary);
+        box-shadow: var(--md-sys-elevation-level1);
+
+        &.elevated {
+            background-color: state-layer.hover-state-layer(--md-sys-color-surface-container-low, --md-sys-color-primary);
+        }
+
+        &.tonal {
+            background-color: state-layer.hover-state-layer(--md-sys-color-secondary-container, --md-sys-color-on-secondary-container);
+        }
 
         &.outline, &.text {
-            background-color: rgb(var(--md-sys-color-primary-rgb) / 0.08)
+            background-color: color.use(--md-sys-color-primary, 0.08);
+            box-shadow: none;
         }
     }
 
     :global(svg) {
-        font-size: 1.4em;
-    }
-
-    &.warning {
-        --accent-color: var(--error-color);
+        font-size: dp.dp(18);
     }
 }
 

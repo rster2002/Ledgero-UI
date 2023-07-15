@@ -44,6 +44,7 @@ import TransactionView from "@/components/TransactionView.svelte";
 import AsyncButton from "@/components/common/AsyncButton.svelte";
 import InlinePage from "@/components/InlinePage.svelte";
 import AsyncContent from "@/components/common/AsyncContent.svelte";
+import ListItem from "@/components/ListItem.svelte";
 
 // Data
 const transactionsService = new TransactionService();
@@ -113,7 +114,7 @@ const promise = refresh();
     padding: dp(16);
 }
 
-@container transactions (max-width: 40rem) {
+@container (width < 80rem) {
     .wrapper {
         .transactions {
             grid-column: span 6;
@@ -125,40 +126,29 @@ const promise = refresh();
     }
 }
 
-//@media only screen and (max-width: $medium-breakpoint){
-
+//@container transactions (max-width: 40rem) {
+//    .wrapper {
+//        .transactions {
+//            grid-column: span 6;
+//        }
+//
+//        .details {
+//            grid-column: span 6;
+//        }
+//    }
 //}
-
-@media only screen and (max-width: $compact-breakpoint) {
-    .wrapper {
-        display: block;
-
-        .transactions {
-            :global(.card) {
-                height: 100%;
-                box-sizing: border-box;
-            }
-        }
-
-        //.details {
-        //    height: 100%;
-        //    width: 100%;
-        //
-        //    display: none;
-        //    position: fixed;
-        //    top: 0;
-        //    left: 0;
-        //    padding: dp(24);
-        //    box-sizing: border-box;
-        //    overflow-y: auto;
-        //
-        //    background-color: var(--md-sys-color-surface);
-        //
-        //    &.open {
-        //        display: block;
-        //    }
-        //}
-    }
-}
+//
+//@media only screen and (max-width: $compact-breakpoint) {
+//    .wrapper {
+//        display: block;
+//
+//        .transactions {
+//            :global(.card) {
+//                height: 100%;
+//                box-sizing: border-box;
+//            }
+//        }
+//    }
+//}
 
 </style>

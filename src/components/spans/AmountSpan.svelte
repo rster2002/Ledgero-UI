@@ -18,14 +18,17 @@ $: amountText = formatMoney(amount, {
 </script>
 
 <style lang="scss">
+@use "../../scss/typescale";
+@use "../../scss/color";
 
 span {
     padding: 0.2em 0.5em;
 
-    font-family: var(--header-face);
-    border-radius: var(--border-radius-full);
+    border-radius: var(--md-sys-shape-corner-full);
     background-color: var(--positive-amount);
-    color: var(--md-ref-palette-neutral20);
+    color: color.use(--md-sys-color-surface);
+
+    @include typescale.use-scale(label-large);
 
     &.negative {
         background-color: var(--negative-amount);

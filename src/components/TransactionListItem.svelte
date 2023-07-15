@@ -1,27 +1,17 @@
-<div class="transactionListItem" on:click>
-  <div class="text">
-    <p class="headline">
-      {#if transaction.externalAccount}
-        {transaction.externalAccount.name}
-        <ContactIcon />
-      {:else}
-        {transaction.externalAccountName}
-      {/if}
-    </p>
+<ListItem clickable on:click>
+  {#if transaction.externalAccount}
+    {transaction.externalAccount.name}
+    <ContactIcon />
+  {:else}
+    {transaction.externalAccountName}
+  {/if}
 
-    <p class="supportingText">
-      {transaction.description}
-    </p>
+  <svelte:fragment slot="supporting">
+    {transaction.description}
+  </svelte:fragment>
 
-    <p>
-      <FullCategorySpan category={transaction.category} subcategory={transaction.subcategory} />
-    </p>
-  </div>
-
-  <div class="amount">
-    <AmountSpan amount={transaction.amount} sign />
-  </div>
-</div>
+  <AmountSpan slot="tailing" amount={transaction.amount} />
+</ListItem>
 
 <script lang="ts">
 // Imports
@@ -31,6 +21,7 @@ import type TransactionDTO from "@/models/dto/transactions/TransactionDTO";
 import AmountSpan from "@/components/spans/AmountSpan.svelte";
 import FullCategorySpan from "@/components/spans/FullCategorySpan.svelte";
 import ContactIcon from "@/components/icons/ContactIcon.svelte";
+import ListItem from "@/components/ListItem.svelte";
 
 // Props
 export var transaction: TransactionDTO;

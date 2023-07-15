@@ -1,0 +1,7 @@
+@use "./easing";
+@use "./shape";
+
+@mixin root {
+    @include easing.easing-tokens;
+    @include shape.shape-tokens;
+}

@@ -1,0 +1,4 @@
+@use "dp";
+
+$compact-breakpoint: dp.dp(600);
+$medium-breakpoint: dp.dp(1240);

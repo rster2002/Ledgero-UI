@@ -5,28 +5,28 @@
       <span>Upload CSV</span>
     </Fab>
 
-    <NavItem route="/">
-      <HomeIcon slot="icon" />
+    <NavItem href="/#/" noChildren>
+      <HomeIcon />
       Home
     </NavItem>
 
-    <NavItem route="/transactions">
-      <TransactionsIcon slot="icon" />
+    <NavItem href="/#/transactions">
+      <TransactionsIcon />
       Transactions
     </NavItem>
 
-    <NavItem route="/categories">
-      <CategoriesIcon slot="icon" />
+    <NavItem href="/#/categories">
+      <CategoriesIcon />
       Categories
     </NavItem>
 
-    <NavItem route="/external-accounts">
-      <ContactsIcon slot="icon" />
+    <NavItem href="/#/external-accounts">
+      <ContactsIcon />
       Contacts
     </NavItem>
 
-    <NavItem route="/bank-accounts">
-      <BankAccountIcon slot="icon" />
+    <NavItem href="/#/bank-accounts">
+      <BankAccountIcon />
       Accounts
     </NavItem>
   </NavBar>
@@ -56,6 +56,7 @@ import ContactsIcon from "@/components/icons/ContactsIcon.svelte";
 </script>
 
 <style lang="scss">
+@use "../scss/color";
 @import "../shared";
 
 section {
@@ -65,7 +66,7 @@ section {
     display: flex;
     flex-direction: row;
 
-    background-color: var(--md-sys-color-surface);
+    background-color: color.use(--md-sys-color-surface);
     //background-color: var(--backdrop);
     //background: rgb(227,236,253);
     //background: linear-gradient(0deg, rgba(227,236,253,1) 0%, rgba(255,255,255,1) 100%);
@@ -83,6 +84,7 @@ section {
 
     .routeContainer {
         height: 100%;
+        container-type: inline-size;
         //background-color: var(--background);
         //border-radius: var(--border-radius-medium);
     }

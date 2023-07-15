@@ -1,0 +1,15 @@
+@function use($token, $opacity: 1) {
+    @return rgb(var(#{$token}-r) var(#{$token}-g) var(#{$token}-b) / $opacity);
+}
+
+@mixin alias($alias, $token, $fallbacks...) {
+    @if length($fallbacks) > 0 {
+        #{$alias}-r: var(#{$token}-r, #{$fallbacks});
+        #{$alias}-g: var(#{$token}-g, #{$fallbacks});
+        #{$alias}-b: var(#{$token}-b, #{$fallbacks});
+    } @else {
+        #{$alias}-r: var(#{$token}-r);
+        #{$alias}-g: var(#{$token}-g);
+        #{$alias}-b: var(#{$token}-b);
+    }
+}

@@ -1,109 +1,134 @@
-<a href={route} class="{isCurrent && 'current'}" use:link>
-  <span class="iconSpan">
-    <slot name="icon" class="iconSlot" />
-  </span>
-  <span class="textSpan">
-    <slot />
-  </span>
+<svelte:window
+  on:locationchange={locationChange}
+  on:hashchange={locationChange}
+/>
+
+<a {href} class="{current && 'current'} {noIcon && 'noIcon'}">
+  <slot />
 </a>
 
 <script lang="ts">
-// Imports
-import { link, location } from 'svelte-spa-router'
-
 // Props
-export var route: string;
+export var href: string;
+export var noChildren: boolean = false;
+export var noIcon: boolean = false;
 
-// Computed
-$: isCurrent = checkIsCurrent($location, route);
+// Data
+let current: boolean = false;
 
 // Functions
-function checkIsCurrent(location: string, route: string): boolean {
-    if (route === "/") {
-        return location === "/";
+function locationChange() {
+    if (noChildren) {
+        current = location.href.replace(location.origin, "") === href;
+        return;
     }
 
-    return location.startsWith(route);
+    current = (location.href.replace(location.origin, "")).startsWith(href);
 }
+
+// Created
+locationChange();
 </script>
 
 <style lang="scss">
-@import "../shared";
+@use "../scss/dp";
+@use "../scss/color";
+@use "../scss/typescale";
+@use "../scss/state-layer";
+@use "../scss/breakpoints";
 
 a {
-    height: 3.5em;
+    height: dp.dp(56);
+    width: 100%;
 
     display: flex;
+    flex-direction: row;
     align-items: center;
-    gap: 0.75em;
-    padding: 0 1em;
+    gap: dp.dp(12);
+    padding: 0 dp.dp(24) 0 dp.dp(16);
+    box-sizing: border-box;
 
     text-decoration: none;
-    border-radius: var(--border-radius-full);
-    font-weight: 500;
-    color: var(--md-sys-color-on-surface-variant);
+    background-color: color.use(--nav-background);
+    color: color.use(--md-sys-color-on-surface-variant);
+    border-radius: var(--md-sys-shape-corner-full);
+    cursor: pointer;
 
     :global(svg) {
-        font-size: 1.5em;
+        font-size: dp.dp(24);
+    }
+
+    &.noIcon {
+        padding-right: dp.dp(24);
     }
 
     &:hover {
-        background-color: rgb(var(--md-sys-color-on-surface-rgb) / var(--md-sys-state-hover-state-layer-opacity));
-        color: var(--md-sys-color-on-surface-variant);
+        background-color: state-layer.hover-state-layer(--nav-background, --md-sys-color-on-surface);
     }
+
+    @include typescale.use-scale(label-large);
 
     &.current {
-        background-color: var(--md-sys-color-secondary-container);
-        color: var(--md-sys-color-on-secondary-container);
+        background-color: color.use(--md-sys-color-secondary-container);
+        color: color.use(--md-sys-color-on-secondary-container);
+
+        &:hover {
+            background-color: state-layer.hover-state-layer(--md-sys-color-secondary-container, --md-sys-color-on-secondary-container)
+        }
     }
 }
 
-@media only screen and (max-width: $medium-breakpoint){
-    a .textSpan {
-        display: none;
-    }
-}
-
-@media only screen and (max-width: $compact-breakpoint){
+@media only screen and (max-width: breakpoints.$medium-breakpoint) {
     a {
-        height: unset;
+        padding: 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: dp.dp(4);
+
         background-color: transparent;
 
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        color: var(--md-sys-color-on-surface-variant);
+        @include typescale.use-scale(label-medium);
 
-        .iconSpan {
-            height: dp(32);
-            width: dp(64);
+        & :global(.icon) {
+            height: dp.dp(32);
+            width: dp.dp(56);
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: grid;
+            place-items: center;
 
-            border-radius: var(--border-radius-full);
+            border-radius: var(--md-sys-shape-corner-full);
         }
 
-        .textSpan {
-            display: initial;
+        &:hover {
+            background-color: transparent;
 
-            @include mdl-font(label-medium);
+            & :global(.icon) {
+                background-color: color.use(--md-sys-color-on-surface-variant, 0.08);
+            }
         }
 
         &.current {
             background-color: transparent;
 
-            .iconSpan {
-                background-color: var(--md-sys-color-secondary-container);
-                color: var(--md-sys-color-on-secondary-container);
+            & :global(.icon) {
+                background-color: color.use(--md-sys-color-secondary-container);
             }
 
-            .textSpan {
-                color: var(--md-sys-color-on-surface);
+            &:hover {
+                background-color: transparent;
+
+                & :global(.icon) {
+                    background-color: state-layer.hover-state-layer(--md-sys-color-secondary-container, --md-sys-color-on-surface);
+                }
             }
         }
     }
 }
 
+@media only screen and (max-width: breakpoints.$compact-breakpoint) {
+    a {
+        width: unset;
+    }
+}
 </style>

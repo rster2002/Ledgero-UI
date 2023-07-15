@@ -22,24 +22,27 @@ $: darkForegroundColor = color ? "#000000" : "var(--md-ref-palette-neutral90)";
 </script>
 
 <style lang="scss">
-@import "../../shared";
+@use "../../scss/typescale";
+@use "../../scss/dp";
+//@import "../../shared";
 
 .chip {
     display: inline-flex;
     flex-direction: row;
-    gap: dp(8);
+    gap: dp.dp(8);
     align-items: center;
     position: relative;
-    padding: dp(4) dp(8);
+    padding: dp.dp(4) dp.dp(8);
 
     color: var(--light-front);
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    font-family: var(--header-face);
-    border-radius: dp(8);
-    border: dp(1) solid var(--md-sys-color-outline);
+    border-radius: dp.dp(8);
+    border: dp.dp(1) solid var(--md-sys-color-outline);
     background-color: var(--light-color, #f1f1f1);
+
+    @include typescale.use-scale(label-large);
 
     &.navigationEnabled {
         cursor: inherit;
@@ -50,12 +53,12 @@ $: darkForegroundColor = color ? "#000000" : "var(--md-ref-palette-neutral90)";
     }
 
     span {
-        height: dp(16);
-        width: dp(16);
+        height: dp.dp(16);
+        width: dp.dp(16);
 
         display: inline-block;
 
-        border-radius: var(--border-radius-full);
+        border-radius: var(--md-sys-shape-corner-full);
     }
 }
 

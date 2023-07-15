@@ -1,0 +1,15 @@
+@function interpolate-between($variable, $target, $factor) {
+    @return calc(var(#{$variable}) + (var(#{$target}) - var(#{$variable})) * #{$factor});
+}
+
+@function state-layer($variable, $target, $opacity) {
+    @return rgb(#{interpolate-between(#{$variable}-r, #{$target}-r, $opacity)} #{interpolate-between(#{$variable}-g, #{$target}-g, $opacity)} #{interpolate-between(#{$variable}-b, #{$target}-b, $opacity)});
+}
+
+@function hover-state-layer($variable, $target) {
+    @return state-layer($variable, $target, 0.08);
+}
+
+@function focus-state-layer($variable, $target) {
+    @return state-layer($variable, $target, 0.16);
+}

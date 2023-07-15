@@ -2,47 +2,53 @@
   <slot />
 </nav>
 
-<script lang="ts">
-// Components
-import MenuIcon from "@/components/icons/MenuIcon.svelte";
-</script>
-
 <style lang="scss">
-@import "../shared";
+@use "../scss/dp";
+@use "../scss/color";
+@use "../scss/typescale";
+@use "../scss/breakpoints";
 
 nav {
-    min-width: 300px;
+    @include color.alias(--nav-background, --md-sys-color-surface);
 
-    padding: dp(32);
+    height: 100%;
+    width: dp.dp(360);
+
+    container-type: inline-size;
+    padding: dp.dp(12);
     box-sizing: border-box;
-    flex: 0;
-
-    background-color: var(--md-sys-color-surface);
-    color: var(--text-on-backdrop);
-
-    :global(.fab) {
-        width: 100%;
-        margin-bottom: dp(48);
-        justify-content: center;
-    }
+    background-color: color.use(--nav-background);
 }
 
-@media only screen and (max-width: $medium-breakpoint){
+@media only screen and (max-width: breakpoints.$medium-breakpoint) {
     nav {
-        min-width: unset;
-        padding: dp(32) dp(16);
-    }
-}
+        width: dp.dp(80);
 
-@media only screen and (max-width: $compact-breakpoint){
-    nav {
         display: flex;
-        justify-content: space-evenly;
-        flex-direction: row;
-        gap: dp(8);
-        padding: dp(12) 0 dp(16) 0;
+        flex-direction: column;
+        align-items: center;
+        gap: dp.dp(12);
 
-        background-color: var(--md-sys-color-surface-container);
+        & > :global(.navAdditional) {
+            display: none;
+        }
+    }
+}
+
+@media only screen and (max-width: breakpoints.$compact-breakpoint) {
+    nav {
+        height: unset;
+        width: 100%;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: dp.dp(12) 0 dp.dp(16);
+        background-color: color.use(--md-sys-color-surface);
+
+        & > :global(.navAdditional) {
+            display: none;
+        }
     }
 }
 
