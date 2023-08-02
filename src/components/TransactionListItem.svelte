@@ -10,7 +10,7 @@
     {transaction.description}
   </svelte:fragment>
 
-  <AmountSpan slot="tailing" amount={transaction.amount} />
+  <AmountSpan slot="tailing" amount={transaction.completeAmount} />
 </ListItem>
 
 <script lang="ts">

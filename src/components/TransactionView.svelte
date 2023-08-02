@@ -70,13 +70,15 @@
 
                 <TextColumn>
                   {#if item.id !== "remainder"}
-                    <IconButton>
-                      <EditIcon />
-                    </IconButton>
+                    <HLayout>
+                      <IconButton>
+                        <EditIcon />
+                      </IconButton>
 
-                    <IconButton on:click={() => deleteSplit(item.id)}>
-                      <DeleteIcon />
-                    </IconButton>
+                      <IconButton on:click={() => deleteSplit(item.id)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </HLayout>
                   {/if}
                 </TextColumn>
               </svelte:fragment>
@@ -102,7 +104,8 @@
     <Button text on:click={() => newSplitPopupOpen = false}>
       Cancel
     </Button>
-    <Button text>
+
+    <Button text on:click={createSplit}>
       Create
     </Button>
   </svelte:fragment>
@@ -130,6 +133,7 @@
     <Button text on:click={cancelEditingTransaction}>
       Cancel
     </Button>
+
     <Button text>
       Save
     </Button>
@@ -148,10 +152,24 @@
 <script lang="ts">
 // Imports
 import type TransactionDTO from "@/models/dto/transactions/TransactionDTO";
-import AmountSpan from "@/components/spans/AmountSpan.svelte";
-import TransactionDetails from "@/components/fragments/TransactionDetails.svelte";
 import TransactionService from "@/services/TransactionService";
 import type SplitDTO from "@/models/dto/transactions/SplitDTO";
+import type NewSplitDTO from "@/models/dto/transactions/NewSplitDTO";
+import type UpdateTransactionDetailsDTO from "@/models/dto/transactions/UpdateTransactionDetailsDTO";
+
+// Components
+import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";
+import ErrorSnackbar from "@/components/Snackbars/ErrorSnackbar.svelte";
+import Card from "@/components/common/Card.svelte";
+import SplitIcon from "@/components/icons/SplitIcon.svelte";
+import Button from "@/components/common/Button.svelte";
+import VLayout from "@/components/layouts/VLayout.svelte";
+import ContactIcon from "@/components/icons/ContactIcon.svelte";
+import Input from "@/components/common/Input.svelte";
+import HLayout from "@/components/layouts/HLayout.svelte";
+import SuggestionIcon from "@/components/icons/SuggestionIcon.svelte";
+import Dialog from "@/components/common/Dialog.svelte";
+import UpdateTransactionDetailsForm from "@/components/forms/UpdateTransactionDetailsForm.svelte";
 import AsyncContent from "@/components/common/AsyncContent.svelte";
 import TableHead from "@/components/Table/TableHead.svelte";
 import IconButton from "@/components/common/IconButton.svelte";
@@ -160,23 +178,8 @@ import Table from "@/components/Table.svelte";
 import EditIcon from "@/components/icons/EditIcon.svelte";
 import CategorySpan from "@/components/spans/CategorySpan.svelte";
 import DeleteIcon from "@/components/icons/DeleteIcon.svelte";
-import type NewSplitDTO from "@/models/dto/transactions/NewSplitDTO";
-import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";
-import ErrorSnackbar from "@/components/Snackbars/ErrorSnackbar.svelte";
-import Card from "@/components/common/Card.svelte";
-import SplitIcon from "@/components/icons/SplitIcon.svelte";
-import Button from "@/components/common/Button.svelte";
-import VLayout from "@/components/layouts/VLayout.svelte";
-import ContactIcon from "@/components/icons/ContactIcon.svelte";
-import CategorySelect from "@/components/CategorySelect.svelte";
-import Input from "@/components/common/Input.svelte";
-import CardHeader from "@/components/fragments/CardHeader.svelte";
-import AsyncButton from "@/components/common/AsyncButton.svelte";
-import HLayout from "@/components/layouts/HLayout.svelte";
-import SuggestionIcon from "@/components/icons/SuggestionIcon.svelte";
-import Dialog from "@/components/common/Dialog.svelte";
-import UpdateTransactionDetailsForm from "@/components/forms/UpdateTransactionDetailsForm.svelte";
-import type UpdateTransactionDetailsDTO from "@/models/dto/transactions/UpdateTransactionDetailsDTO";
+import AmountSpan from "@/components/spans/AmountSpan.svelte";
+import TransactionDetails from "@/components/fragments/TransactionDetails.svelte";
 
 // Props
 export var transaction: TransactionDTO;
@@ -205,7 +208,7 @@ let promise;
 // Computed
 $: isContact = !!transaction.externalAccount?.name;
 $: transactionName = transaction.externalAccount?.name ?? transaction.externalAccountName;
-$: promise = refresh();
+$: promise = transaction && refresh();
 
 // Functions
 async function refresh() {
@@ -232,7 +235,7 @@ async function createSplit() {
     split.amount = Number(Number(newSplit.amount).toFixed(2)) * 100;
 
     try {
-        await transactionService.createSplit(params.id, split);
+        await transactionService.createSplit(transaction.id, split);
     } catch (e) {
         errorMessage = [e.message];
         return;

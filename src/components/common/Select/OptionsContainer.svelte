@@ -81,6 +81,7 @@ onMount(() => {
 </script>
 
 <style lang="scss">
+@use "../../../scss/color";
 
 .optionsContainer {
     position: fixed;
@@ -90,7 +91,7 @@ onMount(() => {
     overflow-y: hidden;
     display: none;
 
-    background-color: var(--md-sys-color-surface-variant);
+    background-color: color.use(--md-sys-color-surface-variant);
     border: 1px solid #cecece;
 
     &.open {

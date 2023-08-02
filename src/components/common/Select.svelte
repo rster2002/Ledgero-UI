@@ -38,8 +38,8 @@ import { createEventDispatcher } from "svelte";
 const dispatch = createEventDispatcher();
 
 // Components
-import InputWrapper from "@/components/fragments/InputWrapper.svelte";
 import OptionsContainer from "@/components/common/Select/OptionsContainer.svelte";
+import InputWrapper from "@/components/common/InputWrapper.svelte";
 
 // Props
 export var label: string;

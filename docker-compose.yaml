@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: test
       POSTGRES_PASSWORD: test
-      POSTGRES_DB: piggybanks
+      POSTGRES_DB: ledgero
     ports:
       - "5470:5432"
 
@@ -19,14 +19,15 @@ services:
     image: ledgero-api
     restart: always
     ports:
-      - "5000:8000"
+      - "5050:8000"
     environment:
       ROCKET_ADDRESS: 0.0.0.0
       ROCKET_PORT: 8000
-      DATABASE_URL: postgres://test:test@database:5432/piggybanks
+      DATABASE_URL: postgres://test:test@database:5432/ledgero
       MEMCACHED_URL: memcache://memcached:11211
       PRIVATE_PEM_PATH: /jwtRS256.key
-      JWT_EXPIRE_SECONDS: 3600
+      JWT_ACCESS_EXPIRE_SECONDS: 3600
+      JWT_REFRESH_EXPIRE_SECONDS: 7776000
       JWT_ISSUER: ledgero-ui-dev
       MAX_BLOB_UNCONFIRMED: 300
       SCHEDULER_INTERVAL_SECONDS: 300

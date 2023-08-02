@@ -145,7 +145,7 @@ function close() {
     }
 
     footer {
-        margin-top: dp(24);
+        margin-top: dp.dp(24);
 
         display: flex;
         flex-direction: row;

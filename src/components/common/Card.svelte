@@ -1,4 +1,4 @@
-<section class="card {min && 'min'} {noOverflow && 'noOverflow'}">
+<section class="card {min && 'min'} {noOverflow && 'noOverflow'} {noPadding && 'noPadding'}]">
   <slot />
 </section>
 
@@ -6,6 +6,7 @@
 // Props
 export var min: boolean = false;
 export var noOverflow: boolean = false;
+export var noPadding: boolean = false;
 </script>
 
 <style lang="scss">
@@ -28,6 +29,14 @@ export var noOverflow: boolean = false;
 
     &:not(.noOverflow) {
         overflow-y: auto;
+    }
+
+    &.noPadding {
+        padding: 0;
+    }
+
+    &:global(h1, h2) {
+
     }
 }
 </style>
