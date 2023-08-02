@@ -1,5 +1,16 @@
 <div class="wrapper">
   <Card>
+    <h1>Categories</h1>
+
+    <p>
+      Used to organize transactions.
+    </p>
+
+    <footer>
+      <Button href="#/categories">
+        View
+      </Button>
+    </footer>
   </Card>
 
   <Card>
@@ -14,6 +25,7 @@
 <script lang="ts">
 // Components
 import Card from "@/components/common/Card.svelte";
+import Button from "@/components/common/Button.svelte";
 </script>
 
 <style lang="scss">
@@ -31,7 +43,7 @@ import Card from "@/components/common/Card.svelte";
   margin: 0 auto;
   display: grid;
   grid-gap: dp.dp(24);
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(dp.dp(275), 1fr));
   grid-auto-rows: 20rem;
   //grid-template-rows: 100%;
 

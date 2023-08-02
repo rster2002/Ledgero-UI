@@ -16,15 +16,15 @@ export default {
     "/organisation": wrap({
         asyncComponent: () => import("./MainView/OrganisationView.svelte"),
     }),
-    // "/categories/:id/subcategory/:subcategoryId": wrap({
-    //     asyncComponent: () => import("./MainView/Categories/ViewSubcategory.svelte"),
-    // }),
-    // "/categories": wrap({
-    //     asyncComponent: () => import("./MainView/Categories.svelte"),
-    // }),
-    // "/categories/:id": wrap({
-    //     asyncComponent: () => import("./MainView/Categories/ViewCategory.svelte"),
-    // }),
+    "/categories/:id/subcategory/:subcategoryId": wrap({
+        asyncComponent: () => import("./MainView/Categories/ViewSubcategory.svelte"),
+    }),
+    "/categories": wrap({
+        asyncComponent: () => import("./MainView/Categories.svelte"),
+    }),
+    "/categories/:id": wrap({
+        asyncComponent: () => import("./MainView/Categories/ViewCategory.svelte"),
+    }),
     // "/bank-accounts": wrap({
     //     asyncComponent: () => import("./MainView/BankAccounts.svelte"),
     // }),

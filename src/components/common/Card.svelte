@@ -12,9 +12,10 @@ export var noPadding: boolean = false;
 <style lang="scss">
 @use "../../scss/color";
 @use "../../scss/dp";
+@use "../../scss/typescale";
 
 .card {
-    padding: dp.dp(16);
+    padding: dp.dp(24);
     box-sizing: border-box;
 
     background-color: color.use(--md-sys-color-surface-container-low);
@@ -35,8 +36,14 @@ export var noPadding: boolean = false;
         padding: 0;
     }
 
-    &:global(h1, h2) {
+    & > :global(:is(h1, h2):first-child) {
+        margin-top: dp.dp(4);
 
+        @include typescale.use-scale(headline-large);
+    }
+
+    & > p {
+        @include typescale.use-scale(body-medium);
     }
 }
 </style>

@@ -69,7 +69,8 @@ import AccountIcon from "@/components/icons/AccountIcon.svelte";
 
 <style lang="scss">
 @use "../scss/color";
-@import "../shared";
+@use "../scss/dp";
+@use "../scss/breakpoints";
 
 section {
     height: 100%;
@@ -91,7 +92,7 @@ section {
 
     overflow-y: auto;
 
-    padding: 2em 2em 2em 0;
+    padding: dp.dp(32);
     box-sizing: border-box;
 
     .routeContainer {
@@ -102,7 +103,7 @@ section {
     }
 }
 
-@media only screen and (max-width: $compact-breakpoint){
+@media only screen and (max-width: breakpoints.$compact-breakpoint){
     section {
         flex-direction: column-reverse;
     }

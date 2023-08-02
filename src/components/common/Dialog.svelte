@@ -69,7 +69,17 @@ function close() {
     padding: dp.dp(56);
     box-sizing: border-box;
 
-    background-color: color.use(--md-sys-scrim, 0.2);
+    animation: scim-in var(--md-sys-motion-duration-medium4) var(--md-sys-motion-easing-emphasized-decelerate) forwards;
+}
+
+@keyframes scim-in {
+    from {
+        background-color: color.use(--md-sys-scrim, 0.0);
+    }
+
+    to {
+        background-color: color.use(--md-sys-scrim, 0.2);
+    }
 }
 
 .modal {
@@ -82,6 +92,8 @@ function close() {
 
     background-color: color.use(--md-sys-color-surface-container-high);
     color: color.use(--md-sys-color-on-surface-variant);
+
+    animation: modal-in var(--md-sys-motion-duration-medium4) var(--md-sys-motion-easing-emphasized-decelerate) forwards;
 
     @include typescale.use-scale(body-medium);
 
@@ -150,6 +162,16 @@ function close() {
         display: flex;
         flex-direction: row;
         justify-content: end;
+    }
+}
+
+@keyframes modal-in {
+    from {
+        transform: translateY(-1rem);
+    }
+
+    to {
+        transform: translateY(0rem);
     }
 }
 
