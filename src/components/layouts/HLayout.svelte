@@ -16,6 +16,8 @@ div {
     flex-direction: row;
     gap: 1em;
 
+    background-color: inherit;
+
     &.right {
         justify-content: right;
     }

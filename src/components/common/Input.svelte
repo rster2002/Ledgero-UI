@@ -1,7 +1,8 @@
 <InputWrapper
   {label}
+  {full}
   focus={focussed}
-  active={focussed || value !== ''}
+  active={focussed || (value !== '' && value !== null && value !== undefined)}
   let:id
 >
   <input placeholder=" " {id} {...$$props} bind:value on:focus={() => focussed = true} on:blur={() => focussed = false} />
@@ -9,19 +10,20 @@
 
 <script lang="ts">
 // Components
-import InputWrapper from "@/components/fragments/InputWrapper.svelte";
+import InputWrapper from "./InputWrapper.svelte";
 
 // Props
 export var label: string;
-export var value;
+export var value: unknown;
+export var full: boolean = false;
 
 // Data
-const id = String(Math.random());
 let focussed = false;
 </script>
 
 <style lang="scss">
-@import "../../shared";
+@use "../../scss/color";
+@use "../../scss/typescale";
 
 input {
     width: 100%;
@@ -33,8 +35,9 @@ input {
     outline: 0;
     border-radius: inherit;
     background-color: inherit;
-    color: var(--md-sys-color-on-surface);
-    @include mdl-font(body-large);
+    color: color.use(--md-sys-color-on-surface);
+
+    @include typescale.use-scale(body-large);
 }
 
 </style>

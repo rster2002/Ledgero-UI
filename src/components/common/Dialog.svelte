@@ -52,7 +52,10 @@ function close() {
 </script>
 
 <style lang="scss">
-@import "../../shared";
+@use "../../scss/dp";
+@use "../../scss/color";
+@use "../../scss/typescale";
+@use "../../scss/breakpoints";
 
 .scrim {
     width: 100%;
@@ -63,26 +66,27 @@ function close() {
     position: fixed;
     top: 0;
     left: 0;
-    padding: dp(56);
+    padding: dp.dp(56);
     box-sizing: border-box;
 
-    background-color: rgb(var(--md-sys-scrim-rgb) / 0.2);
+    background-color: color.use(--md-sys-scrim, 0.2);
 }
 
 .modal {
-    min-width: dp(240);
-    max-width: dp(560);
+    min-width: dp.dp(240);
+    max-width: dp.dp(560);
 
-    padding: dp(24);
-    border-radius: dp(28);
+    padding: dp.dp(24);
+    border-radius: dp.dp(28);
     box-sizing: border-box;
 
-    background-color: var(--md-sys-color-surface-container-high);
-    color: var(--md-sys-color-on-surface-variant);
-    @include mdl-font(body-medium);
+    background-color: color.use(--md-sys-color-surface-container-high);
+    color: color.use(--md-sys-color-on-surface-variant);
+
+    @include typescale.use-scale(body-medium);
 
     .defaultHeader {
-        margin-bottom: dp(16);
+        margin-bottom: dp.dp(16);
 
         .fullScreenActions {
             display: none;
@@ -91,8 +95,9 @@ function close() {
         & > :global(h1), :global(h2), :global(h3), :global(h4), :global(h5), :global(h6) {
             margin: 0;
 
-            color: var(--md-sys-color-on-surface);
-            @include mdl-font(headline-small);
+            color: color.use(--md-sys-color-on-surface);
+
+            @include typescale.use-scale(headline-small);
         }
     }
 
@@ -101,7 +106,7 @@ function close() {
     }
 
     .fullScreenHeader {
-        height: dp(56);
+        height: dp.dp(56);
 
         display: none;
         align-items: center;
@@ -114,14 +119,14 @@ function close() {
 
             button {
                 background-color: transparent;
-                padding: 0 dp(16);
+                padding: 0 dp.dp(16);
                 margin: 0;
                 outline: 0;
                 border: 0;
 
                 :global(svg) {
-                    color: var(--md-sys-color-on-surface);
-                    font-size: dp(24);
+                    color: color.use(--md-sys-color-on-surface);
+                    font-size: dp.dp(24);
                 }
             }
         }
@@ -134,8 +139,8 @@ function close() {
         & > :global(h1), :global(h2), :global(h3), :global(h4), :global(h5), :global(h6) {
             margin: 0;
 
-            color: var(--md-sys-color-on-surface);
-            @include mdl-font(headline-small);
+            color: color.use(--md-sys-color-on-surface);
+            @include typescale.use-scale(headline-small);
         }
     }
 
@@ -148,7 +153,7 @@ function close() {
     }
 }
 
-@media only screen and (max-width: $compact-breakpoint){
+@media only screen and (max-width: breakpoints.$compact-breakpoint){
     .scrim.fullScreen {
         display: block;
         padding: 0;
@@ -169,7 +174,7 @@ function close() {
             }
 
             .content {
-                padding: dp(24);
+                padding: dp.dp(24);
                 box-sizing: border-box;
             }
 

@@ -3,35 +3,44 @@
 </button>
 
 <style lang="scss">
-@import "../shared";
+@use "../scss/dp";
+@use "../scss/typescale";
+@use "../scss/color";
+@use "../scss/breakpoints";
+@use "../scss/state-layer";
 
 .fab {
-    height: dp(56);
-    min-width: dp(80);
+    height: dp.dp(56);
+    min-width: dp.dp(80);
 
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 0.75em;
     padding: 1em;
 
-    border-radius: var(--border-radius-large);
+    border-radius: var(--md-sys-shape-corner-large);
     border: 0;
     cursor: pointer;
     box-shadow: var(--md-sys-elevation-level3);
-    background-color: var(--md-sys-color-primary-container);
-    color: var(--md-sys-color-on-primary-container);
-    font-family: var(--font-label-large-font-family);
-    font-size: var(--font-label-large-font-size);
-    font-weight: var(--font-label-large-weight);
-    line-height: var(--font-label-large-line-height);
-    letter-spacing: var(--font-label-large-tracking);
+    background-color: color.use(--md-sys-color-primary-container);
+    color: color.use(--md-sys-color-on-primary-container);
+    transition: 150ms var(--md-sys-motion-easing-standard);
+    transition-property: box-shadow, background-color;
+
+    @include typescale.use-scale(label-large);
+
+    &:hover {
+        box-shadow: var(--md-sys-elevation-level4);
+        background-color: state-layer.hover-state-layer(--md-sys-color-primary-container, --md-sys-color-on-primary-container);
+    }
 
     :global(svg) {
         font-size: 1.5em;
     }
 }
 
-@media only screen and (max-width: $medium-breakpoint){
+@media only screen and (max-width: breakpoints.$medium-breakpoint){
     .fab {
         min-width: unset;
         width: dp(56);
@@ -42,7 +51,7 @@
     }
 }
 
-@media only screen and (max-width: $compact-breakpoint){
+@media only screen and (max-width: breakpoints.$compact-breakpoint){
     button.fab {
         width: unset;
 

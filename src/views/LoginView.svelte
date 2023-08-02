@@ -1,5 +1,5 @@
 <section>
-  <Card minimal>
+  <Card min>
     <HLayout>
       <aside>
         <h1>Ledgero</h1>
@@ -98,9 +98,11 @@ aside {
     display: grid;
     place-items: center;
     padding: 1em;
+    background-color: inherit;
 
     .inner {
         width: 100%;
+        background-color: inherit;
     }
 
     h2 {

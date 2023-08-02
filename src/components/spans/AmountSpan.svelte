@@ -26,7 +26,7 @@ span {
 
     border-radius: var(--md-sys-shape-corner-full);
     background-color: var(--positive-amount);
-    color: color.use(--md-sys-color-surface);
+    color: #1F1F1F;
 
     @include typescale.use-scale(label-large);
 

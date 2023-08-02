@@ -15,9 +15,14 @@ nav {
     width: dp.dp(360);
 
     container-type: inline-size;
-    padding: dp.dp(12);
+    padding: dp.dp(24);
     box-sizing: border-box;
     background-color: color.use(--nav-background);
+
+    & > :global(.fab) {
+        width: 100%;
+        margin-bottom: dp.dp(32);
+    }
 }
 
 @media only screen and (max-width: breakpoints.$medium-breakpoint) {

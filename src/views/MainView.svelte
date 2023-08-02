@@ -15,20 +15,30 @@
       Transactions
     </NavItem>
 
-    <NavItem href="/#/categories">
-      <CategoriesIcon />
-      Categories
+    <NavItem href="/#/organisation">
+      <OrganisationIcon />
+      Organisation
     </NavItem>
 
-    <NavItem href="/#/external-accounts">
-      <ContactsIcon />
-      Contacts
+    <NavItem href="/#/account">
+      <AccountIcon />
+      Account
     </NavItem>
 
-    <NavItem href="/#/bank-accounts">
-      <BankAccountIcon />
-      Accounts
-    </NavItem>
+<!--    <NavItem href="/#/categories">-->
+<!--      <CategoriesIcon />-->
+<!--      Categories-->
+<!--    </NavItem>-->
+
+<!--    <NavItem href="/#/external-accounts">-->
+<!--      <ContactsIcon />-->
+<!--      Contacts-->
+<!--    </NavItem>-->
+
+<!--    <NavItem href="/#/bank-accounts">-->
+<!--      <BankAccountIcon />-->
+<!--      Accounts-->
+<!--    </NavItem>-->
   </NavBar>
 
   <div class="routeWrapper">
@@ -53,6 +63,8 @@ import BankAccountIcon from "@/components/icons/BankAccountIcon.svelte";
 import UploadIcon from "@/components/icons/UploadIcon.svelte";
 import Fab from "@/components/Fab.svelte";
 import ContactsIcon from "@/components/icons/ContactsIcon.svelte";
+import OrganisationIcon from "@/components/icons/OrganisationIcon.svelte";
+import AccountIcon from "@/components/icons/AccountIcon.svelte";
 </script>
 
 <style lang="scss">
