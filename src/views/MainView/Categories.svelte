@@ -11,8 +11,12 @@
 
         <AsyncContent {promise}>
           {#each categories as category}
-            <ListItem clickable>
+            <ListItem clickable on:click={() => openCategory(category)}>
               {category.name}
+
+              <svelte:fragment slot="supporting">
+                {category.description}
+              </svelte:fragment>
 
               <AmountSpan slot="tailing" amount={category.amount} />
             </ListItem>
@@ -23,9 +27,17 @@
   </div>
 
   <div class="details">
-    <Card>
-
-    </Card>
+    <InlinePage
+      title="Category"
+      open={openedCategory !== null}
+      on:close={() => openedCategory = null}
+    >
+      {#if openedCategory === null}
+        No transaction open
+      {:else}
+        <CategoryView bind:category={openedCategory} on:change={() => categories = categories} />
+      {/if}
+    </InlinePage>
   </div>
 </div>
 
@@ -42,14 +54,21 @@ import AmountSpan from "@/components/spans/AmountSpan.svelte";
 import Button from "@/components/common/Button.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
 import AddIcon from "@/components/icons/AddIcon.svelte";
+import CategoryView from "@/components/CategoryView.svelte";
+import InlinePage from "@/components/InlinePage.svelte";
 
 // Data
 const categoriesService = new CategoryService();
 let categories: CategoryDTO[] = [];
+let openedCategory: CategoryDTO | null = null;
 
 // Functions
 async function refresh() {
   categories = await categoriesService.getAllCategories();
+}
+
+function openCategory(category: CategoryDTO) {
+  openedCategory = category;
 }
 
 const promise = refresh();

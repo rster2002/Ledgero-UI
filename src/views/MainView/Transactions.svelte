@@ -55,7 +55,6 @@ let openedTransaction: TransactionDTO | null = null;
 
 // Functions
 function openTransaction(transaction: TransactionDTO) {
-    // push("/transactions/" + transaction.id);
   openedTransaction = transaction;
 }
 
