@@ -24,6 +24,7 @@ $: darkForegroundColor = color ? "#000000" : "var(--md-ref-palette-neutral90)";
 <style lang="scss">
 @use "../../scss/typescale";
 @use "../../scss/dp";
+@use "../../scss/color";
 //@import "../../shared";
 
 .chip {
@@ -39,7 +40,8 @@ $: darkForegroundColor = color ? "#000000" : "var(--md-ref-palette-neutral90)";
     text-overflow: ellipsis;
     overflow: hidden;
     border-radius: dp.dp(8);
-    border: dp.dp(1) solid var(--md-sys-color-outline);
+    border: solid color.use(--md-sys-color-outline);
+    // var(--md-sys-color-outline);
     background-color: var(--light-color, #f1f1f1);
 
     @include typescale.use-scale(label-large);

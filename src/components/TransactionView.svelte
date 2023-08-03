@@ -111,7 +111,7 @@
   </svelte:fragment>
 
   <svelte:fragment slot="fullscreen-actions">
-    <Button text>
+    <Button text on:click={createSplit}>
       Create
     </Button>
   </svelte:fragment>
@@ -125,7 +125,7 @@
   <VLayout>
     <UpdateTransactionDetailsForm
       externalAccountName={transaction.externalAccountName}
-      bind:updateDetails
+      bind:updateDetails={transactionDetails}
     />
   </VLayout>
 
@@ -134,15 +134,15 @@
       Cancel
     </Button>
 
-    <Button text>
+    <AsyncButton text asyncClick={saveChanges}>
       Save
-    </Button>
+    </AsyncButton>
   </svelte:fragment>
 
   <svelte:fragment slot="fullscreen-actions">
-    <Button text>
+    <AsyncButton text asyncClick={saveChanges}>
       Save
-    </Button>
+    </AsyncButton>
   </svelte:fragment>
 </Dialog>
 
@@ -156,6 +156,8 @@ import TransactionService from "@/services/TransactionService";
 import type SplitDTO from "@/models/dto/transactions/SplitDTO";
 import type NewSplitDTO from "@/models/dto/transactions/NewSplitDTO";
 import type UpdateTransactionDetailsDTO from "@/models/dto/transactions/UpdateTransactionDetailsDTO";
+import { createEventDispatcher } from "svelte";
+const dispatch = createEventDispatcher();
 
 // Components
 import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";
@@ -180,6 +182,7 @@ import CategorySpan from "@/components/spans/CategorySpan.svelte";
 import DeleteIcon from "@/components/icons/DeleteIcon.svelte";
 import AmountSpan from "@/components/spans/AmountSpan.svelte";
 import TransactionDetails from "@/components/fragments/TransactionDetails.svelte";
+import AsyncButton from "@/components/common/AsyncButton.svelte";
 
 // Props
 export var transaction: TransactionDTO;
@@ -189,7 +192,7 @@ const transactionService = new TransactionService();
 let successMessage = [""];
 let errorMessage = [""];
 let splits: SplitDTO[] = [];
-let updateDetails: UpdateTransactionDetailsDTO = {
+let transactionDetails: UpdateTransactionDetailsDTO = {
     description: "",
     categoryId: null,
     subcategoryId: null,
@@ -216,10 +219,10 @@ async function refresh() {
 }
 
 function resetUpdateDetails() {
-    updateDetails.description = transaction.description;
-    updateDetails.categoryId  = transaction.category?.id ?? null;
-    updateDetails.subcategoryId  = transaction.subcategory?.id ?? null;
-    updateDetails.externalAccountId  = transaction.externalAccount?.id ?? null;
+    transactionDetails.description = transaction.description;
+    transactionDetails.categoryId  = transaction.category?.id ?? null;
+    transactionDetails.subcategoryId  = transaction.subcategory?.id ?? null;
+    transactionDetails.externalAccountId  = transaction.externalAccount?.id ?? null;
 }
 
 function cancelEditingTransaction() {
@@ -255,6 +258,17 @@ async function deleteSplit(splitId: string) {
         await transactionService.deleteSplit(transaction.id, splitId);
         promise = refresh();
     }
+}
+
+async function saveChanges() {
+  await transactionService.updateDetails(transaction.id, transactionDetails);
+  const remoteTransaction = await transactionService.getTransaction(transaction.id);
+
+  Object.assign(transaction, remoteTransaction);
+  transaction = transaction;
+  dispatch("change");
+
+  cancelEditingTransaction();
 }
 
 resetUpdateDetails();

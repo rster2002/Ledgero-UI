@@ -26,7 +26,7 @@
       {#if openedTransaction === null}
         No transaction open
       {:else}
-        <TransactionView transaction={openedTransaction} />
+        <TransactionView transaction={openedTransaction} on:change={() => transactions = transactions} />
       {/if}
     </InlinePage>
   </div>
