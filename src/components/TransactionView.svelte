@@ -122,12 +122,25 @@
     Edit details
   </h2>
 
-  <VLayout>
-    <UpdateTransactionDetailsForm
-      externalAccountName={transaction.externalAccountName}
-      bind:updateDetails={transactionDetails}
-    />
-  </VLayout>
+  <GridLayout wide>
+    <div class="span6">
+      <CategorySelect
+        bind:categoryId={transactionDetails.categoryId}
+        bind:subcategoryId={transactionDetails.subcategoryId}
+      />
+    </div>
+
+    <div class="span6">
+      <ExternalAccountSelect
+        bind:externalAccountId={transactionDetails.externalAccountId}
+        externalAccountName={transaction.externalAccountName}
+      />
+    </div>
+
+    <div class="span12">
+      <TextArea label="Description" bind:value={transactionDetails.description} />
+    </div>
+  </GridLayout>
 
   <svelte:fragment slot="actions">
     <Button text on:click={cancelEditingTransaction}>
@@ -183,6 +196,10 @@ import DeleteIcon from "@/components/icons/DeleteIcon.svelte";
 import AmountSpan from "@/components/spans/AmountSpan.svelte";
 import TransactionDetails from "@/components/fragments/TransactionDetails.svelte";
 import AsyncButton from "@/components/common/AsyncButton.svelte";
+import ExternalAccountSelect from "@/components/ExternalAccountSelect.svelte";
+import CategorySelect from "@/components/CategorySelect.svelte";
+import GridLayout from "@/components/layouts/GridLayout.svelte";
+import TextArea from "@/components/common/TextArea.svelte";
 
 // Props
 export var transaction: TransactionDTO;

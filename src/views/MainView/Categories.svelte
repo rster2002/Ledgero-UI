@@ -4,7 +4,7 @@
       <VLayout>
         <header>
           <Button icon>
-            <AddIcon />
+            <CategoryIcon />
             New category
           </Button>
         </header>
@@ -35,7 +35,14 @@
       {#if openedCategory === null}
         No transaction open
       {:else}
-        <CategoryView bind:category={openedCategory} on:change={() => categories = categories} />
+        <CategoryView
+          bind:category={openedCategory}
+          on:change={() => refresh()}
+          on:delete={() => {
+              openedCategory = null;
+              refresh();
+          }}
+        />
       {/if}
     </InlinePage>
   </div>
@@ -56,6 +63,7 @@ import VLayout from "@/components/layouts/VLayout.svelte";
 import AddIcon from "@/components/icons/AddIcon.svelte";
 import CategoryView from "@/components/CategoryView.svelte";
 import InlinePage from "@/components/InlinePage.svelte";
+import CategoryIcon from "@/components/icons/CategoryIcon.svelte";
 
 // Data
 const categoriesService = new CategoryService();

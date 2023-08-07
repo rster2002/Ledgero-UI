@@ -40,7 +40,7 @@ $: darkForegroundColor = color ? "#000000" : "var(--md-ref-palette-neutral90)";
     text-overflow: ellipsis;
     overflow: hidden;
     border-radius: dp.dp(8);
-    border: solid color.use(--md-sys-color-outline);
+    border: solid color.use(--md-sys-color-outline) dp.dp(1);
     // var(--md-sys-color-outline);
     background-color: var(--light-color, #f1f1f1);
 

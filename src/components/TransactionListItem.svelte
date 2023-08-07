@@ -1,4 +1,6 @@
 <ListItem clickable on:click>
+  <CategoryImage slot="leading" category={transaction.category} />
+
   {#if transaction.externalAccount}
     {transaction.externalAccount.name}
     <ContactIcon />
@@ -22,6 +24,7 @@ import AmountSpan from "@/components/spans/AmountSpan.svelte";
 import FullCategorySpan from "@/components/spans/FullCategorySpan.svelte";
 import ContactIcon from "@/components/icons/ContactIcon.svelte";
 import ListItem from "@/components/ListItem.svelte";
+import CategoryImage from "@/components/fragments/CategoryImage.svelte";
 
 // Props
 export var transaction: TransactionDTO;

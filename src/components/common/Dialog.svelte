@@ -83,8 +83,8 @@ function close() {
 }
 
 .modal {
-    min-width: dp.dp(240);
-    max-width: dp.dp(560);
+    min-width: dp.dp(560);
+    max-width: dp.dp(780);
 
     padding: dp.dp(24);
     border-radius: dp.dp(28);
