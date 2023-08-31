@@ -23,11 +23,16 @@
       open={openedTransaction !== null}
       on:close={() => openedTransaction = null}
     >
-      {#if openedTransaction === null}
-        No transaction open
-      {:else}
-        <TransactionView transaction={openedTransaction} on:change={() => transactions = transactions} />
-      {/if}
+      <Router
+        routes={{
+          "/transactions/:transactionId": ViewTransaction,
+        }}
+      />
+      <!--{#if openedTransaction === null}-->
+      <!--  No transaction open-->
+      <!--{:else}-->
+      <!--  <TransactionView transaction={openedTransaction} on:change={() => transactions = transactions} />-->
+      <!--{/if}-->
     </InlinePage>
   </div>
 </div>
@@ -40,11 +45,11 @@ import type TransactionDTO from "@/models/dto/transactions/TransactionDTO";
 // Components
 import Card from "@/components/common/Card.svelte";
 import TransactionListItem from "@/components/TransactionListItem.svelte";
-import TransactionView from "@/components/TransactionView.svelte";
 import AsyncButton from "@/components/common/AsyncButton.svelte";
 import InlinePage from "@/components/InlinePage.svelte";
 import AsyncContent from "@/components/common/AsyncContent.svelte";
-import ListItem from "@/components/ListItem.svelte";
+import Router, { push } from "svelte-spa-router";
+import ViewTransaction from "@/views/MainView/Transactions/ViewTransaction.svelte";
 
 // Data
 const transactionsService = new TransactionService();
@@ -55,7 +60,7 @@ let openedTransaction: TransactionDTO | null = null;
 
 // Functions
 function openTransaction(transaction: TransactionDTO) {
-  openedTransaction = transaction;
+  push(`/transactions/${transaction.id}`);
 }
 
 async function nextPage() {
@@ -77,7 +82,6 @@ const promise = refresh();
 </script>
 
 <style lang="scss">
-@import "../../shared";
 
 .wrapper {
     height: 100%;

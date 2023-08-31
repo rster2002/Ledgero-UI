@@ -32,18 +32,11 @@
       open={openedCategory !== null}
       on:close={() => openedCategory = null}
     >
-      {#if openedCategory === null}
-        No transaction open
-      {:else}
-        <CategoryView
-          bind:category={openedCategory}
-          on:change={() => refresh()}
-          on:delete={() => {
-              openedCategory = null;
-              refresh();
-          }}
-        />
-      {/if}
+      <Router
+        routes={{
+          "/categories/:categoryId": ViewCategory,
+        }}
+      />
     </InlinePage>
   </div>
 </div>
@@ -60,10 +53,10 @@ import ListItem from "@/components/ListItem.svelte";
 import AmountSpan from "@/components/spans/AmountSpan.svelte";
 import Button from "@/components/common/Button.svelte";
 import VLayout from "@/components/layouts/VLayout.svelte";
-import AddIcon from "@/components/icons/AddIcon.svelte";
-import CategoryView from "@/components/CategoryView.svelte";
 import InlinePage from "@/components/InlinePage.svelte";
 import CategoryIcon from "@/components/icons/CategoryIcon.svelte";
+import Router, { push } from "svelte-spa-router";
+import ViewCategory from "@/views/MainView/Categories/ViewCategory.svelte";
 
 // Data
 const categoriesService = new CategoryService();
@@ -76,7 +69,7 @@ async function refresh() {
 }
 
 function openCategory(category: CategoryDTO) {
-  openedCategory = category;
+  push(`/categories/${category.id}`);
 }
 
 const promise = refresh();

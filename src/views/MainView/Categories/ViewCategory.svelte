@@ -1,125 +1,150 @@
-<Page>
-  <AsyncContent {promise}>
+<AsyncContent {promise}>
+  <div class="transactionView">
     <div class="grid">
-      <Card>
-        <h1>
-          <CategorySpan {category} />
-        </h1>
+      <Card outlineCompact>
+        <VLayout>
+          <header>
+            <h2>
+              <AmountSpan amount={category.amount} sign />
+            </h2>
+            <h3>
+              {category.name}
+            </h3>
+          </header>
 
-        <p>
-          {category.description}
-        </p>
+          <HLayout wrap>
+            <Button on:click={() => editCategoryPopupOpen = true} icon outline>
+              <EditIcon />
+              Edit details
+            </Button>
+
+            <Button on:click={deleteCategory} icon text>
+              <DeleteIcon />
+              Delete category
+            </Button>
+          </HLayout>
+        </VLayout>
       </Card>
 
-      <Card>
-        <CardStat label="Category total">
-          {formatMoney(category.amount)}
-        </CardStat>
-      </Card>
-
-      <div class="span">
-        <Card>
+      <div class="details">
+        <Card outlineCompact>
           <VLayout>
-            <HLayout>
-              <Button icon outline on:click={() => editPopupOpen = true}>
-                <EditIcon />
-                Edit category
-              </Button>
+            <!--          <CategoryDet {category} />-->
 
-              <AsyncButton icon text asyncClick={deleteCategory} --accent-color="var(--negative-amount-on-bg)" --tint-50="#FFEBEB">
-                <DeleteIcon />
-                Delete category
-              </AsyncButton>
-            </HLayout>
-
-            <h2>Subcategories</h2>
-
-            <HLayout>
-              <Button on:click={() => newSubcategoryOpen = true}>
-                <AddIcon />
-                Add subcategory
-              </Button>
-            </HLayout>
-
-            <Table
-              items={subcategories}
-              on:click={(e) => openSubcategory(e.detail.id)}
-              clickable
-            >
-              <svelte:fragment slot="header">
-                <TableHead>Amount</TableHead>
-                <TableHead wide>Name</TableHead>
-                <TableHead />
-              </svelte:fragment>
-
-              <svelte:fragment let:item slot="row">
-                <TextColumn>
-                  <AmountSpan amount={item.amount} />
-                </TextColumn>
-
-                <TextColumn>
-                  <SubcategorySpan subcategory={item} />
-                </TextColumn>
-
-                <CenterColumn>
-                  <ArrowRightIcon />
-                </CenterColumn>
-              </svelte:fragment>
-            </Table>
-
-            <h2>Transactions</h2>
-
-            <PaginatedTransactionsTable paginator={transactionPaginator} showCategory={false} />
           </VLayout>
         </Card>
       </div>
+
+      <div class="splits">
+        <Card outlineCompact>
+          <VLayout>
+            <header>
+              <Button icon>
+                <SubcategoryIcon />
+                New subcategory
+              </Button>
+            </header>
+
+            <div>
+              {#each subcategories as subcategory}
+                <ListItem clickable>
+                  {subcategory.name}
+
+                  <svelte:fragment slot="supporting">
+                    {subcategory.description}
+                  </svelte:fragment>
+                </ListItem>
+              {/each}
+            </div>
+          </VLayout>
+          <!--        <VLayout>-->
+          <!--          <header>-->
+          <!--            <Button icon on:click={() => newSplitPopupOpen = true}>-->
+          <!--              <SplitIcon />-->
+          <!--              New split-->
+          <!--            </Button>-->
+          <!--          </header>-->
+
+          <!--          <AsyncContent {promise}>-->
+          <!--            <Table items={splits}>-->
+          <!--              <svelte:fragment slot="header">-->
+          <!--                <TableHead>Amount</TableHead>-->
+          <!--                <TableHead>Category</TableHead>-->
+          <!--                <TableHead wide>Description</TableHead>-->
+          <!--                <TableHead>Actions</TableHead>-->
+          <!--              </svelte:fragment>-->
+
+          <!--              <svelte:fragment slot="row" let:item>-->
+          <!--                <TextColumn>-->
+          <!--                  <AmountSpan amount={item.amount} />-->
+          <!--                </TextColumn>-->
+
+          <!--                <TextColumn>-->
+          <!--                  <CategorySpan category={item.category} />-->
+          <!--                </TextColumn>-->
+
+          <!--                <TextColumn>-->
+          <!--                  {item.description}-->
+          <!--                </TextColumn>-->
+
+          <!--                <TextColumn>-->
+          <!--                  {#if item.id !== "remainder"}-->
+          <!--                    <HLayout>-->
+          <!--                      <IconButton>-->
+          <!--                        <EditIcon />-->
+          <!--                      </IconButton>-->
+
+          <!--                      <IconButton on:click={() => deleteSplit(item.id)}>-->
+          <!--                        <DeleteIcon />-->
+          <!--                      </IconButton>-->
+          <!--                    </HLayout>-->
+          <!--                  {/if}-->
+          <!--                </TextColumn>-->
+          <!--              </svelte:fragment>-->
+          <!--            </Table>-->
+          <!--          </AsyncContent>-->
+          <!--        </VLayout>-->
+        </Card>
+      </div>
     </div>
-  </AsyncContent>
-</Page>
+  </div>
+</AsyncContent>
 
-<!--<Popup bind:open={editPopupOpen}>-->
-<!--  <VLayout>-->
-<!--    <CardHeader>-->
-<!--      <h2>Edit category</h2>-->
-<!--    </CardHeader>-->
+<Dialog bind:open={editCategoryPopupOpen} fullScreen>
+  <h2 slot="header">
+    Edit details
+  </h2>
 
-<!--    <CategoryDetailsForm bind:value={editDetails} />-->
+  <VLayout>
+    <Input label="Name" bind:value={updateDetails.name} />
 
-<!--    <HLayout full>-->
-<!--      <Button on:click={cancelEditing} secondary>-->
-<!--        <CloseIcon />-->
-<!--        Cancel-->
-<!--      </Button>-->
+    <TextArea label="Description" bind:value={updateDetails.description} />
 
-<!--      <AsyncButton asyncClick={saveChanges}>-->
-<!--        <SaveIcon />-->
-<!--        Save changes-->
-<!--      </AsyncButton>-->
-<!--    </HLayout>-->
-<!--  </VLayout>-->
-<!--</Popup>-->
+    <ColorPicker bind:value={updateDetails.hexColor} />
+  </VLayout>
 
-<!--<Popup bind:open={newSubcategoryOpen}>-->
-<!--  <VLayout>-->
-<!--    <CardHeader>-->
-<!--      <h2>New subcategory</h2>-->
-<!--    </CardHeader>-->
+  <svelte:fragment slot="actions">
+    <Button text on:click={cancelEditingCategory}>
+      Cancel
+    </Button>
 
-<!--    <CategoryDetailsForm bind:value={newSubcategoryDetails} />-->
+    <AsyncButton text asyncClick={saveChanges}>
+      Save
+    </AsyncButton>
+  </svelte:fragment>
 
-<!--    <HLayout full>-->
-<!--      <Button on:click={cancelNewSubcategory} secondary>-->
-<!--        <CloseIcon />-->
-<!--        Cancel-->
-<!--      </Button>-->
+  <svelte:fragment slot="fullscreen-actions">
+    <AsyncButton text asyncClick={saveChanges}>
+      Save
+    </AsyncButton>
+  </svelte:fragment>
+</Dialog>
 
-<!--      <AsyncButton asyncClick={createSubcategory}>-->
-<!--        <SaveIcon />-->
-<!--        Create subcategory-->
-<!--      </AsyncButton>-->
-<!--    </HLayout>-->
-<!--  </VLayout>-->
-<!--</Popup>-->
+<Dialog bind:open={newSubcategoryPopup} fullScreen>
+  <h2 slot="header">
+    Edit details
+  </h2>
+</Dialog>
 
 <SuccessSnackbar message={successMessage} />
 <ErrorSnackbar message={errorMessage} />
@@ -128,152 +153,139 @@
 // Imports
 import type CategoryDTO from "@/models/dto/categories/CategoryDTO";
 import type CategoryDetailsDTO from "@/models/dto/categories/CategoryDetailsDTO";
-import CategoryService from "@/services/CategoryService";
-import { push } from "svelte-spa-router";
-import formatMoney from "@/utils/formatMoney";
 import type SubcategoryDTO from "@/models/dto/categories/subcategories/SubcategoryDTO";
+import CategoryService from "@/services/CategoryService";
+import { createEventDispatcher } from "svelte";
+const dispatch = createEventDispatcher();
 
 // Components
-import Page from "@/components/Page.svelte";
-import Card from "@/components/common/Card.svelte";
-import AsyncContent from "@/components/common/AsyncContent.svelte";
-import CategorySpan from "@/components/spans/CategorySpan.svelte";
-import CardStat from "@/components/fragments/CardStat.svelte";
-import AsyncButton from "@/components/common/AsyncButton.svelte";
-import DeleteIcon from "@/components/icons/DeleteIcon.svelte";
-import Button from "@/components/common/Button.svelte";
-import EditIcon from "@/components/icons/EditIcon.svelte";
-import HLayout from "@/components/layouts/HLayout.svelte";
-// import Popup from "@/components/common/Popup.svelte";
-import CategoryDetailsForm from "@/components/forms/CategoryDetailsForm.svelte";
-import VLayout from "@/components/layouts/VLayout.svelte";
-import CardHeader from "@/components/fragments/CardHeader.svelte";
-import SaveIcon from "@/components/icons/SaveIcon.svelte";
-import CloseIcon from "@/components/icons/CloseIcon.svelte";
 import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";
 import ErrorSnackbar from "@/components/Snackbars/ErrorSnackbar.svelte";
-import Table from "@/components/Table.svelte";
-import TableHead from "@/components/Table/TableHead.svelte";
-import TextColumn from "@/components/Table/TextColumn.svelte";
+import Card from "@/components/common/Card.svelte";
+import Button from "@/components/common/Button.svelte";
+import VLayout from "@/components/layouts/VLayout.svelte";
+import HLayout from "@/components/layouts/HLayout.svelte";
+import EditIcon from "@/components/icons/EditIcon.svelte";
 import AmountSpan from "@/components/spans/AmountSpan.svelte";
-import AddIcon from "@/components/icons/AddIcon.svelte";
-import ColorSpan from "@/components/spans/ColorSpan.svelte";
-import CenterColumn from "@/components/Table/CenterColumn.svelte";
-import ArrowRightIcon from "@/components/icons/ArrowRightIcon.svelte";
-import SubcategorySpan from "@/components/spans/SubcategorySpan.svelte";
-import PaginatedTransactionsTable from "@/components/tables/PaginatedTransactionsTable.svelte";
+import Dialog from "@/components/common/Dialog.svelte";
+import Input from "@/components/common/Input.svelte";
+import AsyncButton from "@/components/common/AsyncButton.svelte";
+import ColorPicker from "@/components/common/ColorPicker.svelte";
+import TextArea from "@/components/common/TextArea.svelte";
+import DeleteIcon from "@/components/icons/DeleteIcon.svelte";
+import SubcategoryIcon from "@/components/icons/SubcategoryIcon.svelte";
+import ListItem from "@/components/ListItem.svelte";
+import AsyncContent from "@/components/common/AsyncContent.svelte";
 
 // Props
-export var params: { id: string } = {};
+export let params: { categoryId: string };
 
 // Data
 const categoryService = new CategoryService();
-let promise: Promise<unknown>;
-let transactionPaginator;
+let category: CategoryDTO;
+let subcategories: SubcategoryDTO[] = [];
 let successMessage = [""];
 let errorMessage = [""];
-let category: CategoryDTO;
-let editPopupOpen = false;
-let editDetails: CategoryDetailsDTO = {
-    name: "",
-    description: "",
-    hexColor: "",
+let updateDetails: CategoryDetailsDTO = {
+  name: "",
+  description: "",
+  hexColor: "",
 };
-let subcategories: SubcategoryDTO[] = [];
-let newSubcategoryOpen = false;
-let newSubcategoryDetails: CategoryDetailsDTO = {
-    name: "",
-    description: "",
-    hexColor: "ffffff",
-};
+let editCategoryPopupOpen = false;
+let newSubcategoryPopup = false;
 
 // Functions
 async function refresh() {
-    category = await categoryService.getCategoryById(params.id);
-    subcategories = await categoryService.getSubcategories(params.id);
-    transactionPaginator = categoryService.createTransactionIteratorForCategory(params.id);
-    refreshEditor();
+  category = await categoryService.getCategoryById(params.categoryId);
+  subcategories = await categoryService.getSubcategories(category.id);
+
+  resetUpdateDetails();
 }
 
-function refreshEditor() {
-    editDetails = {
-        name: category.name,
-        description: category.description,
-        hexColor: category.hexColor,
-    };
+function resetUpdateDetails() {
+  updateDetails.name = category.name;
+  updateDetails.description = category.description;
+  updateDetails.hexColor = category.hexColor;
 }
 
-function cancelEditing() {
-    refreshEditor();
-    editPopupOpen = false;
-}
-
-async function deleteCategory() {
-    if (confirm("Are you sure you want to delete this category?")) {
-        await categoryService.deleteCategory(category.id);
-        await push("/categories");
-    }
+function cancelEditingCategory() {
+  resetUpdateDetails();
+  editCategoryPopupOpen = false;
 }
 
 async function saveChanges() {
-    try {
-        await categoryService.updateCategory(category.id, editDetails);
+  await categoryService.updateCategory(category.id, updateDetails);
+  const remoteCategory = await categoryService.getCategoryById(category.id);
 
-        successMessage = ["Successfully updated"];
-        editPopupOpen = false;
-        promise = refresh();
-    } catch (e) {
-        errorMessage = [e.message];
-    }
+  Object.assign(category, remoteCategory);
+  category = category;
+  dispatch("change");
+
+  cancelEditingCategory();
 }
 
-function refreshSubcategoryEditor() {
-    newSubcategoryDetails = {
-        name: "",
-        description: "",
-        hexColor: "ffffff",
-    };
+async function deleteCategory() {
+  if (!confirm("Are you sure you want to delete this category?")) {
+    return;
+  }
+
+  await categoryService.deleteCategory(category.id);
+  dispatch("delete");
 }
 
-function cancelNewSubcategory() {
-    refreshSubcategoryEditor();
-    newSubcategoryOpen = false;
-}
-
-async function createSubcategory() {
-    try {
-        await categoryService.createSubcategory(category.id, newSubcategoryDetails);
-
-        successMessage = ["Subcategory created"];
-        newSubcategoryOpen = false;
-        refreshSubcategoryEditor();
-        promise = refresh();
-    } catch (e) {
-        errorMessage = [e.message];
-    }
-}
-
-function openSubcategory(subcategoryId: string) {
-    push(`/categories/${category.id}/subcategory/${subcategoryId}`);
-}
-
-promise = refresh();
+const promise = refresh();
 </script>
 
 <style lang="scss">
+@use "../../../scss/typescale";
+@use "../../../scss/dp";
 
-h1 {
-    margin: 0;
-    font-size: 2em;
+.transactionView {
+    container-name: details;
+    container-type: inline-size;
+}
+
+h2 {
+    @include typescale.use-scale(headline-medium);
+}
+
+h3 {
+    @include typescale.use-scale(headline-small);
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 2em;
+    grid-gap: dp.dp(24);
+    grid-template-columns: repeat(3, 1fr);
+}
 
-    .span {
-        grid-column: span 2;
+.details {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.splits {
+    grid-column: span 1;
+}
+
+@container details (max-width: 700px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .details {
+        grid-column: span 1;
+    }
+}
+
+@container details (max-width: 700px) {
+    .grid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .details {
+        grid-column: span 1;
     }
 }
 
