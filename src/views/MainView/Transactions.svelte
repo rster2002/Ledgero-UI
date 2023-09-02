@@ -82,6 +82,7 @@ const promise = refresh();
 </script>
 
 <style lang="scss">
+@use "../../scss/dp";
 
 .wrapper {
     height: 100%;
@@ -91,7 +92,7 @@ const promise = refresh();
     container-name: transactions;
 
     display: grid;
-    grid-gap: dp(24);
+    grid-gap: dp.dp(24);
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: 100%;
 
@@ -114,7 +115,7 @@ const promise = refresh();
 .transactions footer {
     display: grid;
     place-items: center;
-    padding: dp(16);
+    padding: dp.dp(16);
 }
 
 @container (width < 80rem) {

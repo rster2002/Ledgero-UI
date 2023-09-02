@@ -226,16 +226,17 @@ let newSplit: NewSplitDTO = {
 let newSplitPopupOpen = false;
 let editTransactionPopupOpen = false;
 let suggestionsAvailable = true; // TODO implement
-let promise;
+let promise = refresh();
 
 // Computed
-$: isContact = !!transaction.externalAccount?.name;
-$: transactionName = transaction.externalAccount?.name ?? transaction.externalAccountName;
+$: isContact = transaction && !!transaction.externalAccount?.name;
+$: transactionName = transaction && (transaction.externalAccount?.name ?? transaction.externalAccountName);
 $: promise = params && refresh();
 
 // Functions
 async function refresh() {
   transaction = await transactionService.getTransaction(params.transactionId);
+  console.log({ transaction });
   splits = await transactionService.getSplitsFor(transaction.id);
 
   resetUpdateDetails();
@@ -293,8 +294,6 @@ async function saveChanges() {
 
   cancelEditingTransaction();
 }
-
-promise = refresh();
 </script>
 
 <style lang="scss">
