@@ -13,14 +13,22 @@
 <script lang="ts">
 // Components
 import InputWrapper from "@/components/common/InputWrapper.svelte";
+import FormValue from "@/components/common/Form/FormValue";
 
 // Props
+export var name: string | undefined;
 export var label: string;
 export var value: string;
 export var full: boolean = false;
 
 // Data
 let focussed = false;
+
+// On mount
+new FormValue<string | number | null>({
+  name,
+  getValue: () => value,
+});
 </script>
 
 <style lang="scss">

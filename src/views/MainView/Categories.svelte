@@ -33,6 +33,7 @@
       on:close={() => openedCategory = null}
     >
       <Router
+        on:routeEvent={refresh}
         routes={{
           "/categories/:categoryId": ViewCategory,
         }}

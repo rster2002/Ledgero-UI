@@ -39,7 +39,7 @@
         <Card outlineCompact>
           <VLayout>
             <header>
-              <Button icon>
+              <Button icon on:click={() => newSubcategoryPopup = true}>
                 <SubcategoryIcon />
                 New subcategory
               </Button>
@@ -142,8 +142,27 @@
 
 <Dialog bind:open={newSubcategoryPopup} fullScreen>
   <h2 slot="header">
-    Edit details
+    New subcategory
   </h2>
+
+  <Form on:submit={event}>
+    <VLayout>
+      <Input name="name" label="Name" default="New category" />
+      <TextArea name="description" label="Description" />
+
+      <HLayout>
+        <Button type="cancel" text icon>
+          <CloseIcon />
+          Cancel
+        </Button>
+
+        <Button type="submit" icon>
+          <AddIcon />
+          Create
+        </Button>
+      </HLayout>
+    </VLayout>
+  </Form>
 </Dialog>
 
 <SuccessSnackbar message={successMessage} />
@@ -176,6 +195,9 @@ import DeleteIcon from "@/components/icons/DeleteIcon.svelte";
 import SubcategoryIcon from "@/components/icons/SubcategoryIcon.svelte";
 import ListItem from "@/components/ListItem.svelte";
 import AsyncContent from "@/components/common/AsyncContent.svelte";
+import Form from "@/components/common/Form.svelte";
+import AddIcon from "@/components/icons/AddIcon.svelte";
+import CloseIcon from "@/components/icons/CloseIcon.svelte";
 
 // Props
 export let params: { categoryId: string };
@@ -219,7 +241,7 @@ async function saveChanges() {
 
   Object.assign(category, remoteCategory);
   category = category;
-  dispatch("change");
+  dispatch("routeEvent");
 
   cancelEditingCategory();
 }
@@ -231,6 +253,10 @@ async function deleteCategory() {
 
   await categoryService.deleteCategory(category.id);
   dispatch("delete");
+}
+
+async function createNewSubcategory(event) {
+  console.log(event);
 }
 
 const promise = refresh();

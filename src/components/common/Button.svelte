@@ -34,6 +34,7 @@ export var href: string = "";
 // Data
 let el: HTMLButtonElement;
 
+// On mount
 onMount(() => {
     let style = getComputedStyle(el);
     el.style.minWidth = style.width;
