@@ -17,8 +17,9 @@ import FormValue from "@/components/common/Form/FormValue";
 
 // Props
 export var name: string | undefined;
+export var formDefault: string | undefined;
 export var label: string;
-export var value: string;
+export var value: string = "";
 export var full: boolean = false;
 
 // Data
@@ -27,7 +28,10 @@ let focussed = false;
 // On mount
 new FormValue<string | number | null>({
   name,
-  getValue: () => value,
+  getValue: () => value ?? "",
+  reset() {
+    value = formDefault ?? "";
+  }
 });
 </script>
 

@@ -8,8 +8,9 @@ export default abstract class FormElement {
     const context = getContext<FormContext>("form");
 
     if (context) {
+      context.registerElement(this);
+
       onMount(() => {
-        context.registerElement(this);
         return () => context.unregisterElement(this);
       });
     }
@@ -19,8 +20,12 @@ export default abstract class FormElement {
     this.parent = form;
   }
 
+  getParent(): FormContext | null {
+    return this.parent;
+  }
+
   requireParent(): FormContext {
-    if (this.parent === null) {
+    if (this.getParent() === null) {
       throw new Error();
     }
 

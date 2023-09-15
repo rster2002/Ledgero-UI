@@ -9,7 +9,7 @@
       {text && 'text'}
       {disabled && 'disabled'}
     "
-  on:click
+  on:click={handleClick}
   bind:this={el}
   {disabled}
   {href}
@@ -19,9 +19,12 @@
 
 <script lang="ts">
 // Imports
-import { onMount } from "svelte";
+import { onMount, createEventDispatcher } from "svelte";
+import FormAction from "@/components/common/Form/FormAction";
+const dispatch = createEventDispatcher();
 
 // Props
+export var action = "submit" | "cancel" | undefined;
 export var icon = false;
 export var elevated = false;
 export var tonal = false;
@@ -32,7 +35,25 @@ export var disabled = false;
 export var href: string = "";
 
 // Data
+const formAction = new FormAction();
 let el: HTMLButtonElement;
+
+// Functions
+function handleClick(event) {
+  if (action === "submit") {
+    formAction.call(form => {
+      form.submit();
+    });
+  }
+
+  if (action === "cancel") {
+    formAction.call(form => {
+      form.reset();
+    });
+  }
+
+  dispatch("click", event);
+}
 
 // On mount
 onMount(() => {

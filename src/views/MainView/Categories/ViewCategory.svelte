@@ -145,18 +145,21 @@
     New subcategory
   </h2>
 
-  <Form on:submit={event}>
+  <Form
+    on:submit={createNewSubcategory}
+    on:cancel={() => newSubcategoryPopup = false}
+  >
     <VLayout>
-      <Input name="name" label="Name" default="New category" />
+      <Input name="name" label="Name" autocomplete="off" />
       <TextArea name="description" label="Description" />
 
       <HLayout>
-        <Button type="cancel" text icon>
+        <Button action="cancel" text icon>
           <CloseIcon />
           Cancel
         </Button>
 
-        <Button type="submit" icon>
+        <Button action="submit" icon>
           <AddIcon />
           Create
         </Button>

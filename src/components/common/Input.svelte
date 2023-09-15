@@ -11,14 +11,16 @@
 <script lang="ts">
 // Components
 import InputWrapper from "./InputWrapper.svelte";
-import FormElement from "@/components/common/Form/FormElement";
 import FormValue from "@/components/common/Form/FormValue";
 
 // Props
 export var name: string | undefined;
+export var formDefault: string | undefined;
 export var label: string;
 export var value: string | number | null;
 export var full: boolean = false;
+export var minLength: number | undefined;
+export var maxLength: number | undefined;
 
 // Data
 let focussed = false;
@@ -26,7 +28,10 @@ let focussed = false;
 // On mount
 new FormValue<string | number | null>({
   name,
-  getValue: () => value,
+  getValue: () => value ?? "",
+  reset() {
+    value = formDefault;
+  }
 });
 </script>
 
