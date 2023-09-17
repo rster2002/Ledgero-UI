@@ -1,30 +1,33 @@
 <AsyncContent {promise}>
   <div class="transactionView">
     <div class="grid">
-      <Card outlineCompact>
-        <VLayout>
-          <header>
-            <h2>
-              <AmountSpan amount={category.amount} sign />
-            </h2>
-            <h3>
-              {category.name}
-            </h3>
-          </header>
+      <div class="main" style="--bgc: #{category.hexColor}; --c: #{textColorBasedOnHex(category.hexColor)}">
+        <Card outlineCompact>
+          <VLayout>
+            <header>
+              <h2>
+                {category.name}
+              </h2>
 
-          <HLayout wrap>
-            <Button on:click={() => editCategoryPopupOpen = true} icon outline>
-              <EditIcon />
-              Edit details
-            </Button>
+              <span class="amount">
+                <AmountSpan amount={category.amount} sign />
+              </span>
+            </header>
 
-            <Button on:click={deleteCategory} icon text>
-              <DeleteIcon />
-              Delete category
-            </Button>
-          </HLayout>
-        </VLayout>
-      </Card>
+            <HLayout wrap>
+              <Button on:click={() => editCategoryPopupOpen = true} icon outline>
+                <EditIcon />
+                Edit details
+              </Button>
+
+              <Button on:click={deleteCategory} icon text>
+                <DeleteIcon />
+                Delete category
+              </Button>
+            </HLayout>
+          </VLayout>
+        </Card>
+      </div>
 
       <div class="details">
         <Card outlineCompact>
@@ -248,6 +251,7 @@ import type TransactionDTO from "@/models/dto/transactions/TransactionDTO";
 import AsyncItems from "@/components/AsyncItems.svelte";
 import TransactionListItem from "@/components/TransactionListItem.svelte";
 import useContextCaller from "@/composables/useContextCaller";
+import textColorBasedOnHex from "@/utils/textForBackground";
 
 // Props
 export let params: { categoryId: string };
@@ -342,6 +346,26 @@ h3 {
     display: grid;
     grid-gap: dp.dp(24);
     grid-template-columns: repeat(3, 1fr);
+}
+
+.main {
+    header {
+        display: flex;
+        flex-direction: row;
+
+        span {
+            font-size: dp.dp(16);
+        }
+    }
+
+    :global(.card) {
+        background-color: var(--bgc);
+        color: var(--c);
+
+        :global(button) {
+            color: var(--c);
+        }
+    }
 }
 
 .details {

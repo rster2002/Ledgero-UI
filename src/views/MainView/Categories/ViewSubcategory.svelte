@@ -1,175 +1,177 @@
-<Page>
-  <AsyncContent {promise}>
-    <div class="grid">
-      <Card>
-        <h1>
-          <SubcategorySpan {subcategory} />
-        </h1>
 
-        <p>
-          {subcategory.description}
-        </p>
-      </Card>
 
-      <Card>
-        <CardStat label="Subcategory total">
-          {formatMoney(subcategory.amount)}
-        </CardStat>
-      </Card>
+<!--<Page>-->
+<!--  <AsyncContent {promise}>-->
+<!--    <div class="grid">-->
+<!--      <Card>-->
+<!--        <h1>-->
+<!--          <SubcategorySpan {subcategory} />-->
+<!--        </h1>-->
 
-      <div class="span">
-        <Card>
-          <VLayout>
-            <HLayout>
-              <Button icon outline on:click={() => editPopupOpen = true}>
-                <EditIcon />
-                Edit subcategory
-              </Button>
+<!--        <p>-->
+<!--          {subcategory.description}-->
+<!--        </p>-->
+<!--      </Card>-->
 
-              <AsyncButton icon text asyncClick={deleteSubcategory} --accent-color="var(--negative-amount-on-bg)" --tint-50="#FFEBEB">
-                <DeleteIcon />
-                Delete subcategory
-              </AsyncButton>
-            </HLayout>
+<!--      <Card>-->
+<!--        <CardStat label="Subcategory total">-->
+<!--          {formatMoney(subcategory.amount)}-->
+<!--        </CardStat>-->
+<!--      </Card>-->
 
-            <h2>Transactions</h2>
+<!--      <div class="span">-->
+<!--        <Card>-->
+<!--          <VLayout>-->
+<!--            <HLayout>-->
+<!--              <Button icon outline on:click={() => editPopupOpen = true}>-->
+<!--                <EditIcon />-->
+<!--                Edit subcategory-->
+<!--              </Button>-->
 
-            <PaginatedTransactionsTable paginator={transactionPaginator} showCategory={false} />
-          </VLayout>
-        </Card>
-      </div>
-    </div>
-  </AsyncContent>
-</Page>
+<!--              <AsyncButton icon text asyncClick={deleteSubcategory} &#45;&#45;accent-color="var(&#45;&#45;negative-amount-on-bg)" &#45;&#45;tint-50="#FFEBEB">-->
+<!--                <DeleteIcon />-->
+<!--                Delete subcategory-->
+<!--              </AsyncButton>-->
+<!--            </HLayout>-->
 
-<!--<Popup bind:open={editPopupOpen}>-->
-<!--  <VLayout>-->
-<!--    <CardHeader>-->
-<!--      <h2>Edit subcategory</h2>-->
-<!--    </CardHeader>-->
+<!--            <h2>Transactions</h2>-->
 
-<!--    <CategoryDetailsForm bind:value={editDetails} />-->
+<!--            <PaginatedTransactionsTable paginator={transactionPaginator} showCategory={false} />-->
+<!--          </VLayout>-->
+<!--        </Card>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </AsyncContent>-->
+<!--</Page>-->
 
-<!--    <HLayout full>-->
-<!--      <Button on:click={cancelEditing} secondary>-->
-<!--        <CloseIcon />-->
-<!--        Cancel-->
-<!--      </Button>-->
+<!--&lt;!&ndash;<Popup bind:open={editPopupOpen}>&ndash;&gt;-->
+<!--&lt;!&ndash;  <VLayout>&ndash;&gt;-->
+<!--&lt;!&ndash;    <CardHeader>&ndash;&gt;-->
+<!--&lt;!&ndash;      <h2>Edit subcategory</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;    </CardHeader>&ndash;&gt;-->
 
-<!--      <AsyncButton asyncClick={saveChanges}>-->
-<!--        <SaveIcon />-->
-<!--        Save changes-->
-<!--      </AsyncButton>-->
-<!--    </HLayout>-->
-<!--  </VLayout>-->
-<!--</Popup>-->
+<!--&lt;!&ndash;    <CategoryDetailsForm bind:value={editDetails} />&ndash;&gt;-->
 
-<SuccessSnackbar message={successMessage} />
-<ErrorSnackbar message={errorMessage} />
+<!--&lt;!&ndash;    <HLayout full>&ndash;&gt;-->
+<!--&lt;!&ndash;      <Button on:click={cancelEditing} secondary>&ndash;&gt;-->
+<!--&lt;!&ndash;        <CloseIcon />&ndash;&gt;-->
+<!--&lt;!&ndash;        Cancel&ndash;&gt;-->
+<!--&lt;!&ndash;      </Button>&ndash;&gt;-->
 
-<script lang="ts">
-// Imports
-import type CategoryDetailsDTO from "@/models/dto/categories/CategoryDetailsDTO";
-import CategoryService from "@/services/CategoryService";
-import { push } from "svelte-spa-router";
-import formatMoney from "@/utils/formatMoney";
-import type SubcategoryDTO from "@/models/dto/categories/subcategories/SubcategoryDTO";
+<!--&lt;!&ndash;      <AsyncButton asyncClick={saveChanges}>&ndash;&gt;-->
+<!--&lt;!&ndash;        <SaveIcon />&ndash;&gt;-->
+<!--&lt;!&ndash;        Save changes&ndash;&gt;-->
+<!--&lt;!&ndash;      </AsyncButton>&ndash;&gt;-->
+<!--&lt;!&ndash;    </HLayout>&ndash;&gt;-->
+<!--&lt;!&ndash;  </VLayout>&ndash;&gt;-->
+<!--&lt;!&ndash;</Popup>&ndash;&gt;-->
 
-// Components
-import Page from "@/components/Page.svelte";
-import Card from "@/components/common/Card.svelte";
-import AsyncContent from "@/components/common/AsyncContent.svelte";
-import CardStat from "@/components/fragments/CardStat.svelte";
-import AsyncButton from "@/components/common/AsyncButton.svelte";
-import DeleteIcon from "@/components/icons/DeleteIcon.svelte";
-import Button from "@/components/common/Button.svelte";
-import EditIcon from "@/components/icons/EditIcon.svelte";
-import HLayout from "@/components/layouts/HLayout.svelte";
-// import Popup from "@/components/common/Popup.svelte";
-import CategoryDetailsForm from "@/components/forms/CategoryDetailsForm.svelte";
-import VLayout from "@/components/layouts/VLayout.svelte";
-import CardHeader from "@/components/fragments/CardHeader.svelte";
-import SaveIcon from "@/components/icons/SaveIcon.svelte";
-import CloseIcon from "@/components/icons/CloseIcon.svelte";
-import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";
-import ErrorSnackbar from "@/components/Snackbars/ErrorSnackbar.svelte";
-import SubcategorySpan from "@/components/spans/SubcategorySpan.svelte";
-import PaginatedTransactionsTable from "@/components/tables/PaginatedTransactionsTable.svelte";
+<!--<SuccessSnackbar message={successMessage} />-->
+<!--<ErrorSnackbar message={errorMessage} />-->
 
-// Props
-export var params: { id: string, subcategoryId: string } = {};
+<!--<script lang="ts">-->
+<!--// Imports-->
+<!--import type CategoryDetailsDTO from "@/models/dto/categories/CategoryDetailsDTO";-->
+<!--import CategoryService from "@/services/CategoryService";-->
+<!--import { push } from "svelte-spa-router";-->
+<!--import formatMoney from "@/utils/formatMoney";-->
+<!--import type SubcategoryDTO from "@/models/dto/categories/subcategories/SubcategoryDTO";-->
 
-// Data
-const categoryService = new CategoryService();
-let promise: Promise<unknown>;
-let transactionPaginator;
-let successMessage = [""];
-let errorMessage = [""];
-let subcategory: SubcategoryDTO;
-let editPopupOpen = false;
-let editDetails: CategoryDetailsDTO = {
-    name: "",
-    description: "",
-    hexColor: "",
-};
+<!--// Components-->
+<!--import Page from "@/components/Page.svelte";-->
+<!--import Card from "@/components/common/Card.svelte";-->
+<!--import AsyncContent from "@/components/common/AsyncContent.svelte";-->
+<!--import CardStat from "@/components/fragments/CardStat.svelte";-->
+<!--import AsyncButton from "@/components/common/AsyncButton.svelte";-->
+<!--import DeleteIcon from "@/components/icons/DeleteIcon.svelte";-->
+<!--import Button from "@/components/common/Button.svelte";-->
+<!--import EditIcon from "@/components/icons/EditIcon.svelte";-->
+<!--import HLayout from "@/components/layouts/HLayout.svelte";-->
+<!--// import Popup from "@/components/common/Popup.svelte";-->
+<!--import CategoryDetailsForm from "@/components/forms/CategoryDetailsForm.svelte";-->
+<!--import VLayout from "@/components/layouts/VLayout.svelte";-->
+<!--import CardHeader from "@/components/fragments/CardHeader.svelte";-->
+<!--import SaveIcon from "@/components/icons/SaveIcon.svelte";-->
+<!--import CloseIcon from "@/components/icons/CloseIcon.svelte";-->
+<!--import SuccessSnackbar from "@/components/Snackbars/SuccessSnackbar.svelte";-->
+<!--import ErrorSnackbar from "@/components/Snackbars/ErrorSnackbar.svelte";-->
+<!--import SubcategorySpan from "@/components/spans/SubcategorySpan.svelte";-->
+<!--import PaginatedTransactionsTable from "@/components/tables/PaginatedTransactionsTable.svelte";-->
 
-// Functions
-async function refresh() {
-    subcategory = await categoryService.getSubcategoryById(params.id, params.subcategoryId);
-    transactionPaginator = categoryService.createTransactionIteratorForSubcategory(params.id, params.subcategoryId);
-    refreshEditor();
-}
+<!--// Props-->
+<!--export var params: { id: string, subcategoryId: string } = {};-->
 
-function refreshEditor() {
-    editDetails = {
-        name: subcategory.name,
-        description: subcategory.description,
-        hexColor: subcategory.hexColor,
-    };
-}
+<!--// Data-->
+<!--const categoryService = new CategoryService();-->
+<!--let promise: Promise<unknown>;-->
+<!--let transactionPaginator;-->
+<!--let successMessage = [""];-->
+<!--let errorMessage = [""];-->
+<!--let subcategory: SubcategoryDTO;-->
+<!--let editPopupOpen = false;-->
+<!--let editDetails: CategoryDetailsDTO = {-->
+<!--    name: "",-->
+<!--    description: "",-->
+<!--    hexColor: "",-->
+<!--};-->
 
-function cancelEditing() {
-    refreshEditor();
-    editPopupOpen = false;
-}
+<!--// Functions-->
+<!--async function refresh() {-->
+<!--    subcategory = await categoryService.getSubcategoryById(params.id, params.subcategoryId);-->
+<!--    transactionPaginator = categoryService.createTransactionIteratorForSubcategory(params.id, params.subcategoryId);-->
+<!--    refreshEditor();-->
+<!--}-->
 
-async function deleteSubcategory() {
-    if (confirm("Are you sure you want to delete this category?")) {
-        await categoryService.deleteSubcategory(params.id, params.subcategoryId);
-        await push(`/categories/${params.id}`);
-    }
-}
+<!--function refreshEditor() {-->
+<!--    editDetails = {-->
+<!--        name: subcategory.name,-->
+<!--        description: subcategory.description,-->
+<!--        hexColor: subcategory.hexColor,-->
+<!--    };-->
+<!--}-->
 
-async function saveChanges() {
-    try {
-        await categoryService.updateSubcategory(params.id, params.subcategoryId, editDetails);
+<!--function cancelEditing() {-->
+<!--    refreshEditor();-->
+<!--    editPopupOpen = false;-->
+<!--}-->
 
-        successMessage = ["Successfully updated"];
-        editPopupOpen = false;
-        promise = refresh();
-    } catch (e) {
-        errorMessage = [e.message];
-    }
-}
+<!--async function deleteSubcategory() {-->
+<!--    if (confirm("Are you sure you want to delete this category?")) {-->
+<!--        await categoryService.deleteSubcategory(params.id, params.subcategoryId);-->
+<!--        await push(`/categories/${params.id}`);-->
+<!--    }-->
+<!--}-->
 
-promise = refresh();
-</script>
+<!--async function saveChanges() {-->
+<!--    try {-->
+<!--        await categoryService.updateSubcategory(params.id, params.subcategoryId, editDetails);-->
 
-<style lang="scss">
+<!--        successMessage = ["Successfully updated"];-->
+<!--        editPopupOpen = false;-->
+<!--        promise = refresh();-->
+<!--    } catch (e) {-->
+<!--        errorMessage = [e.message];-->
+<!--    }-->
+<!--}-->
 
-h1 {
-    margin: 0;
-    font-size: 2em;
-}
+<!--promise = refresh();-->
+<!--</script>-->
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 2em;
+<!--<style lang="scss">-->
 
-    .span {
-        grid-column: span 2;
-    }
-}
+<!--h1 {-->
+<!--    margin: 0;-->
+<!--    font-size: 2em;-->
+<!--}-->
 
-</style>
+<!--.grid {-->
+<!--    display: grid;-->
+<!--    grid-template-columns: repeat(2, 1fr);-->
+<!--    grid-gap: 2em;-->
+
+<!--    .span {-->
+<!--        grid-column: span 2;-->
+<!--    }-->
+<!--}-->
+
+<!--</style>-->
