@@ -1,8 +1,19 @@
-<div class="categoryImage" style="border-color: {borderColor}; --light-color: {lightBackgroundColor}; --light-front: {lightForegroundColor}; --dark-color: {darkBackgroundColor}; --dark-front: {darkForegroundColor}">
-  {#if category === null}
-    <NoCategoryIcon />
-  {:else}
+<div
+  class="categoryImage"
+  style="
+    border-color: {borderColor};
+    --light-color: {lightBackgroundColor};
+    --light-front: {lightForegroundColor};
+    --dark-color: {darkBackgroundColor};
+    --dark-front: {darkForegroundColor}
+  "
+>
+  {#if subcategory}
+    <SubcategoryIcon />
+  {:else if category}
     <CategoryIcon />
+  {:else}
+    <NoCategoryIcon />
   {/if}
 </div>
 
@@ -15,13 +26,14 @@ import {lighten} from "@/utils/textForBackground";
 // Components
 import CategoryIcon from "@/components/icons/CategoryIcon.svelte";
 import NoCategoryIcon from "@/components/icons/NoCategoryIcon.svelte";
+import SubcategoryIcon from "@/components/icons/SubcategoryIcon.svelte";
 
 // Props
 export var category: CategoryDTO | null;
-export var subcategory: SubcategoryDTO;
+export var subcategory: SubcategoryDTO | null | undefined;
 
 // Computed
-$: color = category?.hexColor ?? "e3e3e3";
+$: color = subcategory?.hexColor ?? category?.hexColor ?? "e3e3e3";
 $: borderColor = color ? `#${color}` : "var(--md-sys-color-outline)";
 $: lightBackgroundColor = lighten(color ?? "ffffff", 0.85);
 $: lightForegroundColor = "var(--md-ref-palette-neutral20)";

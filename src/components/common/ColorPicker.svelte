@@ -10,9 +10,13 @@
 <script lang="ts">
 // Props
 import textColorBasedOnHex from "@/utils/textForBackground";
+import FormValue from "@/components/common/Form/FormValue";
 
+// Props
+export var name: string | undefined;
 export var label: string = "Color";
 export var value: string = "ffffff";
+export var formDefault: string = "ffffff";
 
 // Data
 let el: HTMLInputElement = null;
@@ -39,6 +43,12 @@ function setNewValue(value: string) {
 function onClick() {
     el.click();
 }
+
+new FormValue({
+  name,
+  getValue: () => value ?? "ffffff",
+  reset: () => value ?? formDefault,
+});
 </script>
 
 <style lang="scss">

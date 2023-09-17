@@ -1,17 +1,19 @@
-<div class="wrapper">
-  <div class="categories">
-    <Card>
-      <VLayout>
-        <header>
-          <Button icon>
-            <CategoryIcon />
-            New category
-          </Button>
-        </header>
+<ListDetailPage>
+  <svelte:fragment slot="list">
+    <VLayout>
+      <header>
+        <Button icon on:click={() => newCategoryOpen = true}>
+          <CategoryIcon />
+          New category
+        </Button>
+      </header>
 
+      <div>
         <AsyncContent {promise}>
           {#each categories as category}
             <ListItem clickable on:click={() => openCategory(category)}>
+              <CategoryImage slot="leading" {category} />
+
               {category.name}
 
               <svelte:fragment slot="supporting">
@@ -22,25 +24,55 @@
             </ListItem>
           {/each}
         </AsyncContent>
-      </VLayout>
-    </Card>
-  </div>
+      </div>
+    </VLayout>
+  </svelte:fragment>
 
-  <div class="details">
-    <InlinePage
-      title="Category"
-      open={openedCategory !== null}
-      on:close={() => openedCategory = null}
-    >
-      <Router
-        on:routeEvent={refresh}
-        routes={{
+  <svelte:fragment slot="detail">
+    <Router
+      on:routeEvent={refresh}
+      routes={{
           "/categories/:categoryId": ViewCategory,
         }}
+    />
+  </svelte:fragment>
+</ListDetailPage>
+
+<Dialog bind:open={newCategoryOpen}>
+  <h2 slot="header">
+    New category
+  </h2>
+
+  <Form asyncSubmit={createCategory}>
+    <VLayout>
+      <Input
+        name="name"
+        label="Name"
+        required
       />
-    </InlinePage>
-  </div>
-</div>
+
+      <TextArea
+        name="description"
+        label="Description"
+      />
+
+      <ColorPicker
+        name="hexColor"
+        label="Color"
+      />
+
+      <HLayout>
+        <Button action="cancel">
+          Cancel
+        </Button>
+
+        <AsyncButton action="submit">
+          Create
+        </AsyncButton>
+      </HLayout>
+    </VLayout>
+  </Form>
+</Dialog>
 
 <script lang="ts">
 // Imports
@@ -58,11 +90,22 @@ import InlinePage from "@/components/InlinePage.svelte";
 import CategoryIcon from "@/components/icons/CategoryIcon.svelte";
 import Router, { push } from "svelte-spa-router";
 import ViewCategory from "@/views/MainView/Categories/ViewCategory.svelte";
+import CategoryImage from "@/components/fragments/CategoryImage.svelte";
+import Dialog from "@/components/common/Dialog.svelte";
+import Form from "@/components/common/Form.svelte";
+import Input from "@/components/common/Input.svelte";
+import TextArea from "@/components/common/TextArea.svelte";
+import ColorPicker from "@/components/common/ColorPicker.svelte";
+import HLayout from "@/components/layouts/HLayout.svelte";
+import AsyncButton from "@/components/common/AsyncButton.svelte";
+import ListDetailPage from "@/layouts/ListDetailPage.svelte";
+import Page from "@/layouts/Page.svelte";
 
 // Data
 const categoriesService = new CategoryService();
 let categories: CategoryDTO[] = [];
 let openedCategory: CategoryDTO | null = null;
+let newCategoryOpen = false;
 
 // Functions
 async function refresh() {
@@ -71,6 +114,13 @@ async function refresh() {
 
 function openCategory(category: CategoryDTO) {
   push(`/categories/${category.id}`);
+}
+
+async function createCategory({ detail }) {
+  await categoriesService.createCategory(detail);
+  await refresh();
+
+  newCategoryOpen = false;
 }
 
 const promise = refresh();
@@ -111,18 +161,6 @@ const promise = refresh();
     display: grid;
     place-items: center;
     padding: dp.dp(16);
-}
-
-@container (width < 80rem) {
-    .wrapper {
-        .categories {
-            grid-column: span 6;
-        }
-
-        .details {
-            grid-column: span 6;
-        }
-    }
 }
 
 </style>

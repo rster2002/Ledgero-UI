@@ -28,10 +28,26 @@
 
       <div class="details">
         <Card outlineCompact>
-          <VLayout>
-            <!--          <CategoryDet {category} />-->
+          <AsyncItems
+            generator={transactionsGenerator}
+            let:items
+            let:done
+            let:next
+          >
+            <VLayout>
+              <div>
+                {#each items as transaction}
+                  <TransactionListItem {transaction} />
+                {/each}
+              </div>
 
-          </VLayout>
+              {#if !done}
+                <AsyncButton asyncClick={next} text>
+                  Load more
+                </AsyncButton>
+              {/if}
+            </VLayout>
+          </AsyncItems>
         </Card>
       </div>
 
@@ -48,11 +64,22 @@
             <div>
               {#each subcategories as subcategory}
                 <ListItem clickable>
+                  <CategoryImage
+                    slot="leading"
+                    {category}
+                    {subcategory}
+                  />
+
                   {subcategory.name}
 
                   <svelte:fragment slot="supporting">
                     {subcategory.description}
                   </svelte:fragment>
+
+                  <AmountSpan
+                    slot="tailing"
+                    amount={subcategory.amount}
+                  />
                 </ListItem>
               {/each}
             </div>
@@ -146,12 +173,26 @@
   </h2>
 
   <Form
-    on:submit={createNewSubcategory}
+    asyncSubmit={createNewSubcategory}
     on:cancel={() => newSubcategoryPopup = false}
   >
     <VLayout>
-      <Input name="name" label="Name" autocomplete="off" />
-      <TextArea name="description" label="Description" />
+      <Input
+        name="name"
+        label="Name"
+        autocomplete="off"
+        required
+      />
+
+      <TextArea
+        name="description"
+        label="Description"
+      />
+
+      <ColorPicker
+        name="hexColor"
+        label="Color"
+      />
 
       <HLayout>
         <Button action="cancel" text icon>
@@ -159,10 +200,10 @@
           Cancel
         </Button>
 
-        <Button action="submit" icon>
+        <AsyncButton action="submit" icon>
           <AddIcon />
           Create
-        </Button>
+        </AsyncButton>
       </HLayout>
     </VLayout>
   </Form>
@@ -201,13 +242,21 @@ import AsyncContent from "@/components/common/AsyncContent.svelte";
 import Form from "@/components/common/Form.svelte";
 import AddIcon from "@/components/icons/AddIcon.svelte";
 import CloseIcon from "@/components/icons/CloseIcon.svelte";
+import CategoryImage from "@/components/fragments/CategoryImage.svelte";
+import TransactionDetails from "@/components/fragments/TransactionDetails.svelte";
+import type TransactionDTO from "@/models/dto/transactions/TransactionDTO";
+import AsyncItems from "@/components/AsyncItems.svelte";
+import TransactionListItem from "@/components/TransactionListItem.svelte";
+import useContextCaller from "@/composables/useContextCaller";
 
 // Props
 export let params: { categoryId: string };
 
 // Data
 const categoryService = new CategoryService();
+let promise: Promise<unknown>;
 let category: CategoryDTO;
+let transactionsGenerator: AsyncGenerator<TransactionDTO[]>;
 let subcategories: SubcategoryDTO[] = [];
 let successMessage = [""];
 let errorMessage = [""];
@@ -219,9 +268,13 @@ let updateDetails: CategoryDetailsDTO = {
 let editCategoryPopupOpen = false;
 let newSubcategoryPopup = false;
 
+// Computed
+$: promise = params && refresh();
+
 // Functions
 async function refresh() {
   category = await categoryService.getCategoryById(params.categoryId);
+  transactionsGenerator = categoryService.createTransactionIteratorForCategory(params.categoryId);
   subcategories = await categoryService.getSubcategories(category.id);
 
   resetUpdateDetails();
@@ -258,11 +311,14 @@ async function deleteCategory() {
   dispatch("delete");
 }
 
-async function createNewSubcategory(event) {
-  console.log(event);
+async function createNewSubcategory({ detail }) {
+  await categoryService.createSubcategory(category.id, detail);
+  await refresh();
+
+  newSubcategoryPopup = false;
 }
 
-const promise = refresh();
+promise = refresh();
 </script>
 
 <style lang="scss">

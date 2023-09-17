@@ -1,41 +1,28 @@
-<div class="wrapper">
-  <div class="transactions">
-    <Card disappearCompact>
-      <AsyncContent {promise}>
-        {#each transactions as transaction}
-          <TransactionListItem {transaction} on:click={() => openTransaction(transaction)} />
-        {/each}
+<ListDetailPage>
+  <svelte:fragment slot="list">
+    <AsyncContent {promise}>
+      {#each transactions as transaction}
+        <TransactionListItem {transaction} on:click={() => openTransaction(transaction)} />
+      {/each}
 
-        {#if !transactionsDone}
-          <footer>
-            <AsyncButton asyncClick={nextPage}>
-              Load more
-            </AsyncButton>
-          </footer>
-        {/if}
-      </AsyncContent>
-    </Card>
-  </div>
+      {#if !transactionsDone}
+        <footer>
+          <AsyncButton asyncClick={nextPage}>
+            Load more
+          </AsyncButton>
+        </footer>
+      {/if}
+    </AsyncContent>
+  </svelte:fragment>
 
-  <div class="details">
-    <InlinePage
-      title="Transaction"
-      open={openedTransaction !== null}
-      on:close={() => openedTransaction = null}
-    >
-      <Router
-        routes={{
-          "/transactions/:transactionId": ViewTransaction,
-        }}
-      />
-      <!--{#if openedTransaction === null}-->
-      <!--  No transaction open-->
-      <!--{:else}-->
-      <!--  <TransactionView transaction={openedTransaction} on:change={() => transactions = transactions} />-->
-      <!--{/if}-->
-    </InlinePage>
-  </div>
-</div>
+  <svelte:fragment slot="detail">
+    <Router
+      routes={{
+        "/transactions/:transactionId": ViewTransaction,
+      }}
+    />
+  </svelte:fragment>
+</ListDetailPage>
 
 <script lang="ts">
 // Imports
@@ -50,6 +37,7 @@ import InlinePage from "@/components/InlinePage.svelte";
 import AsyncContent from "@/components/common/AsyncContent.svelte";
 import Router, { push } from "svelte-spa-router";
 import ViewTransaction from "@/views/MainView/Transactions/ViewTransaction.svelte";
+import ListDetailPage from "@/layouts/ListDetailPage.svelte";
 
 // Data
 const transactionsService = new TransactionService();

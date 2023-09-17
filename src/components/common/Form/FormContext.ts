@@ -1,8 +1,9 @@
 import type FormElement from "@/components/common/Form/FormElement";
 import FormValue from "@/components/common/Form/FormValue";
+import FormAction from "@/components/common/Form/FormAction";
 
 export interface FormContextOptions {
-  onSubmitCallback: (result: unknown) => void;
+  onSubmitCallback: (result: unknown) => Promise<void>;
   onCancelCallback: () => void;
 }
 
@@ -35,15 +36,43 @@ export default class FormContext {
       .filter(element => element instanceof FormValue);
   }
 
-  submit(): unknown {
+  private getFormActions(): FormAction[] {
+    return <FormAction[]> this.elements
+      .filter(element => element instanceof FormAction);
+  }
+
+  private setDisabledActions(disabled: boolean) {
+    for (const action of this.getFormActions()) {
+      action.setDisabled(disabled);
+    }
+  }
+
+  async submit(): Promise<unknown> {
+    console.log(this);
+
     const result = {};
     const values = this.getFormValues();
 
+    this.setDisabledActions(true);
+
+    let failed = false;
+
     for (const value of values) {
+      if (!value.validate()) {
+        failed = true;
+        continue;
+      }
+
       result[value.getName()] = value.getValue();
     }
 
-    this.onSubmitCallback(result);
+    if (failed) {
+      this.setDisabledActions(false);
+      return;
+    }
+
+    await this.onSubmitCallback(result);
+    this.setDisabledActions(false);
 
     return result;
   }

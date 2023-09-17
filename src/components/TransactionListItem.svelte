@@ -1,5 +1,9 @@
 <ListItem clickable on:click>
-  <CategoryImage slot="leading" category={transaction.category} />
+  <CategoryImage
+    slot="leading"
+    category={transaction.category}
+    subcategory={transaction.subcategory}
+  />
 
   {#if transaction.externalAccount}
     {transaction.externalAccount.name}

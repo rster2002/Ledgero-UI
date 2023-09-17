@@ -1,5 +1,6 @@
-<div
-  class="
+<div class="inputContainer {error && 'error'}">
+  <div
+    class="
     inputWrapper
     {padding && 'padding'}
     {pointer && 'pointer'}
@@ -7,15 +8,22 @@
     {active && 'active'}
     {full && 'full'}
   "
-  on:click
->
-  <slot {id} />
-  <label for={id}>{label}</label>
+    on:click
+  >
+    <slot {id} />
+    <label for={id}>{label}</label>
+  </div>
+
+  <span class="supporting {(supporting || error) && 'show'}">
+    {error ?? supporting}
+  </span>
 </div>
 
 <script lang="ts">
 // Props
 export var label: string;
+export var supporting: string | undefined;
+export var error: string | undefined;
 export var full: boolean = false;
 export var focus: boolean = false;
 export var active: boolean = true;
@@ -87,6 +95,38 @@ const id = String(Math.random());
 
         label {
             color: color.use(--md-sys-color-primary);
+        }
+    }
+}
+
+.supporting {
+    visibility: hidden;
+
+    padding: dp.dp(4) dp.dp(16) 0;
+    box-sizing: border-box;
+
+    color: color.use(--md-sys-color-on-surface-variant);
+    @include typescale.use-scale(body-small);
+
+    &.show {
+        visibility: visible;
+    }
+}
+
+.inputContainer {
+    background-color: inherit;
+
+    &.error {
+        .inputWrapper {
+            border-color: color.use(--md-sys-color-error);
+
+            label {
+                color: color.use(--md-sys-color-error);
+            }
+        }
+
+        .supporting {
+            color: color.use(--md-sys-color-error);
         }
     }
 }

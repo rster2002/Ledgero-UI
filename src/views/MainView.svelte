@@ -90,10 +90,7 @@ section {
     width: 100%;
     flex: 1;
 
-    overflow-y: auto;
-
-    padding: dp.dp(32);
-    box-sizing: border-box;
+    //overflow-y: auto;
 
     .routeContainer {
         height: 100%;

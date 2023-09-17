@@ -35,7 +35,9 @@ export var disabled = false;
 export var href: string = "";
 
 // Data
-const formAction = new FormAction();
+const formAction = new FormAction({
+  disabled: state => disabled = state,
+});
 let el: HTMLButtonElement;
 
 // Functions
